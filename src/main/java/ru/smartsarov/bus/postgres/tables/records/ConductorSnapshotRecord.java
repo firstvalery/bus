@@ -30,7 +30,7 @@ import ru.smartsarov.bus.postgres.tables.ConductorSnapshot;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapshotRecord> implements Record8<Integer, Short, Short, Short, Short, OffsetDateTime, OffsetDateTime, Short> {
 
-    private static final long serialVersionUID = 2021297313;
+    private static final long serialVersionUID = 460903092;
 
     /**
      * Setter for <code>public.conductor_snapshot.id</code>.
@@ -61,30 +61,30 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
     }
 
     /**
+     * Setter for <code>public.conductor_snapshot.position_id</code>.
+     */
+    public void setPositionId(Short value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.conductor_snapshot.position_id</code>.
+     */
+    public Short getPositionId() {
+        return (Short) get(2);
+    }
+
+    /**
      * Setter for <code>public.conductor_snapshot.schedule_type</code>.
      */
     public void setScheduleType(Short value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>public.conductor_snapshot.schedule_type</code>.
      */
     public Short getScheduleType() {
-        return (Short) get(2);
-    }
-
-    /**
-     * Setter for <code>public.conductor_snapshot.ready_type_id</code>.
-     */
-    public void setReadyTypeId(Short value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>public.conductor_snapshot.ready_type_id</code>.
-     */
-    public Short getReadyTypeId() {
         return (Short) get(3);
     }
 
@@ -197,7 +197,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Field<Short> field3() {
-        return ConductorSnapshot.CONDUCTOR_SNAPSHOT.SCHEDULE_TYPE;
+        return ConductorSnapshot.CONDUCTOR_SNAPSHOT.POSITION_ID;
     }
 
     /**
@@ -205,7 +205,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Field<Short> field4() {
-        return ConductorSnapshot.CONDUCTOR_SNAPSHOT.READY_TYPE_ID;
+        return ConductorSnapshot.CONDUCTOR_SNAPSHOT.SCHEDULE_TYPE;
     }
 
     /**
@@ -261,7 +261,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Short component3() {
-        return getScheduleType();
+        return getPositionId();
     }
 
     /**
@@ -269,7 +269,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Short component4() {
-        return getReadyTypeId();
+        return getScheduleType();
     }
 
     /**
@@ -325,7 +325,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Short value3() {
-        return getScheduleType();
+        return getPositionId();
     }
 
     /**
@@ -333,7 +333,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public Short value4() {
-        return getReadyTypeId();
+        return getScheduleType();
     }
 
     /**
@@ -391,7 +391,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public ConductorSnapshotRecord value3(Short value) {
-        setScheduleType(value);
+        setPositionId(value);
         return this;
     }
 
@@ -400,7 +400,7 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
      */
     @Override
     public ConductorSnapshotRecord value4(Short value) {
-        setReadyTypeId(value);
+        setScheduleType(value);
         return this;
     }
 
@@ -470,13 +470,13 @@ public class ConductorSnapshotRecord extends UpdatableRecordImpl<ConductorSnapsh
     /**
      * Create a detached, initialised ConductorSnapshotRecord
      */
-    public ConductorSnapshotRecord(Integer id, Short employeeDataId, Short scheduleType, Short readyTypeId, Short stateId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
+    public ConductorSnapshotRecord(Integer id, Short employeeDataId, Short positionId, Short scheduleType, Short stateId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
         super(ConductorSnapshot.CONDUCTOR_SNAPSHOT);
 
         set(0, id);
         set(1, employeeDataId);
-        set(2, scheduleType);
-        set(3, readyTypeId);
+        set(2, positionId);
+        set(3, scheduleType);
         set(4, stateId);
         set(5, createdAt);
         set(6, endedAt);

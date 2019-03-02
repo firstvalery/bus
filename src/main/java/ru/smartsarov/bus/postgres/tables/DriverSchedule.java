@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverScheduleRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
 
-    private static final long serialVersionUID = -1555997682;
+    private static final long serialVersionUID = -1453523666;
 
     /**
      * The reference instance of <code>public.driver_schedule</code>
@@ -70,6 +70,11 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
      * The column <code>public.driver_schedule.schedule_type_id</code>.
      */
     public final TableField<DriverScheduleRecord, Short> SCHEDULE_TYPE_ID = createField("schedule_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
+     * The column <code>public.driver_schedule.ready_type_id</code>.
+     */
+    public final TableField<DriverScheduleRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_schedule.removed</code>.
@@ -146,7 +151,7 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
      */
     @Override
     public List<ForeignKey<DriverScheduleRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverScheduleRecord, ?>>asList(Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID);
+        return Arrays.<ForeignKey<DriverScheduleRecord, ?>>asList(Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_READY_TYPE_ID);
     }
 
     public Driver driver() {
@@ -155,6 +160,10 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
 
     public ShiftType shiftType() {
         return new ShiftType(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID);
+    }
+
+    public RbReadyType rbReadyType() {
+        return new RbReadyType(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_READY_TYPE_ID);
     }
 
     /**

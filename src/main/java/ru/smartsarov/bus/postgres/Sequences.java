@@ -24,19 +24,19 @@ import org.jooq.impl.SequenceImpl;
 public class Sequences {
 
     /**
-     * The sequence <code>public.bus_condition_id_seq</code>
-     */
-    public static final Sequence<Integer> BUS_CONDITION_ID_SEQ = new SequenceImpl<Integer>("bus_condition_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
-
-    /**
-     * The sequence <code>public.bus_data_id_seq</code>
-     */
-    public static final Sequence<Integer> BUS_DATA_ID_SEQ = new SequenceImpl<Integer>("bus_data_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
-
-    /**
      * The sequence <code>public.bus_id_seq</code>
      */
     public static final Sequence<Integer> BUS_ID_SEQ = new SequenceImpl<Integer>("bus_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+
+    /**
+     * The sequence <code>public.bus_info_id_seq</code>
+     */
+    public static final Sequence<Short> BUS_INFO_ID_SEQ = new SequenceImpl<Short>("bus_info_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.SMALLINT.nullable(false));
+
+    /**
+     * The sequence <code>public.bus_snapshot_id_seq</code>
+     */
+    public static final Sequence<Integer> BUS_SNAPSHOT_ID_SEQ = new SequenceImpl<Integer>("bus_snapshot_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
      * The sequence <code>public.bus_stop_list_id_seq</code>
@@ -89,9 +89,9 @@ public class Sequences {
     public static final Sequence<Integer> DRIVER_SNAPSHOT_ID_SEQ = new SequenceImpl<Integer>("driver_snapshot_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
-     * The sequence <code>public.employee_data_id_seq</code>
+     * The sequence <code>public.employee_info_id_seq</code>
      */
-    public static final Sequence<Integer> EMPLOYEE_DATA_ID_SEQ = new SequenceImpl<Integer>("employee_data_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+    public static final Sequence<Integer> EMPLOYEE_INFO_ID_SEQ = new SequenceImpl<Integer>("employee_info_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
      * The sequence <code>public.fuel_code_fuel_type_id_seq</code>
@@ -109,6 +109,11 @@ public class Sequences {
     public static final Sequence<Integer> INTSIDENT_ID_SEQ = new SequenceImpl<Integer>("intsident_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
+     * The sequence <code>public.position_id_seq</code>
+     */
+    public static final Sequence<Integer> POSITION_ID_SEQ = new SequenceImpl<Integer>("position_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+
+    /**
      * The sequence <code>public.race_id_seq</code>
      */
     public static final Sequence<Integer> RACE_ID_SEQ = new SequenceImpl<Integer>("race_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
@@ -119,14 +124,19 @@ public class Sequences {
     public static final Sequence<Integer> RACE_SNAPHOT_ID_SEQ = new SequenceImpl<Integer>("race_snaphot_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
 
     /**
+     * The sequence <code>public.rb_bus_condition_type_id_seq</code>
+     */
+    public static final Sequence<Short> RB_BUS_CONDITION_TYPE_ID_SEQ = new SequenceImpl<Short>("rb_bus_condition_type_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.SMALLINT.nullable(false));
+
+    /**
      * The sequence <code>public.rb_bus_make_id_seq</code>
      */
-    public static final Sequence<Integer> RB_BUS_MAKE_ID_SEQ = new SequenceImpl<Integer>("rb_bus_make_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+    public static final Sequence<Short> RB_BUS_MAKE_ID_SEQ = new SequenceImpl<Short>("rb_bus_make_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.SMALLINT.nullable(false));
 
     /**
      * The sequence <code>public.rb_bus_model_id_seq</code>
      */
-    public static final Sequence<Integer> RB_BUS_MODEL_ID_SEQ = new SequenceImpl<Integer>("rb_bus_model_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.INTEGER.nullable(false));
+    public static final Sequence<Short> RB_BUS_MODEL_ID_SEQ = new SequenceImpl<Short>("rb_bus_model_id_seq", Public.PUBLIC, org.jooq.impl.SQLDataType.SMALLINT.nullable(false));
 
     /**
      * The sequence <code>public.rb_bus_stop_id_seq</code>

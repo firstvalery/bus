@@ -28,7 +28,7 @@ import ru.smartsarov.bus.postgres.tables.Conductor;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implements Record6<Integer, Short, Short, Short, Short, Short> {
 
-    private static final long serialVersionUID = 1421182023;
+    private static final long serialVersionUID = -1095129158;
 
     /**
      * Setter for <code>public.conductor.id</code>.
@@ -59,30 +59,30 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
     }
 
     /**
+     * Setter for <code>public.conductor.position_id</code>.
+     */
+    public void setPositionId(Short value) {
+        set(2, value);
+    }
+
+    /**
+     * Getter for <code>public.conductor.position_id</code>.
+     */
+    public Short getPositionId() {
+        return (Short) get(2);
+    }
+
+    /**
      * Setter for <code>public.conductor.schedule_type</code>.
      */
     public void setScheduleType(Short value) {
-        set(2, value);
+        set(3, value);
     }
 
     /**
      * Getter for <code>public.conductor.schedule_type</code>.
      */
     public Short getScheduleType() {
-        return (Short) get(2);
-    }
-
-    /**
-     * Setter for <code>public.conductor.ready_type_id</code>.
-     */
-    public void setReadyTypeId(Short value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>public.conductor.ready_type_id</code>.
-     */
-    public Short getReadyTypeId() {
         return (Short) get(3);
     }
 
@@ -167,7 +167,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Field<Short> field3() {
-        return Conductor.CONDUCTOR.SCHEDULE_TYPE;
+        return Conductor.CONDUCTOR.POSITION_ID;
     }
 
     /**
@@ -175,7 +175,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Field<Short> field4() {
-        return Conductor.CONDUCTOR.READY_TYPE_ID;
+        return Conductor.CONDUCTOR.SCHEDULE_TYPE;
     }
 
     /**
@@ -215,7 +215,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Short component3() {
-        return getScheduleType();
+        return getPositionId();
     }
 
     /**
@@ -223,7 +223,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Short component4() {
-        return getReadyTypeId();
+        return getScheduleType();
     }
 
     /**
@@ -263,7 +263,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Short value3() {
-        return getScheduleType();
+        return getPositionId();
     }
 
     /**
@@ -271,7 +271,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public Short value4() {
-        return getReadyTypeId();
+        return getScheduleType();
     }
 
     /**
@@ -313,7 +313,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public ConductorRecord value3(Short value) {
-        setScheduleType(value);
+        setPositionId(value);
         return this;
     }
 
@@ -322,7 +322,7 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
      */
     @Override
     public ConductorRecord value4(Short value) {
-        setReadyTypeId(value);
+        setScheduleType(value);
         return this;
     }
 
@@ -372,13 +372,13 @@ public class ConductorRecord extends UpdatableRecordImpl<ConductorRecord> implem
     /**
      * Create a detached, initialised ConductorRecord
      */
-    public ConductorRecord(Integer id, Short employeeDataId, Short scheduleType, Short readyTypeId, Short stateId, Short removed) {
+    public ConductorRecord(Integer id, Short employeeDataId, Short positionId, Short scheduleType, Short stateId, Short removed) {
         super(Conductor.CONDUCTOR);
 
         set(0, id);
         set(1, employeeDataId);
-        set(2, scheduleType);
-        set(3, readyTypeId);
+        set(2, positionId);
+        set(3, scheduleType);
         set(4, stateId);
         set(5, removed);
     }

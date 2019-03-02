@@ -7,8 +7,8 @@ package ru.smartsarov.bus.postgres;
 import javax.annotation.Generated;
 
 import ru.smartsarov.bus.postgres.tables.Bus;
-import ru.smartsarov.bus.postgres.tables.BusCondition;
-import ru.smartsarov.bus.postgres.tables.BusData;
+import ru.smartsarov.bus.postgres.tables.BusInfo;
+import ru.smartsarov.bus.postgres.tables.BusSnapshot;
 import ru.smartsarov.bus.postgres.tables.BusStopList;
 import ru.smartsarov.bus.postgres.tables.BusStops;
 import ru.smartsarov.bus.postgres.tables.Conductor;
@@ -23,11 +23,13 @@ import ru.smartsarov.bus.postgres.tables.DriverGroup;
 import ru.smartsarov.bus.postgres.tables.DriverSchedule;
 import ru.smartsarov.bus.postgres.tables.DriverScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.DriverSnapshot;
-import ru.smartsarov.bus.postgres.tables.EmployeeData;
+import ru.smartsarov.bus.postgres.tables.EmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.FuelCode;
 import ru.smartsarov.bus.postgres.tables.Intsident;
+import ru.smartsarov.bus.postgres.tables.Position;
 import ru.smartsarov.bus.postgres.tables.Race;
 import ru.smartsarov.bus.postgres.tables.RaceSnaphot;
+import ru.smartsarov.bus.postgres.tables.RbBusConditionType;
 import ru.smartsarov.bus.postgres.tables.RbBusMake;
 import ru.smartsarov.bus.postgres.tables.RbBusModel;
 import ru.smartsarov.bus.postgres.tables.RbBusStop;
@@ -48,6 +50,8 @@ import ru.smartsarov.bus.postgres.tables.ShiftFixedSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftSchedule;
 import ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftType;
+import ru.smartsarov.bus.postgres.tables.TechAvailability;
+import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
 import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
 
@@ -71,14 +75,14 @@ public class Tables {
     public static final Bus BUS = ru.smartsarov.bus.postgres.tables.Bus.BUS;
 
     /**
-     * The table <code>public.bus_condition</code>.
+     * The table <code>public.bus_info</code>.
      */
-    public static final BusCondition BUS_CONDITION = ru.smartsarov.bus.postgres.tables.BusCondition.BUS_CONDITION;
+    public static final BusInfo BUS_INFO = ru.smartsarov.bus.postgres.tables.BusInfo.BUS_INFO;
 
     /**
-     * The table <code>public.bus_data</code>.
+     * The table <code>public.bus_snapshot</code>.
      */
-    public static final BusData BUS_DATA = ru.smartsarov.bus.postgres.tables.BusData.BUS_DATA;
+    public static final BusSnapshot BUS_SNAPSHOT = ru.smartsarov.bus.postgres.tables.BusSnapshot.BUS_SNAPSHOT;
 
     /**
      * The table <code>public.bus_stop_list</code>.
@@ -151,9 +155,9 @@ public class Tables {
     public static final DriverSnapshot DRIVER_SNAPSHOT = ru.smartsarov.bus.postgres.tables.DriverSnapshot.DRIVER_SNAPSHOT;
 
     /**
-     * The table <code>public.employee_data</code>.
+     * The table <code>public.employee_info</code>.
      */
-    public static final EmployeeData EMPLOYEE_DATA = ru.smartsarov.bus.postgres.tables.EmployeeData.EMPLOYEE_DATA;
+    public static final EmployeeInfo EMPLOYEE_INFO = ru.smartsarov.bus.postgres.tables.EmployeeInfo.EMPLOYEE_INFO;
 
     /**
      * The table <code>public.fuel_code</code>.
@@ -166,6 +170,11 @@ public class Tables {
     public static final Intsident INTSIDENT = ru.smartsarov.bus.postgres.tables.Intsident.INTSIDENT;
 
     /**
+     * The table <code>public.position</code>.
+     */
+    public static final Position POSITION = ru.smartsarov.bus.postgres.tables.Position.POSITION;
+
+    /**
      * The table <code>public.race</code>.
      */
     public static final Race RACE = ru.smartsarov.bus.postgres.tables.Race.RACE;
@@ -174,6 +183,11 @@ public class Tables {
      * The table <code>public.race_snaphot</code>.
      */
     public static final RaceSnaphot RACE_SNAPHOT = ru.smartsarov.bus.postgres.tables.RaceSnaphot.RACE_SNAPHOT;
+
+    /**
+     * The table <code>public.rb_bus_condition_type</code>.
+     */
+    public static final RbBusConditionType RB_BUS_CONDITION_TYPE = ru.smartsarov.bus.postgres.tables.RbBusConditionType.RB_BUS_CONDITION_TYPE;
 
     /**
      * The table <code>public.rb_bus_make</code>.
@@ -275,6 +289,16 @@ public class Tables {
      * The table <code>public.shift_type</code>.
      */
     public static final ShiftType SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.ShiftType.SHIFT_TYPE;
+
+    /**
+     * The table <code>public.tech_availability</code>.
+     */
+    public static final TechAvailability TECH_AVAILABILITY = ru.smartsarov.bus.postgres.tables.TechAvailability.TECH_AVAILABILITY;
+
+    /**
+     * The table <code>public.tech_availability_snapshot</code>.
+     */
+    public static final TechAvailabilitySnapshot TECH_AVAILABILITY_SNAPSHOT = ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT;
 
     /**
      * The table <code>public.track</code>.

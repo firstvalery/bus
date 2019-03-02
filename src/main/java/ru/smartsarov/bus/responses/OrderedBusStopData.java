@@ -3,7 +3,7 @@ package ru.smartsarov.bus.responses;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class OrderedBusStop {
+public class OrderedBusStopData {
 	@SerializedName("order")
     @Expose
     private Integer order;
@@ -32,12 +32,12 @@ public class OrderedBusStop {
 		this.elapsedTime = elapsedTime;
 	}
 	
-	public OrderedBusStop(Integer order, BusStopData busStopData, Integer elapsedTime) {
+	public OrderedBusStopData(Integer order, BusStopData busStopData, Integer elapsedTime) {
 		this.order = order;
 		this.busStopData = busStopData;
 		this.elapsedTime = elapsedTime;
 	}
-	public OrderedBusStop() {
+	public OrderedBusStopData() {
 		this.order = null;
 		this.busStopData = null;
 		this.elapsedTime = null;

@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.BusRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bus extends TableImpl<BusRecord> {
 
-    private static final long serialVersionUID = -1946549358;
+    private static final long serialVersionUID = 605879689;
 
     /**
      * The reference instance of <code>public.bus</code>
@@ -62,19 +62,19 @@ public class Bus extends TableImpl<BusRecord> {
     public final TableField<BusRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('bus_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>public.bus.bus_id</code>.
+     * The column <code>public.bus.bus_info_id</code>.
      */
-    public final TableField<BusRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<BusRecord, Short> BUS_INFO_ID = createField("bus_info_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
-     * The column <code>public.bus.garage_number_id</code>.
+     * The column <code>public.bus.garage_number</code>.
      */
-    public final TableField<BusRecord, String> GARAGE_NUMBER_ID = createField("garage_number_id", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<BusRecord, String> GARAGE_NUMBER = createField("garage_number", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
-     * The column <code>public.bus.state_number_id</code>.
+     * The column <code>public.bus.state_number</code>.
      */
-    public final TableField<BusRecord, String> STATE_NUMBER_ID = createField("state_number_id", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<BusRecord, String> STATE_NUMBER = createField("state_number", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.bus.fuel_code_id</code>.
@@ -179,19 +179,19 @@ public class Bus extends TableImpl<BusRecord> {
      */
     @Override
     public List<ForeignKey<BusRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<BusRecord, ?>>asList(Keys.BUS__FK_BUS_TBL_BUS_ID, Keys.BUS__FK_BUS_TBL_FUEL_CODE_ID, Keys.BUS__FK_BUS_TBL_CONDITION_ID);
+        return Arrays.<ForeignKey<BusRecord, ?>>asList(Keys.BUS__FK_BUS_TBL_BUS_INFO_ID, Keys.BUS__FK_BUS_TBL_FUEL_CODE_ID, Keys.BUS__FK_BUS_TBL_CONDITION_ID);
     }
 
-    public BusData busData() {
-        return new BusData(this, Keys.BUS__FK_BUS_TBL_BUS_ID);
+    public BusInfo busInfo() {
+        return new BusInfo(this, Keys.BUS__FK_BUS_TBL_BUS_INFO_ID);
     }
 
     public FuelCode fuelCode() {
         return new FuelCode(this, Keys.BUS__FK_BUS_TBL_FUEL_CODE_ID);
     }
 
-    public BusCondition busCondition() {
-        return new BusCondition(this, Keys.BUS__FK_BUS_TBL_CONDITION_ID);
+    public RbBusConditionType rbBusConditionType() {
+        return new RbBusConditionType(this, Keys.BUS__FK_BUS_TBL_CONDITION_ID);
     }
 
     /**

@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbBusMakeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbBusMake extends TableImpl<RbBusMakeRecord> {
 
-    private static final long serialVersionUID = -1099846608;
+    private static final long serialVersionUID = -2008164278;
 
     /**
      * The reference instance of <code>public.rb_bus_make</code>
@@ -59,7 +59,7 @@ public class RbBusMake extends TableImpl<RbBusMakeRecord> {
     /**
      * The column <code>public.rb_bus_make.id</code>.
      */
-    public final TableField<RbBusMakeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_bus_make_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RbBusMakeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_bus_make_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_bus_make.name</code>.
@@ -124,7 +124,7 @@ public class RbBusMake extends TableImpl<RbBusMakeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbBusMakeRecord, Integer> getIdentity() {
+    public Identity<RbBusMakeRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_BUS_MAKE;
     }
 

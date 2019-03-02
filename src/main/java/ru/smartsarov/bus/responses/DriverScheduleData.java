@@ -10,6 +10,9 @@ public class DriverScheduleData {
 	 @SerializedName("shiftType")
 	    @Expose
 	    private String shiftType;
+	 @SerializedName("readyType")
+	    @Expose
+	    private String readyType;
 	public DriverData getDriverData() {
 		return driverData;
 	}
@@ -22,13 +25,21 @@ public class DriverScheduleData {
 	public void setShiftType(String shiftType) {
 		this.shiftType = shiftType;
 	}
-	public DriverScheduleData(DriverData driverData, String shiftType) {
+	public String getReadyType() {
+		return readyType;
+	}
+	public void setReadyType(String readyType) {
+		this.readyType = readyType;
+	}
+	public DriverScheduleData(DriverData driverData, String shiftType, String readyType) {
 		this.driverData = driverData;
 		this.shiftType = shiftType;
+		this.readyType = readyType;
 	}
 	public DriverScheduleData() {
 		this.driverData = new DriverData();
 		this.shiftType = "";
+		this.readyType = "";
 	}
 	 
 }

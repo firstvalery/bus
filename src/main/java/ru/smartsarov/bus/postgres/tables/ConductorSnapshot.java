@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorSnapshot extends TableImpl<ConductorSnapshotRecord> {
 
-    private static final long serialVersionUID = 354343051;
+    private static final long serialVersionUID = -1578751834;
 
     /**
      * The reference instance of <code>public.conductor_snapshot</code>
@@ -68,14 +68,14 @@ public class ConductorSnapshot extends TableImpl<ConductorSnapshotRecord> {
     public final TableField<ConductorSnapshotRecord, Short> EMPLOYEE_DATA_ID = createField("employee_data_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
+     * The column <code>public.conductor_snapshot.position_id</code>.
+     */
+    public final TableField<ConductorSnapshotRecord, Short> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
      * The column <code>public.conductor_snapshot.schedule_type</code>.
      */
     public final TableField<ConductorSnapshotRecord, Short> SCHEDULE_TYPE = createField("schedule_type", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
-    /**
-     * The column <code>public.conductor_snapshot.ready_type_id</code>.
-     */
-    public final TableField<ConductorSnapshotRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.conductor_snapshot.state_id</code>.
@@ -175,19 +175,19 @@ public class ConductorSnapshot extends TableImpl<ConductorSnapshotRecord> {
      */
     @Override
     public List<ForeignKey<ConductorSnapshotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ConductorSnapshotRecord, ?>>asList(Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_READY_TYPE_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_STATE_ID);
+        return Arrays.<ForeignKey<ConductorSnapshotRecord, ?>>asList(Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_STATE_ID);
     }
 
     public RbEmployeeScheduleType rbEmployeeScheduleType() {
         return new RbEmployeeScheduleType(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID);
     }
 
-    public EmployeeData employeeData() {
-        return new EmployeeData(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
+    public EmployeeInfo employeeInfo() {
+        return new EmployeeInfo(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
     }
 
-    public RbReadyType rbReadyType() {
-        return new RbReadyType(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_READY_TYPE_ID);
+    public Position position() {
+        return new Position(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID);
     }
 
     public RbStateType rbStateType() {

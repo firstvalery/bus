@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverScheduleSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotRecord> {
 
-    private static final long serialVersionUID = -60491454;
+    private static final long serialVersionUID = 1251700419;
 
     /**
      * The reference instance of <code>public.driver_schedule_snapshot</code>
@@ -71,6 +71,11 @@ public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotReco
      * The column <code>public.driver_schedule_snapshot.shift_type_id</code>.
      */
     public final TableField<DriverScheduleSnapshotRecord, Short> SHIFT_TYPE_ID = createField("shift_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
+     * The column <code>public.driver_schedule_snapshot.ready_type_id</code>.
+     */
+    public final TableField<DriverScheduleSnapshotRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_schedule_snapshot.created_at</code>.
@@ -157,7 +162,7 @@ public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotReco
      */
     @Override
     public List<ForeignKey<DriverScheduleSnapshotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverScheduleSnapshotRecord, ?>>asList(Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+        return Arrays.<ForeignKey<DriverScheduleSnapshotRecord, ?>>asList(Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     public Driver driver() {
@@ -166,6 +171,10 @@ public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotReco
 
     public ShiftType shiftType() {
         return new ShiftType(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+    }
+
+    public RbReadyType rbReadyType() {
+        return new RbReadyType(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     /**

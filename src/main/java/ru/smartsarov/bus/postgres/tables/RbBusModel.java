@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbBusModelRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbBusModel extends TableImpl<RbBusModelRecord> {
 
-    private static final long serialVersionUID = -148059700;
+    private static final long serialVersionUID = -1811171672;
 
     /**
      * The reference instance of <code>public.rb_bus_model</code>
@@ -59,7 +59,7 @@ public class RbBusModel extends TableImpl<RbBusModelRecord> {
     /**
      * The column <code>public.rb_bus_model.id</code>.
      */
-    public final TableField<RbBusModelRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_bus_model_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RbBusModelRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_bus_model_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_bus_model.name</code>.
@@ -124,7 +124,7 @@ public class RbBusModel extends TableImpl<RbBusModelRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbBusModelRecord, Integer> getIdentity() {
+    public Identity<RbBusModelRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_BUS_MODEL;
     }
 

@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Conductor extends TableImpl<ConductorRecord> {
 
-    private static final long serialVersionUID = 1101274732;
+    private static final long serialVersionUID = -1148264497;
 
     /**
      * The reference instance of <code>public.conductor</code>
@@ -67,14 +67,14 @@ public class Conductor extends TableImpl<ConductorRecord> {
     public final TableField<ConductorRecord, Short> EMPLOYEE_DATA_ID = createField("employee_data_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
+     * The column <code>public.conductor.position_id</code>.
+     */
+    public final TableField<ConductorRecord, Short> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
      * The column <code>public.conductor.schedule_type</code>.
      */
     public final TableField<ConductorRecord, Short> SCHEDULE_TYPE = createField("schedule_type", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
-    /**
-     * The column <code>public.conductor.ready_type_id</code>.
-     */
-    public final TableField<ConductorRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.conductor.state_id</code>.
@@ -164,19 +164,19 @@ public class Conductor extends TableImpl<ConductorRecord> {
      */
     @Override
     public List<ForeignKey<ConductorRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ConductorRecord, ?>>asList(Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_READY_TYPE_ID_FK, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK);
+        return Arrays.<ForeignKey<ConductorRecord, ?>>asList(Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK);
     }
 
     public RbEmployeeScheduleType rbEmployeeScheduleType() {
         return new RbEmployeeScheduleType(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK);
     }
 
-    public EmployeeData employeeData() {
-        return new EmployeeData(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID);
+    public EmployeeInfo employeeInfo() {
+        return new EmployeeInfo(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID);
     }
 
-    public RbReadyType rbReadyType() {
-        return new RbReadyType(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_READY_TYPE_ID_FK);
+    public Position position() {
+        return new Position(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID);
     }
 
     public RbStateType rbStateType() {

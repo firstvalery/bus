@@ -28,7 +28,7 @@ import ru.smartsarov.bus.postgres.tables.Bus;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9<Integer, Short, String, String, Short, Integer, Integer, Short, Short> {
 
-    private static final long serialVersionUID = 384876264;
+    private static final long serialVersionUID = 631563115;
 
     /**
      * Setter for <code>public.bus.id</code>.
@@ -45,44 +45,44 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
     }
 
     /**
-     * Setter for <code>public.bus.bus_id</code>.
+     * Setter for <code>public.bus.bus_info_id</code>.
      */
-    public void setBusId(Short value) {
+    public void setBusInfoId(Short value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.bus.bus_id</code>.
+     * Getter for <code>public.bus.bus_info_id</code>.
      */
-    public Short getBusId() {
+    public Short getBusInfoId() {
         return (Short) get(1);
     }
 
     /**
-     * Setter for <code>public.bus.garage_number_id</code>.
+     * Setter for <code>public.bus.garage_number</code>.
      */
-    public void setGarageNumberId(String value) {
+    public void setGarageNumber(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>public.bus.garage_number_id</code>.
+     * Getter for <code>public.bus.garage_number</code>.
      */
-    public String getGarageNumberId() {
+    public String getGarageNumber() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>public.bus.state_number_id</code>.
+     * Setter for <code>public.bus.state_number</code>.
      */
-    public void setStateNumberId(String value) {
+    public void setStateNumber(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>public.bus.state_number_id</code>.
+     * Getter for <code>public.bus.state_number</code>.
      */
-    public String getStateNumberId() {
+    public String getStateNumber() {
         return (String) get(3);
     }
 
@@ -201,7 +201,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public Field<Short> field2() {
-        return Bus.BUS.BUS_ID;
+        return Bus.BUS.BUS_INFO_ID;
     }
 
     /**
@@ -209,7 +209,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public Field<String> field3() {
-        return Bus.BUS.GARAGE_NUMBER_ID;
+        return Bus.BUS.GARAGE_NUMBER;
     }
 
     /**
@@ -217,7 +217,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public Field<String> field4() {
-        return Bus.BUS.STATE_NUMBER_ID;
+        return Bus.BUS.STATE_NUMBER;
     }
 
     /**
@@ -273,7 +273,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public Short component2() {
-        return getBusId();
+        return getBusInfoId();
     }
 
     /**
@@ -281,7 +281,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public String component3() {
-        return getGarageNumberId();
+        return getGarageNumber();
     }
 
     /**
@@ -289,7 +289,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public String component4() {
-        return getStateNumberId();
+        return getStateNumber();
     }
 
     /**
@@ -345,7 +345,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public Short value2() {
-        return getBusId();
+        return getBusInfoId();
     }
 
     /**
@@ -353,7 +353,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public String value3() {
-        return getGarageNumberId();
+        return getGarageNumber();
     }
 
     /**
@@ -361,7 +361,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public String value4() {
-        return getStateNumberId();
+        return getStateNumber();
     }
 
     /**
@@ -418,7 +418,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public BusRecord value2(Short value) {
-        setBusId(value);
+        setBusInfoId(value);
         return this;
     }
 
@@ -427,7 +427,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public BusRecord value3(String value) {
-        setGarageNumberId(value);
+        setGarageNumber(value);
         return this;
     }
 
@@ -436,7 +436,7 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
      */
     @Override
     public BusRecord value4(String value) {
-        setStateNumberId(value);
+        setStateNumber(value);
         return this;
     }
 
@@ -516,13 +516,13 @@ public class BusRecord extends UpdatableRecordImpl<BusRecord> implements Record9
     /**
      * Create a detached, initialised BusRecord
      */
-    public BusRecord(Integer id, Short busId, String garageNumberId, String stateNumberId, Short fuelCodeId, Integer odometerMileage, Integer trackerMileage, Short conditionId, Short removed) {
+    public BusRecord(Integer id, Short busInfoId, String garageNumber, String stateNumber, Short fuelCodeId, Integer odometerMileage, Integer trackerMileage, Short conditionId, Short removed) {
         super(Bus.BUS);
 
         set(0, id);
-        set(1, busId);
-        set(2, garageNumberId);
-        set(3, stateNumberId);
+        set(1, busInfoId);
+        set(2, garageNumber);
+        set(3, stateNumber);
         set(4, fuelCodeId);
         set(5, odometerMileage);
         set(6, trackerMileage);

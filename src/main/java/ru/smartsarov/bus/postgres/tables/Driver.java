@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Driver extends TableImpl<DriverRecord> {
 
-    private static final long serialVersionUID = -185986915;
+    private static final long serialVersionUID = -1339197480;
 
     /**
      * The reference instance of <code>public.driver</code>
@@ -67,6 +67,11 @@ public class Driver extends TableImpl<DriverRecord> {
     public final TableField<DriverRecord, Short> EMPLOYEE_DATA_ID = createField("employee_data_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
+     * The column <code>public.driver.position_id</code>.
+     */
+    public final TableField<DriverRecord, Short> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
      * The column <code>public.driver.bus_id</code>.
      */
     public final TableField<DriverRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
@@ -85,11 +90,6 @@ public class Driver extends TableImpl<DriverRecord> {
      * The column <code>public.driver.schedule_type</code>.
      */
     public final TableField<DriverRecord, Short> SCHEDULE_TYPE = createField("schedule_type", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
-    /**
-     * The column <code>public.driver.ready_type_id</code>.
-     */
-    public final TableField<DriverRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.driver.state_id</code>.
@@ -184,11 +184,15 @@ public class Driver extends TableImpl<DriverRecord> {
      */
     @Override
     public List<ForeignKey<DriverRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverRecord, ?>>asList(Keys.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID, Keys.DRIVER__FK_DRIVER_TBL_BUS_ID, Keys.DRIVER__FK_DRIVER_TBL_GROUP_ID, Keys.DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE, Keys.DRIVER__FK_DRIVER_TBL_READY_TYPE_ID, Keys.DRIVER__FK_DRIVER_TBL_STATE_ID);
+        return Arrays.<ForeignKey<DriverRecord, ?>>asList(Keys.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID, Keys.DRIVER__FK_DRIVER_TBL_POSITION_ID, Keys.DRIVER__FK_DRIVER_TBL_BUS_ID, Keys.DRIVER__FK_DRIVER_TBL_GROUP_ID, Keys.DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE, Keys.DRIVER__FK_DRIVER_TBL_STATE_ID);
     }
 
-    public EmployeeData employeeData() {
-        return new EmployeeData(this, Keys.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID);
+    public EmployeeInfo employeeInfo() {
+        return new EmployeeInfo(this, Keys.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID);
+    }
+
+    public Position position() {
+        return new Position(this, Keys.DRIVER__FK_DRIVER_TBL_POSITION_ID);
     }
 
     public Bus bus() {
@@ -201,10 +205,6 @@ public class Driver extends TableImpl<DriverRecord> {
 
     public RbEmployeeScheduleType rbEmployeeScheduleType() {
         return new RbEmployeeScheduleType(this, Keys.DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE);
-    }
-
-    public RbReadyType rbReadyType() {
-        return new RbReadyType(this, Keys.DRIVER__FK_DRIVER_TBL_READY_TYPE_ID);
     }
 
     public RbStateType rbStateType() {

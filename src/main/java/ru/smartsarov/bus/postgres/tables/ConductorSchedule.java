@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
 
-    private static final long serialVersionUID = -2078216580;
+    private static final long serialVersionUID = 1163499396;
 
     /**
      * The reference instance of <code>public.conductor_schedule</code>
@@ -70,6 +70,11 @@ public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
      * The column <code>public.conductor_schedule.shift_type_id</code>.
      */
     public final TableField<ConductorScheduleRecord, Short> SHIFT_TYPE_ID = createField("shift_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
+     * The column <code>public.conductor_schedule.ready_type_id</code>.
+     */
+    public final TableField<ConductorScheduleRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.conductor_schedule.removed</code>.
@@ -146,7 +151,7 @@ public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
      */
     @Override
     public List<ForeignKey<ConductorScheduleRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ConductorScheduleRecord, ?>>asList(Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_CONDUCTOR_ID, Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID);
+        return Arrays.<ForeignKey<ConductorScheduleRecord, ?>>asList(Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_CONDUCTOR_ID, Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID, Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_READY_TYPE_ID);
     }
 
     public Conductor conductor() {
@@ -155,6 +160,10 @@ public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
 
     public ShiftType shiftType() {
         return new ShiftType(this, Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID);
+    }
+
+    public RbReadyType rbReadyType() {
+        return new RbReadyType(this, Keys.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_READY_TYPE_ID);
     }
 
     /**

@@ -25,12 +25,12 @@ public class DriverData {
 	 @SerializedName("groupId")
 	    @Expose
 	    private Integer groupId;
+	 @SerializedName("brigadeId")
+	    @Expose
+	    private Integer brigadeId;
 	 @SerializedName("briadireFlag")
 	    @Expose
 	    private boolean briadireFlag;
-	 @SerializedName("readyType")
-	    @Expose
-	    private String readyType;
 	 @SerializedName("stateType")
 	    @Expose
 	    private String stateType;
@@ -38,7 +38,7 @@ public class DriverData {
 	    @Expose
 	    private boolean ticketFlag;
 	public DriverData(Integer id, Integer personalNumber, String firstName, String middleName, String lastName,
-			String busGarageNumber, Integer groupId, boolean briadireFlag, String readyType, String stateType,
+			String busGarageNumber, Integer groupId, Integer brigadeId, boolean briadireFlag, String stateType,
 			boolean ticketFlag) {
 		this.id = id;
 		this.personalNumber = personalNumber;
@@ -47,8 +47,8 @@ public class DriverData {
 		this.lastName = lastName;
 		this.busGarageNumber = busGarageNumber;
 		this.groupId = groupId;
+		this.brigadeId = brigadeId;
 		this.briadireFlag = briadireFlag;
-		this.readyType = readyType;
 		this.stateType = stateType;
 		this.ticketFlag = ticketFlag;
 	}
@@ -60,8 +60,8 @@ public class DriverData {
 		this.lastName = "";
 		this.busGarageNumber = "";
 		this.groupId = 0;
+		this.brigadeId = 0;
 		this.briadireFlag = false;
-		this.readyType = "";
 		this.stateType = "";
 		this.ticketFlag = false;
 	}
@@ -113,12 +113,6 @@ public class DriverData {
 	public void setBriadireFlag(boolean briadireFlag) {
 		this.briadireFlag = briadireFlag;
 	}
-	public String getReadyType() {
-		return readyType;
-	}
-	public void setReadyType(String readyType) {
-		this.readyType = readyType;
-	}
 	public String getStateType() {
 		return stateType;
 	}
@@ -130,6 +124,12 @@ public class DriverData {
 	}
 	public void setTicketFlag(boolean ticketFlag) {
 		this.ticketFlag = ticketFlag;
+	}
+	public Integer getBrigadeId() {
+		return brigadeId;
+	}
+	public void setBrigadeId(Integer brigadeId) {
+		this.brigadeId = brigadeId;
 	}
 	
 	 

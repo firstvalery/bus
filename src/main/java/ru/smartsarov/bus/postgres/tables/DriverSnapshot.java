@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
 
-    private static final long serialVersionUID = -1494653452;
+    private static final long serialVersionUID = 724331267;
 
     /**
      * The reference instance of <code>public.driver_snapshot</code>
@@ -68,6 +68,11 @@ public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
     public final TableField<DriverSnapshotRecord, Short> EMPLOYEE_DATA_ID = createField("employee_data_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
+     * The column <code>public.driver_snapshot.position_id</code>.
+     */
+    public final TableField<DriverSnapshotRecord, Short> POSITION_ID = createField("position_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
      * The column <code>public.driver_snapshot.bus_id</code>.
      */
     public final TableField<DriverSnapshotRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
@@ -86,11 +91,6 @@ public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
      * The column <code>public.driver_snapshot.schedule_type</code>.
      */
     public final TableField<DriverSnapshotRecord, Short> SCHEDULE_TYPE = createField("schedule_type", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
-
-    /**
-     * The column <code>public.driver_snapshot.ready_type_id</code>.
-     */
-    public final TableField<DriverSnapshotRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_snapshot.state_id</code>.
@@ -195,11 +195,15 @@ public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
      */
     @Override
     public List<ForeignKey<DriverSnapshotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverSnapshotRecord, ?>>asList(Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_BUS_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_GROUP_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE, Keys.DRIVER_SNAPSHOT__FK_DRIVER__SNAPSHOT_TBL_READY_TYPE_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_STATE_ID);
+        return Arrays.<ForeignKey<DriverSnapshotRecord, ?>>asList(Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_BUS_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_GROUP_ID, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_STATE_ID);
     }
 
-    public EmployeeData employeeData() {
-        return new EmployeeData(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
+    public EmployeeInfo employeeInfo() {
+        return new EmployeeInfo(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
+    }
+
+    public Position position() {
+        return new Position(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID);
     }
 
     public Bus bus() {
@@ -212,10 +216,6 @@ public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
 
     public RbEmployeeScheduleType rbEmployeeScheduleType() {
         return new RbEmployeeScheduleType(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE);
-    }
-
-    public RbReadyType rbReadyType() {
-        return new RbReadyType(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER__SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     public RbStateType rbStateType() {

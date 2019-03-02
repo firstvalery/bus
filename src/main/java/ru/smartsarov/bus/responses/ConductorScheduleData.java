@@ -10,6 +10,9 @@ public class ConductorScheduleData {
 	 @SerializedName("shiftType")
 	    @Expose
 	    private String shiftType;
+	 @SerializedName("readyType")
+	    @Expose
+	    private String readyType;
 	public ConductorData getConductorData() {
 		return conductorData;
 	}
@@ -22,12 +25,21 @@ public class ConductorScheduleData {
 	public void setShiftType(String shiftType) {
 		this.shiftType = shiftType;
 	}
-	public ConductorScheduleData(ConductorData conductorData, String shiftType) {
+	public String getReadyType() {
+		return readyType;
+	}
+	public void setReadyType(String readyType) {
+		this.readyType = readyType;
+	}
+	public ConductorScheduleData(ConductorData conductorData, String shiftType, String readyType) {
 		this.conductorData = conductorData;
 		this.shiftType = shiftType;
-	} 
+		this.readyType = readyType;
+	}
 	public ConductorScheduleData() {
 		this.conductorData = new ConductorData();
 		this.shiftType = "";
-	}  
+		this.readyType = "";
+	}
+	  
 }

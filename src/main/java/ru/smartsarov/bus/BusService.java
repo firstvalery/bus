@@ -16,6 +16,7 @@ import ru.smartsarov.bus.responses.*;
 
 
 import java.io.InputStream;
+import java.sql.SQLException;
 @Path("/")
 @Api()
 @Produces(MediaType.APPLICATION_JSON)
@@ -169,7 +170,7 @@ public class BusService
 	
 			
 	@GET
-	@ApiOperation(value = "Получить расписание водителя",
+	@ApiOperation(value = "Получить расписание водителей",
 	    notes = "Выводится JSON массивом в виде списка дат и типа смены. На конкретный промежуток между двумя датами. в параметре driverIdList JSON список id водителей. При пустом driverIdList выводится расписание всех водителей",
 	    response = DriverScheduleDataOnDate.class,
 	    responseContainer = "List")
@@ -177,12 +178,13 @@ public class BusService
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
 	@Path("/driver/schedule/get")
-	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getDriverShiftType(
-    		@ApiParam(value = "Идентификаторы водителей", required = true)@QueryParam("driverIdList") String driverId,
-    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("dateMin") String dateMin,
-    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("dateMax") String dateMax)
+    		@ApiParam(value = "Список идентификаторов водителей", required = true)@QueryParam("driver_id_ist") String driverId,
+    		@ApiParam(value = "Номер бригады", required = true)@QueryParam("brigade_id") int brigadeId,
+    		@ApiParam(value = "Гаражный номер автобуса", required = true)@QueryParam("bus_garage_number") String busGarageNumber,
+    		@ApiParam(value = "Дата минимальная", required = true)@QueryParam("date_min") String dateMin,
+    		@ApiParam(value = "Дата максимальная", required = true)@QueryParam("date_max") String dateMax)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
@@ -214,7 +216,7 @@ public class BusService
 	@Path("/conductor/get")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getConductor(
-    		@ApiParam(value = "Идентификатор кондуктора", required = true)@QueryParam("conductor_id") int driverId)
+    		@ApiParam(value = "Идентификатор кондуктора", required = true)@QueryParam("conductor_id") int conductorId)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
@@ -222,7 +224,7 @@ public class BusService
 	
 	
 	@GET
-	@ApiOperation(value = "Получить расписание кондуктора",
+	@ApiOperation(value = "Получить расписание кондукторов",
 	    notes = "Выводится JSON массивом в виде списка дат и типа смены. На конкретный промежуток между двумя датами. в параметре conductorIdList JSON список id кондукторов. При пустом conductorIdList выводится расписание всех кондукторов",
 	    response = ConductorScheduleDataOnDate.class,
 	    responseContainer = "List")
@@ -233,9 +235,9 @@ public class BusService
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getConductorShiftType(
-    		@ApiParam(value = "Идентификаторы кондуктора", required = false)@QueryParam("conductorIdList") String conductorIdList,
-    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("dateMin") String date_min,
-    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("dateMax") String date_max)
+    		@ApiParam(value = "список идентификаторов кондукторов", required = false)@QueryParam("conductor_id_list") String conductorIdList,
+    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("date_min") String date_min,
+    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("date_max") String date_max)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
@@ -252,8 +254,7 @@ public class BusService
 	@Path("/driver/get_actual_list")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getAvailableDrivers(
-    		@ApiParam(value = "Идентификатор водителя", required = true)@QueryParam("driver_id") int driverId,
-    		@ApiParam(value = "Дата", required = true)@QueryParam("date") int date)
+    		@ApiParam(value = "Дата", required = true)@QueryParam("date") String date)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
@@ -270,8 +271,7 @@ public class BusService
 	@Path("/conductor/get_actual_list")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getAvailableConductors(
-    		@ApiParam(value = "Идентификатор кондуктора", required = true)@QueryParam("conductor_id") int driverId,
-    		@ApiParam(value = "Дата", required = true)@QueryParam("date") int date)
+    		@ApiParam(value = "Дата", required = true)@QueryParam("date") String date)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
@@ -307,73 +307,91 @@ public class BusService
     {
 		return Response.status(Response.Status.OK).entity(fixConductorParams).build();
     }
-	
+		
 	@GET
-	@ApiOperation(value = "Получить общую разнарядку",
+	@ApiOperation(value = "Получить список автобусов",
 	    notes = "JSON ",
+	    response = BusData.class,
 	    responseContainer = "List")
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/schedule/get")
+	@Path("/bus/get_list")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Response getCommonSchedule(
-    		@ApiParam(value = "JSON", required = true)@QueryParam("date") String date)
+    public Response getBusList(@ApiParam(value = "Идентификатор автобуса", required = false)@QueryParam("bus_id") Integer busId)
+    {
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getBusList(busId)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}	
+    }
+	
+	
+	@GET
+	@ApiOperation(value = "Получить данные об автобусе",
+	    notes = "JSON ",
+	    response = BusData.class)
+	@ApiResponses(value = { 
+		      @ApiResponse(code = 400, message = "Bad Request"),
+		      @ApiResponse(code = 404, message = "Not Found") })
+	@Path("/bus/get")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Response getBus(@ApiParam(value = "Идентификатор автобуса", required = true)@QueryParam("bus_id") int busId)
+    {
+		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
+    	return Response.status(Response.Status.OK).entity(is).build();
+    }
+	
+	
+	@GET
+	@ApiOperation(value = "Получить список доступных автобусов на дату",
+	    notes = "JSON ",
+	    response = BusData.class,
+	    responseContainer = "List")
+	@ApiResponses(value = { 
+		      @ApiResponse(code = 400, message = "Bad Request"),
+		      @ApiResponse(code = 404, message = "Not Found") })
+	@Path("/bus/get_actual_list")
+	@Produces(MediaType.APPLICATION_JSON)
+    public Response getActualBusList(@ApiParam(value = "Дата", required = true)@QueryParam("date") String date)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
     }
 	
 	@GET
-	@ApiOperation(value = "Получить разнарядку для водителя",
-	    notes = "JSON ",
+	@ApiOperation(value = "Получить расписание технической доступности автобусов",
+	    notes = "Выводится JSON массивом в виде списка дат и типа состояния автобуса. На конкретный промежуток между двумя датами. в параметре BusGarageNumberList JSON список гаражных номеров автобусов. При пустом BusGarageNumberList выводится расписание всех автобусов",
+	    response = BusTechAvailabilityDataOnDate.class,
 	    responseContainer = "List")
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/schedule/get/for_driver")
+	@Path("/bus/techAvailability/get")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Response getDriverSchedule(
-    		@ApiParam(value = "JSON", required = true)@QueryParam("date") String date,
-    		@ApiParam(value = "идентификатор водителя", required = true)@QueryParam("driver_id") String driverId)
-    {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
-    }
-	
-	
-	@GET
-	@ApiOperation(value = "Получить разнарядку для кондуктора",
-	    notes = "JSON ",
-	    responseContainer = "List")
-	@ApiResponses(value = { 
-		      @ApiResponse(code = 400, message = "Bad Request"),
-		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/schedule/get/for_conductor")
-	@Produces(MediaType.APPLICATION_JSON)
-    public Response getConductorSchedule(
-    		@ApiParam(value = "JSON", required = true)@QueryParam("date") String date,
-    		@ApiParam(value = "идентификатор кондуктора", required = true)@QueryParam("conductor_id") String conductorId)
+    public Response getBusTechAvailability(
+    		@ApiParam(value = "список id автобусов", required = false)@QueryParam("bus_id_list") String BusIdList,
+    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("date_min") String date_min,
+    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("date_max") String date_max)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
     }
 	
 	@GET
-	@ApiOperation(value = "Получить разнарядку для автобуса",
-	    notes = "JSON ",
-	    responseContainer = "List")
+	@ApiOperation(value = "Получить разнарядку",
+	    notes = "Выводится JSON массивом.",
+	    response = OrderData.class)
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/schedule/get/for_bus")
+	@Path("/order/get")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Response getBusSchedule(
-    		@ApiParam(value = "JSON", required = true)@QueryParam("date") String date,
-    		@ApiParam(value = "идентификатор автобуса", required = true)@QueryParam("bus_id") String conductorId)
+    public Response getOrder(
+    		@ApiParam(value = "дата", required = true)@QueryParam("date") String date_max)
     {
 		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
     	return Response.status(Response.Status.OK).entity(is).build();
     }
-	
 }

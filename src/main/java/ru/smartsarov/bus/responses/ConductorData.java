@@ -19,9 +19,6 @@ public class ConductorData {
 	 @SerializedName("lastName")
 	    @Expose
 	    private String lastName;
-	 @SerializedName("readyType")
-	    @Expose
-	    private String readyType;
 	 @SerializedName("stateType")
 	    @Expose
 	    private String stateType;
@@ -55,12 +52,6 @@ public class ConductorData {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getReadyType() {
-		return readyType;
-	}
-	public void setReadyType(String readyType) {
-		this.readyType = readyType;
-	}
 	public String getStateType() {
 		return stateType;
 	}
@@ -68,13 +59,12 @@ public class ConductorData {
 		this.stateType = stateType;
 	}
 	public ConductorData(Integer id, Integer personalNumber, String firstName, String middleName, String lastName,
-			String readyType, String stateType) {
+			 String stateType) {
 		this.id = id;
 		this.personalNumber = personalNumber;
 		this.firstName = firstName;
 		this.middleName = middleName;
 		this.lastName = lastName;
-		this.readyType = readyType;
 		this.stateType = stateType;
 	}
 	public ConductorData() {
@@ -83,7 +73,6 @@ public class ConductorData {
 		this.firstName = "";
 		this.middleName = "";
 		this.lastName = "";
-		this.readyType = "";
 		this.stateType = "";
 	}
 	 

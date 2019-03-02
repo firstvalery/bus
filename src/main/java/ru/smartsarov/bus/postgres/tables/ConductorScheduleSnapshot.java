@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleSnapshotRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapshotRecord> {
 
-    private static final long serialVersionUID = -196157243;
+    private static final long serialVersionUID = -1520877898;
 
     /**
      * The reference instance of <code>public.conductor_schedule_snapshot</code>
@@ -71,6 +71,11 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
      * The column <code>public.conductor_schedule_snapshot.shift_type_id</code>.
      */
     public final TableField<ConductorScheduleSnapshotRecord, Short> SHIFT_TYPE_ID = createField("shift_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+
+    /**
+     * The column <code>public.conductor_schedule_snapshot.ready_type_id</code>.
+     */
+    public final TableField<ConductorScheduleSnapshotRecord, Short> READY_TYPE_ID = createField("ready_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.conductor_schedule_snapshot.created_at</code>.
@@ -157,7 +162,7 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
      */
     @Override
     public List<ForeignKey<ConductorScheduleSnapshotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ConductorScheduleSnapshotRecord, ?>>asList(Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_CONDUCTOR_ID, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+        return Arrays.<ForeignKey<ConductorScheduleSnapshotRecord, ?>>asList(Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_CONDUCTOR_ID, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     public Conductor conductor() {
@@ -166,6 +171,10 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
 
     public ShiftType shiftType() {
         return new ShiftType(this, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+    }
+
+    public RbReadyType rbReadyType() {
+        return new RbReadyType(this, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     /**

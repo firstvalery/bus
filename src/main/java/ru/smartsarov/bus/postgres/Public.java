@@ -16,8 +16,8 @@ import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
 
 import ru.smartsarov.bus.postgres.tables.Bus;
-import ru.smartsarov.bus.postgres.tables.BusCondition;
-import ru.smartsarov.bus.postgres.tables.BusData;
+import ru.smartsarov.bus.postgres.tables.BusInfo;
+import ru.smartsarov.bus.postgres.tables.BusSnapshot;
 import ru.smartsarov.bus.postgres.tables.BusStopList;
 import ru.smartsarov.bus.postgres.tables.BusStops;
 import ru.smartsarov.bus.postgres.tables.Conductor;
@@ -32,11 +32,13 @@ import ru.smartsarov.bus.postgres.tables.DriverGroup;
 import ru.smartsarov.bus.postgres.tables.DriverSchedule;
 import ru.smartsarov.bus.postgres.tables.DriverScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.DriverSnapshot;
-import ru.smartsarov.bus.postgres.tables.EmployeeData;
+import ru.smartsarov.bus.postgres.tables.EmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.FuelCode;
 import ru.smartsarov.bus.postgres.tables.Intsident;
+import ru.smartsarov.bus.postgres.tables.Position;
 import ru.smartsarov.bus.postgres.tables.Race;
 import ru.smartsarov.bus.postgres.tables.RaceSnaphot;
+import ru.smartsarov.bus.postgres.tables.RbBusConditionType;
 import ru.smartsarov.bus.postgres.tables.RbBusMake;
 import ru.smartsarov.bus.postgres.tables.RbBusModel;
 import ru.smartsarov.bus.postgres.tables.RbBusStop;
@@ -57,6 +59,8 @@ import ru.smartsarov.bus.postgres.tables.ShiftFixedSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftSchedule;
 import ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftType;
+import ru.smartsarov.bus.postgres.tables.TechAvailability;
+import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
 import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
 
@@ -74,7 +78,7 @@ import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = -829023030;
+    private static final long serialVersionUID = 711696270;
 
     /**
      * The reference instance of <code>public</code>
@@ -87,14 +91,14 @@ public class Public extends SchemaImpl {
     public final Bus BUS = ru.smartsarov.bus.postgres.tables.Bus.BUS;
 
     /**
-     * The table <code>public.bus_condition</code>.
+     * The table <code>public.bus_info</code>.
      */
-    public final BusCondition BUS_CONDITION = ru.smartsarov.bus.postgres.tables.BusCondition.BUS_CONDITION;
+    public final BusInfo BUS_INFO = ru.smartsarov.bus.postgres.tables.BusInfo.BUS_INFO;
 
     /**
-     * The table <code>public.bus_data</code>.
+     * The table <code>public.bus_snapshot</code>.
      */
-    public final BusData BUS_DATA = ru.smartsarov.bus.postgres.tables.BusData.BUS_DATA;
+    public final BusSnapshot BUS_SNAPSHOT = ru.smartsarov.bus.postgres.tables.BusSnapshot.BUS_SNAPSHOT;
 
     /**
      * The table <code>public.bus_stop_list</code>.
@@ -167,9 +171,9 @@ public class Public extends SchemaImpl {
     public final DriverSnapshot DRIVER_SNAPSHOT = ru.smartsarov.bus.postgres.tables.DriverSnapshot.DRIVER_SNAPSHOT;
 
     /**
-     * The table <code>public.employee_data</code>.
+     * The table <code>public.employee_info</code>.
      */
-    public final EmployeeData EMPLOYEE_DATA = ru.smartsarov.bus.postgres.tables.EmployeeData.EMPLOYEE_DATA;
+    public final EmployeeInfo EMPLOYEE_INFO = ru.smartsarov.bus.postgres.tables.EmployeeInfo.EMPLOYEE_INFO;
 
     /**
      * The table <code>public.fuel_code</code>.
@@ -182,6 +186,11 @@ public class Public extends SchemaImpl {
     public final Intsident INTSIDENT = ru.smartsarov.bus.postgres.tables.Intsident.INTSIDENT;
 
     /**
+     * The table <code>public.position</code>.
+     */
+    public final Position POSITION = ru.smartsarov.bus.postgres.tables.Position.POSITION;
+
+    /**
      * The table <code>public.race</code>.
      */
     public final Race RACE = ru.smartsarov.bus.postgres.tables.Race.RACE;
@@ -190,6 +199,11 @@ public class Public extends SchemaImpl {
      * The table <code>public.race_snaphot</code>.
      */
     public final RaceSnaphot RACE_SNAPHOT = ru.smartsarov.bus.postgres.tables.RaceSnaphot.RACE_SNAPHOT;
+
+    /**
+     * The table <code>public.rb_bus_condition_type</code>.
+     */
+    public final RbBusConditionType RB_BUS_CONDITION_TYPE = ru.smartsarov.bus.postgres.tables.RbBusConditionType.RB_BUS_CONDITION_TYPE;
 
     /**
      * The table <code>public.rb_bus_make</code>.
@@ -293,6 +307,16 @@ public class Public extends SchemaImpl {
     public final ShiftType SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.ShiftType.SHIFT_TYPE;
 
     /**
+     * The table <code>public.tech_availability</code>.
+     */
+    public final TechAvailability TECH_AVAILABILITY = ru.smartsarov.bus.postgres.tables.TechAvailability.TECH_AVAILABILITY;
+
+    /**
+     * The table <code>public.tech_availability_snapshot</code>.
+     */
+    public final TechAvailabilitySnapshot TECH_AVAILABILITY_SNAPSHOT = ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT;
+
+    /**
      * The table <code>public.track</code>.
      */
     public final Track TRACK = ru.smartsarov.bus.postgres.tables.Track.TRACK;
@@ -327,9 +351,9 @@ public class Public extends SchemaImpl {
 
     private final List<Sequence<?>> getSequences0() {
         return Arrays.<Sequence<?>>asList(
-            Sequences.BUS_CONDITION_ID_SEQ,
-            Sequences.BUS_DATA_ID_SEQ,
             Sequences.BUS_ID_SEQ,
+            Sequences.BUS_INFO_ID_SEQ,
+            Sequences.BUS_SNAPSHOT_ID_SEQ,
             Sequences.BUS_STOP_LIST_ID_SEQ,
             Sequences.BUS_STOPS_ID_SEQ,
             Sequences.CONDUCTOR_ID_SEQ,
@@ -340,12 +364,14 @@ public class Public extends SchemaImpl {
             Sequences.DRIVER_GROUP_ID_SEQ,
             Sequences.DRIVER_ID_SEQ,
             Sequences.DRIVER_SNAPSHOT_ID_SEQ,
-            Sequences.EMPLOYEE_DATA_ID_SEQ,
+            Sequences.EMPLOYEE_INFO_ID_SEQ,
             Sequences.FUEL_CODE_FUEL_TYPE_ID_SEQ,
             Sequences.FUEL_CODE_ID_SEQ,
             Sequences.INTSIDENT_ID_SEQ,
+            Sequences.POSITION_ID_SEQ,
             Sequences.RACE_ID_SEQ,
             Sequences.RACE_SNAPHOT_ID_SEQ,
+            Sequences.RB_BUS_CONDITION_TYPE_ID_SEQ,
             Sequences.RB_BUS_MAKE_ID_SEQ,
             Sequences.RB_BUS_MODEL_ID_SEQ,
             Sequences.RB_BUS_STOP_ID_SEQ,
@@ -374,8 +400,8 @@ public class Public extends SchemaImpl {
     private final List<Table<?>> getTables0() {
         return Arrays.<Table<?>>asList(
             Bus.BUS,
-            BusCondition.BUS_CONDITION,
-            BusData.BUS_DATA,
+            BusInfo.BUS_INFO,
+            BusSnapshot.BUS_SNAPSHOT,
             BusStopList.BUS_STOP_LIST,
             BusStops.BUS_STOPS,
             Conductor.CONDUCTOR,
@@ -390,11 +416,13 @@ public class Public extends SchemaImpl {
             DriverSchedule.DRIVER_SCHEDULE,
             DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT,
             DriverSnapshot.DRIVER_SNAPSHOT,
-            EmployeeData.EMPLOYEE_DATA,
+            EmployeeInfo.EMPLOYEE_INFO,
             FuelCode.FUEL_CODE,
             Intsident.INTSIDENT,
+            Position.POSITION,
             Race.RACE,
             RaceSnaphot.RACE_SNAPHOT,
+            RbBusConditionType.RB_BUS_CONDITION_TYPE,
             RbBusMake.RB_BUS_MAKE,
             RbBusModel.RB_BUS_MODEL,
             RbBusStop.RB_BUS_STOP,
@@ -415,6 +443,8 @@ public class Public extends SchemaImpl {
             ShiftSchedule.SHIFT_SCHEDULE,
             ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT,
             ShiftType.SHIFT_TYPE,
+            TechAvailability.TECH_AVAILABILITY,
+            TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT,
             Track.TRACK,
             TrackCoordinates.TRACK_COORDINATES);
     }
