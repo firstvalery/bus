@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.TechAvailabilityRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class TechAvailability extends TableImpl<TechAvailabilityRecord> {
 
-    private static final long serialVersionUID = -1345693373;
+    private static final long serialVersionUID = 1167404783;
 
     /**
      * The reference instance of <code>public.tech_availability</code>
@@ -59,7 +59,7 @@ public class TechAvailability extends TableImpl<TechAvailabilityRecord> {
     /**
      * The column <code>public.tech_availability.bus_id</code>.
      */
-    public final TableField<TechAvailabilityRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<TechAvailabilityRecord, Integer> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.tech_availability.date</code>.

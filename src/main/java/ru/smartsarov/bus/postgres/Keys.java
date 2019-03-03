@@ -137,10 +137,10 @@ public class Keys {
     public static final Identity<DepartureListRecord, Integer> IDENTITY_DEPARTURE_LIST = Identities0.IDENTITY_DEPARTURE_LIST;
     public static final Identity<DepartureMomentsRecord, Integer> IDENTITY_DEPARTURE_MOMENTS = Identities0.IDENTITY_DEPARTURE_MOMENTS;
     public static final Identity<DriverRecord, Integer> IDENTITY_DRIVER = Identities0.IDENTITY_DRIVER;
-    public static final Identity<DriverBrigadeRecord, Integer> IDENTITY_DRIVER_BRIGADE = Identities0.IDENTITY_DRIVER_BRIGADE;
-    public static final Identity<DriverGroupRecord, Integer> IDENTITY_DRIVER_GROUP = Identities0.IDENTITY_DRIVER_GROUP;
+    public static final Identity<DriverBrigadeRecord, Short> IDENTITY_DRIVER_BRIGADE = Identities0.IDENTITY_DRIVER_BRIGADE;
+    public static final Identity<DriverGroupRecord, Short> IDENTITY_DRIVER_GROUP = Identities0.IDENTITY_DRIVER_GROUP;
     public static final Identity<DriverSnapshotRecord, Integer> IDENTITY_DRIVER_SNAPSHOT = Identities0.IDENTITY_DRIVER_SNAPSHOT;
-    public static final Identity<EmployeeInfoRecord, Integer> IDENTITY_EMPLOYEE_INFO = Identities0.IDENTITY_EMPLOYEE_INFO;
+    public static final Identity<EmployeeInfoRecord, Short> IDENTITY_EMPLOYEE_INFO = Identities0.IDENTITY_EMPLOYEE_INFO;
     public static final Identity<FuelCodeRecord, Integer> IDENTITY_FUEL_CODE = Identities0.IDENTITY_FUEL_CODE;
     public static final Identity<IntsidentRecord, Integer> IDENTITY_INTSIDENT = Identities0.IDENTITY_INTSIDENT;
     public static final Identity<PositionRecord, Integer> IDENTITY_POSITION = Identities0.IDENTITY_POSITION;
@@ -154,7 +154,7 @@ public class Keys {
     public static final Identity<RbEmployeeTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_TYPE = Identities0.IDENTITY_RB_EMPLOYEE_TYPE;
     public static final Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Identities0.IDENTITY_RB_FUEL_TYPE;
     public static final Identity<RbReadyTypeRecord, Integer> IDENTITY_RB_READY_TYPE = Identities0.IDENTITY_RB_READY_TYPE;
-    public static final Identity<RbStateTypeRecord, Integer> IDENTITY_RB_STATE_TYPE = Identities0.IDENTITY_RB_STATE_TYPE;
+    public static final Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Identities0.IDENTITY_RB_STATE_TYPE;
     public static final Identity<RouteRecord, Integer> IDENTITY_ROUTE = Identities0.IDENTITY_ROUTE;
     public static final Identity<ShiftDepartureListRecord, Integer> IDENTITY_SHIFT_DEPARTURE_LIST = Identities0.IDENTITY_SHIFT_DEPARTURE_LIST;
     public static final Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Identities0.IDENTITY_SHIFT_DEPARTURE_MOMENTS;
@@ -319,10 +319,10 @@ public class Keys {
         public static Identity<DepartureListRecord, Integer> IDENTITY_DEPARTURE_LIST = Internal.createIdentity(DepartureList.DEPARTURE_LIST, DepartureList.DEPARTURE_LIST.ID);
         public static Identity<DepartureMomentsRecord, Integer> IDENTITY_DEPARTURE_MOMENTS = Internal.createIdentity(DepartureMoments.DEPARTURE_MOMENTS, DepartureMoments.DEPARTURE_MOMENTS.ID);
         public static Identity<DriverRecord, Integer> IDENTITY_DRIVER = Internal.createIdentity(Driver.DRIVER, Driver.DRIVER.ID);
-        public static Identity<DriverBrigadeRecord, Integer> IDENTITY_DRIVER_BRIGADE = Internal.createIdentity(DriverBrigade.DRIVER_BRIGADE, DriverBrigade.DRIVER_BRIGADE.ID);
-        public static Identity<DriverGroupRecord, Integer> IDENTITY_DRIVER_GROUP = Internal.createIdentity(DriverGroup.DRIVER_GROUP, DriverGroup.DRIVER_GROUP.ID);
+        public static Identity<DriverBrigadeRecord, Short> IDENTITY_DRIVER_BRIGADE = Internal.createIdentity(DriverBrigade.DRIVER_BRIGADE, DriverBrigade.DRIVER_BRIGADE.ID);
+        public static Identity<DriverGroupRecord, Short> IDENTITY_DRIVER_GROUP = Internal.createIdentity(DriverGroup.DRIVER_GROUP, DriverGroup.DRIVER_GROUP.ID);
         public static Identity<DriverSnapshotRecord, Integer> IDENTITY_DRIVER_SNAPSHOT = Internal.createIdentity(DriverSnapshot.DRIVER_SNAPSHOT, DriverSnapshot.DRIVER_SNAPSHOT.ID);
-        public static Identity<EmployeeInfoRecord, Integer> IDENTITY_EMPLOYEE_INFO = Internal.createIdentity(EmployeeInfo.EMPLOYEE_INFO, EmployeeInfo.EMPLOYEE_INFO.ID);
+        public static Identity<EmployeeInfoRecord, Short> IDENTITY_EMPLOYEE_INFO = Internal.createIdentity(EmployeeInfo.EMPLOYEE_INFO, EmployeeInfo.EMPLOYEE_INFO.ID);
         public static Identity<FuelCodeRecord, Integer> IDENTITY_FUEL_CODE = Internal.createIdentity(FuelCode.FUEL_CODE, FuelCode.FUEL_CODE.ID);
         public static Identity<IntsidentRecord, Integer> IDENTITY_INTSIDENT = Internal.createIdentity(Intsident.INTSIDENT, Intsident.INTSIDENT.ID);
         public static Identity<PositionRecord, Integer> IDENTITY_POSITION = Internal.createIdentity(Position.POSITION, Position.POSITION.ID);
@@ -336,7 +336,7 @@ public class Keys {
         public static Identity<RbEmployeeTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_TYPE = Internal.createIdentity(RbEmployeeType.RB_EMPLOYEE_TYPE, RbEmployeeType.RB_EMPLOYEE_TYPE.ID);
         public static Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Internal.createIdentity(RbFuelType.RB_FUEL_TYPE, RbFuelType.RB_FUEL_TYPE.ID);
         public static Identity<RbReadyTypeRecord, Integer> IDENTITY_RB_READY_TYPE = Internal.createIdentity(RbReadyType.RB_READY_TYPE, RbReadyType.RB_READY_TYPE.ID);
-        public static Identity<RbStateTypeRecord, Integer> IDENTITY_RB_STATE_TYPE = Internal.createIdentity(RbStateType.RB_STATE_TYPE, RbStateType.RB_STATE_TYPE.ID);
+        public static Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Internal.createIdentity(RbStateType.RB_STATE_TYPE, RbStateType.RB_STATE_TYPE.ID);
         public static Identity<RouteRecord, Integer> IDENTITY_ROUTE = Internal.createIdentity(Route.ROUTE, Route.ROUTE.ID);
         public static Identity<ShiftDepartureListRecord, Integer> IDENTITY_SHIFT_DEPARTURE_LIST = Internal.createIdentity(ShiftDepartureList.SHIFT_DEPARTURE_LIST, ShiftDepartureList.SHIFT_DEPARTURE_LIST.ID);
         public static Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Internal.createIdentity(ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS, ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS.ID);
@@ -406,7 +406,7 @@ public class Keys {
         public static final ForeignKey<BusRecord, RbBusConditionTypeRecord> BUS__FK_BUS_TBL_CONDITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_CONDITION_TBL, Bus.BUS, "bus__fk_bus_tbl_condition_id", Bus.BUS.CONDITION_ID);
         public static final ForeignKey<BusInfoRecord, RbBusMakeRecord> BUS_INFO__FK_BUS_INFO_TBL_BUS_MAKE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_BUS_MAKE_TBL, BusInfo.BUS_INFO, "bus_info__fk_bus_info_tbl_bus_make", BusInfo.BUS_INFO.MAKE_ID);
         public static final ForeignKey<BusInfoRecord, RbBusModelRecord> BUS_INFO__FK_BUS_INFO_TBL_BUS_MODEL = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_BUS_MODEL_TBL, BusInfo.BUS_INFO, "bus_info__fk_bus_info_tbl_bus_model", BusInfo.BUS_INFO.MODEL_ID);
-        public static final ForeignKey<BusSnapshotRecord, BusInfoRecord> BUS_SNAPSHOT__FK_BUS_SNAPSHOT_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_INFO_TBL, BusSnapshot.BUS_SNAPSHOT, "bus_snapshot__fk_bus_snapshot_tbl_bus_id", BusSnapshot.BUS_SNAPSHOT.BUS_ID);
+        public static final ForeignKey<BusSnapshotRecord, BusInfoRecord> BUS_SNAPSHOT__FK_BUS_SNAPSHOT_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_INFO_TBL, BusSnapshot.BUS_SNAPSHOT, "bus_snapshot__fk_bus_snapshot_tbl_bus_id", BusSnapshot.BUS_SNAPSHOT.BUS_INFO_ID);
         public static final ForeignKey<BusSnapshotRecord, FuelCodeRecord> BUS_SNAPSHOT__FK_BUS_SNAPSHOT_TBL_FUEL_CODE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_FUEL_CODE_TBL, BusSnapshot.BUS_SNAPSHOT, "bus_snapshot__fk_bus_snapshot_tbl_fuel_code_id", BusSnapshot.BUS_SNAPSHOT.FUEL_CODE_ID);
         public static final ForeignKey<BusSnapshotRecord, RbBusConditionTypeRecord> BUS_SNAPSHOT__FK_BUS_SNAPSHOT_TBL_CONDITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_CONDITION_TBL, BusSnapshot.BUS_SNAPSHOT, "bus_snapshot__fk_bus_snapshot_tbl_condition_id", BusSnapshot.BUS_SNAPSHOT.CONDITION_ID);
         public static final ForeignKey<BusStopsRecord, BusStopListRecord> BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_LIST_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_STOP_LIST_TBL, BusStops.BUS_STOPS, "bus_stops__fk_bus_stops_tbl_bus_stop_list_id", BusStops.BUS_STOPS.BUS_STOP_LIST_ID);

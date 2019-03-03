@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.BusSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BusSnapshot extends TableImpl<BusSnapshotRecord> {
 
-    private static final long serialVersionUID = -1406640303;
+    private static final long serialVersionUID = -525006530;
 
     /**
      * The reference instance of <code>public.bus_snapshot</code>
@@ -63,9 +63,9 @@ public class BusSnapshot extends TableImpl<BusSnapshotRecord> {
     public final TableField<BusSnapshotRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('bus_snapshot_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
-     * The column <code>public.bus_snapshot.bus_id</code>.
+     * The column <code>public.bus_snapshot.bus_info_id</code>.
      */
-    public final TableField<BusSnapshotRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<BusSnapshotRecord, Short> BUS_INFO_ID = createField("bus_info_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.bus_snapshot.garage_number_id</code>.

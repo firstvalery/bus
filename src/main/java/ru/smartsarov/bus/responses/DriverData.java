@@ -9,7 +9,7 @@ public class DriverData {
 	    private Integer id;
 	 @SerializedName("personalNumber")
 	    @Expose
-	    private Integer personalNumber;
+	    private String personalNumber;
 	 @SerializedName("firstName")
 	    @Expose
 	    private String firstName;
@@ -24,10 +24,10 @@ public class DriverData {
 	    private String busGarageNumber;
 	 @SerializedName("groupId")
 	    @Expose
-	    private Integer groupId;
+	    private Short groupId;
 	 @SerializedName("brigadeId")
 	    @Expose
-	    private Integer brigadeId;
+	    private Short brigadeId;
 	 @SerializedName("briadireFlag")
 	    @Expose
 	    private boolean briadireFlag;
@@ -37,8 +37,8 @@ public class DriverData {
 	 @SerializedName("ticketFlag")
 	    @Expose
 	    private boolean ticketFlag;
-	public DriverData(Integer id, Integer personalNumber, String firstName, String middleName, String lastName,
-			String busGarageNumber, Integer groupId, Integer brigadeId, boolean briadireFlag, String stateType,
+	public DriverData(Integer id, String personalNumber, String firstName, String middleName, String lastName,
+			String busGarageNumber, Short groupId, Short brigadeId, boolean briadireFlag, String stateType,
 			boolean ticketFlag) {
 		this.id = id;
 		this.personalNumber = personalNumber;
@@ -54,7 +54,7 @@ public class DriverData {
 	}
 	public DriverData() {
 		this.id = 0;
-		this.personalNumber = 0;
+		this.personalNumber = "";
 		this.firstName = "";
 		this.middleName = "";
 		this.lastName = "";
@@ -71,10 +71,10 @@ public class DriverData {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPersonalNumber() {
+	public String getPersonalNumber() {
 		return personalNumber;
 	}
-	public void setPersonalNumber(Integer personalNumber) {
+	public void setPersonalNumber(String personalNumber) {
 		this.personalNumber = personalNumber;
 	}
 	public String getFirstName() {
@@ -101,10 +101,10 @@ public class DriverData {
 	public void setBusGarageNumber(String busGarageNumber) {
 		this.busGarageNumber = busGarageNumber;
 	}
-	public Integer getGroupId() {
+	public Short getGroupId() {
 		return groupId;
 	}
-	public void setGroupId(Integer groupId) {
+	public void setGroupId(Short groupId) {
 		this.groupId = groupId;
 	}
 	public boolean isBriadireFlag() {
@@ -125,10 +125,10 @@ public class DriverData {
 	public void setTicketFlag(boolean ticketFlag) {
 		this.ticketFlag = ticketFlag;
 	}
-	public Integer getBrigadeId() {
+	public Short getBrigadeId() {
 		return brigadeId;
 	}
-	public void setBrigadeId(Integer brigadeId) {
+	public void setBrigadeId(Short brigadeId) {
 		this.brigadeId = brigadeId;
 	}
 	

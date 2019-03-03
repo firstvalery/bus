@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverGroupRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverGroup extends TableImpl<DriverGroupRecord> {
 
-    private static final long serialVersionUID = -124377751;
+    private static final long serialVersionUID = 958009031;
 
     /**
      * The reference instance of <code>public.driver_group</code>
@@ -59,7 +59,7 @@ public class DriverGroup extends TableImpl<DriverGroupRecord> {
     /**
      * The column <code>public.driver_group.id</code>.
      */
-    public final TableField<DriverGroupRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('driver_group_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<DriverGroupRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('driver_group_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.driver_group.description</code>.
@@ -129,7 +129,7 @@ public class DriverGroup extends TableImpl<DriverGroupRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<DriverGroupRecord, Integer> getIdentity() {
+    public Identity<DriverGroupRecord, Short> getIdentity() {
         return Keys.IDENTITY_DRIVER_GROUP;
     }
 

@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverBrigadeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverBrigade extends TableImpl<DriverBrigadeRecord> {
 
-    private static final long serialVersionUID = -979627015;
+    private static final long serialVersionUID = 656706893;
 
     /**
      * The reference instance of <code>public.driver_brigade</code>
@@ -59,7 +59,7 @@ public class DriverBrigade extends TableImpl<DriverBrigadeRecord> {
     /**
      * The column <code>public.driver_brigade.id</code>.
      */
-    public final TableField<DriverBrigadeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('driver_brigade_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<DriverBrigadeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('driver_brigade_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.driver_brigade.description</code>.
@@ -124,7 +124,7 @@ public class DriverBrigade extends TableImpl<DriverBrigadeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<DriverBrigadeRecord, Integer> getIdentity() {
+    public Identity<DriverBrigadeRecord, Short> getIdentity() {
         return Keys.IDENTITY_DRIVER_BRIGADE;
     }
 

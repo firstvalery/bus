@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.EmployeeInfoRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
 
-    private static final long serialVersionUID = 690582617;
+    private static final long serialVersionUID = 1763571917;
 
     /**
      * The reference instance of <code>public.employee_info</code>
@@ -59,7 +59,7 @@ public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
     /**
      * The column <code>public.employee_info.id</code>.
      */
-    public final TableField<EmployeeInfoRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('employee_info_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<EmployeeInfoRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('employee_info_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.employee_info.personnel_number</code>.
@@ -144,7 +144,7 @@ public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<EmployeeInfoRecord, Integer> getIdentity() {
+    public Identity<EmployeeInfoRecord, Short> getIdentity() {
         return Keys.IDENTITY_EMPLOYEE_INFO;
     }
 

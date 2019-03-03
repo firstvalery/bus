@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Driver extends TableImpl<DriverRecord> {
 
-    private static final long serialVersionUID = -1339197480;
+    private static final long serialVersionUID = -1700684392;
 
     /**
      * The reference instance of <code>public.driver</code>
@@ -74,7 +74,7 @@ public class Driver extends TableImpl<DriverRecord> {
     /**
      * The column <code>public.driver.bus_id</code>.
      */
-    public final TableField<DriverRecord, Short> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<DriverRecord, Integer> BUS_ID = createField("bus_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.driver.brigadier_flag</code>.

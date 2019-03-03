@@ -30,7 +30,7 @@ import ru.smartsarov.bus.postgres.tables.BusSnapshot;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> implements Record11<Integer, Short, String, String, Short, Integer, Integer, Short, OffsetDateTime, OffsetDateTime, Short> {
 
-    private static final long serialVersionUID = 2089374110;
+    private static final long serialVersionUID = 149179015;
 
     /**
      * Setter for <code>public.bus_snapshot.id</code>.
@@ -47,16 +47,16 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
     }
 
     /**
-     * Setter for <code>public.bus_snapshot.bus_id</code>.
+     * Setter for <code>public.bus_snapshot.bus_info_id</code>.
      */
-    public void setBusId(Short value) {
+    public void setBusInfoId(Short value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>public.bus_snapshot.bus_id</code>.
+     * Getter for <code>public.bus_snapshot.bus_info_id</code>.
      */
-    public Short getBusId() {
+    public Short getBusInfoId() {
         return (Short) get(1);
     }
 
@@ -231,7 +231,7 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
      */
     @Override
     public Field<Short> field2() {
-        return BusSnapshot.BUS_SNAPSHOT.BUS_ID;
+        return BusSnapshot.BUS_SNAPSHOT.BUS_INFO_ID;
     }
 
     /**
@@ -319,7 +319,7 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
      */
     @Override
     public Short component2() {
-        return getBusId();
+        return getBusInfoId();
     }
 
     /**
@@ -407,7 +407,7 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
      */
     @Override
     public Short value2() {
-        return getBusId();
+        return getBusInfoId();
     }
 
     /**
@@ -496,7 +496,7 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
      */
     @Override
     public BusSnapshotRecord value2(Short value) {
-        setBusId(value);
+        setBusInfoId(value);
         return this;
     }
 
@@ -614,11 +614,11 @@ public class BusSnapshotRecord extends UpdatableRecordImpl<BusSnapshotRecord> im
     /**
      * Create a detached, initialised BusSnapshotRecord
      */
-    public BusSnapshotRecord(Integer id, Short busId, String garageNumberId, String stateNumberId, Short fuelCodeId, Integer odometerMileage, Integer trackerMileage, Short conditionId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
+    public BusSnapshotRecord(Integer id, Short busInfoId, String garageNumberId, String stateNumberId, Short fuelCodeId, Integer odometerMileage, Integer trackerMileage, Short conditionId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
         super(BusSnapshot.BUS_SNAPSHOT);
 
         set(0, id);
-        set(1, busId);
+        set(1, busInfoId);
         set(2, garageNumberId);
         set(3, stateNumberId);
         set(4, fuelCodeId);

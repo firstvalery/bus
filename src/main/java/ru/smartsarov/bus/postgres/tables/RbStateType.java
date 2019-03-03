@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbStateTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbStateType extends TableImpl<RbStateTypeRecord> {
 
-    private static final long serialVersionUID = -247196493;
+    private static final long serialVersionUID = -475612819;
 
     /**
      * The reference instance of <code>public.rb_state_type</code>
@@ -59,17 +59,17 @@ public class RbStateType extends TableImpl<RbStateTypeRecord> {
     /**
      * The column <code>public.rb_state_type.id</code>.
      */
-    public final TableField<RbStateTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_state_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
-
-    /**
-     * The column <code>public.rb_state_type.state_type_description</code>.
-     */
-    public final TableField<RbStateTypeRecord, Short> STATE_TYPE_DESCRIPTION = createField("state_type_description", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RbStateTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_state_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_state_type.removed</code>.
      */
     public final TableField<RbStateTypeRecord, Short> REMOVED = createField("removed", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
+
+    /**
+     * The column <code>public.rb_state_type.name</code>.
+     */
+    public final TableField<RbStateTypeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * Create a <code>public.rb_state_type</code> table reference
@@ -124,7 +124,7 @@ public class RbStateType extends TableImpl<RbStateTypeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbStateTypeRecord, Integer> getIdentity() {
+    public Identity<RbStateTypeRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_STATE_TYPE;
     }
 
