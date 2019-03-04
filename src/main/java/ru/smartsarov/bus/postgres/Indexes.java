@@ -42,6 +42,7 @@ import ru.smartsarov.bus.postgres.tables.RbEmployeeType;
 import ru.smartsarov.bus.postgres.tables.RbFuelType;
 import ru.smartsarov.bus.postgres.tables.RbIntsidentType;
 import ru.smartsarov.bus.postgres.tables.RbReadyType;
+import ru.smartsarov.bus.postgres.tables.RbShiftType;
 import ru.smartsarov.bus.postgres.tables.RbStateType;
 import ru.smartsarov.bus.postgres.tables.Route;
 import ru.smartsarov.bus.postgres.tables.RouteSchedule;
@@ -53,7 +54,6 @@ import ru.smartsarov.bus.postgres.tables.ShiftFixed;
 import ru.smartsarov.bus.postgres.tables.ShiftFixedSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftSchedule;
 import ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot;
-import ru.smartsarov.bus.postgres.tables.ShiftType;
 import ru.smartsarov.bus.postgres.tables.TechAvailability;
 import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
@@ -110,6 +110,7 @@ public class Indexes {
     public static final Index PL_RB_FUEL_TYPE_TBL = Indexes0.PL_RB_FUEL_TYPE_TBL;
     public static final Index PK_INTSIDENT_TYPE_TBL = Indexes0.PK_INTSIDENT_TYPE_TBL;
     public static final Index PK_RB_READY_TYPE_TBL = Indexes0.PK_RB_READY_TYPE_TBL;
+    public static final Index PK_SHIFT_TYPE_TBL = Indexes0.PK_SHIFT_TYPE_TBL;
     public static final Index PK_RB_STATE_TYPE_TBL = Indexes0.PK_RB_STATE_TYPE_TBL;
     public static final Index PK_ROUTE_TBL = Indexes0.PK_ROUTE_TBL;
     public static final Index PK_ROUTE_SCHEDULE_TBL = Indexes0.PK_ROUTE_SCHEDULE_TBL;
@@ -122,7 +123,6 @@ public class Indexes {
     public static final Index PK_FIXED_SHIFT_SNAPSHOT_TBL = Indexes0.PK_FIXED_SHIFT_SNAPSHOT_TBL;
     public static final Index PK_SHIFT_SCHEDULE_ID = Indexes0.PK_SHIFT_SCHEDULE_ID;
     public static final Index PK_SHIFT_SCHEDULE_SNAPSORT_TBL = Indexes0.PK_SHIFT_SCHEDULE_SNAPSORT_TBL;
-    public static final Index PK_SHIFT_TYPE_TBL = Indexes0.PK_SHIFT_TYPE_TBL;
     public static final Index PK_TECH_AVAILABILITY_TBL = Indexes0.PK_TECH_AVAILABILITY_TBL;
     public static final Index PK_TECH_SNAPSHOT_AVAILABILITY_TBL = Indexes0.PK_TECH_SNAPSHOT_AVAILABILITY_TBL;
     public static final Index PK_TRACK_TBL = Indexes0.PK_TRACK_TBL;
@@ -148,8 +148,8 @@ public class Indexes {
         public static Index PK_DRIVER_TBL_EMPLOYEE_SNAPSHOT_ID = Internal.createIndex("pk_driver_tbl_employee_snapshot_id", Driver.DRIVER, new OrderField[] { Driver.DRIVER.ID }, true);
         public static Index PK_DRIVER_BRIGADE_TBL = Internal.createIndex("pk_driver_brigade_tbl", DriverBrigade.DRIVER_BRIGADE, new OrderField[] { DriverBrigade.DRIVER_BRIGADE.ID }, true);
         public static Index PK_DRIVER_GROUP_TBL = Internal.createIndex("pk_driver_group_tbl", DriverGroup.DRIVER_GROUP, new OrderField[] { DriverGroup.DRIVER_GROUP.ID }, true);
-        public static Index PK_DRIVER_SCHEDULE_TBL = Internal.createIndex("pk_driver_schedule_tbl", DriverSchedule.DRIVER_SCHEDULE, new OrderField[] { DriverSchedule.DRIVER_SCHEDULE.EMPLOYEE_ID, DriverSchedule.DRIVER_SCHEDULE.DATE }, true);
-        public static Index PK_DRIVER_SCHEDULE_SNAPSHOT_TBL = Internal.createIndex("pk_driver_schedule_snapshot_tbl", DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT, new OrderField[] { DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.EMPLOYEE_ID, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.DATE, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.CREATED_AT }, true);
+        public static Index PK_DRIVER_SCHEDULE_TBL = Internal.createIndex("pk_driver_schedule_tbl", DriverSchedule.DRIVER_SCHEDULE, new OrderField[] { DriverSchedule.DRIVER_SCHEDULE.DRIVER_ID, DriverSchedule.DRIVER_SCHEDULE.DATE }, true);
+        public static Index PK_DRIVER_SCHEDULE_SNAPSHOT_TBL = Internal.createIndex("pk_driver_schedule_snapshot_tbl", DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT, new OrderField[] { DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.DRIVER_ID, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.DATE, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_EMPLOYEE_SNAPSHOT_TBL = Internal.createIndex("pk_employee_snapshot_tbl", DriverSnapshot.DRIVER_SNAPSHOT, new OrderField[] { DriverSnapshot.DRIVER_SNAPSHOT.ID, DriverSnapshot.DRIVER_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_EMPLOYEE_INFO_TBL = Internal.createIndex("pk_employee_info_tbl", EmployeeInfo.EMPLOYEE_INFO, new OrderField[] { EmployeeInfo.EMPLOYEE_INFO.ID }, true);
         public static Index PK_FUEL_CODE_TBL = Internal.createIndex("pk_fuel_code_tbl", FuelCode.FUEL_CODE, new OrderField[] { FuelCode.FUEL_CODE.ID }, true);
@@ -166,6 +166,7 @@ public class Indexes {
         public static Index PL_RB_FUEL_TYPE_TBL = Internal.createIndex("pl_rb_fuel_type_tbl", RbFuelType.RB_FUEL_TYPE, new OrderField[] { RbFuelType.RB_FUEL_TYPE.ID }, true);
         public static Index PK_INTSIDENT_TYPE_TBL = Internal.createIndex("pk_intsident_type_tbl", RbIntsidentType.RB_INTSIDENT_TYPE, new OrderField[] { RbIntsidentType.RB_INTSIDENT_TYPE.ID }, true);
         public static Index PK_RB_READY_TYPE_TBL = Internal.createIndex("pk_rb_ready_type_tbl", RbReadyType.RB_READY_TYPE, new OrderField[] { RbReadyType.RB_READY_TYPE.ID }, true);
+        public static Index PK_SHIFT_TYPE_TBL = Internal.createIndex("pk_shift_type_tbl", RbShiftType.RB_SHIFT_TYPE, new OrderField[] { RbShiftType.RB_SHIFT_TYPE.ID }, true);
         public static Index PK_RB_STATE_TYPE_TBL = Internal.createIndex("pk_rb_state_type_tbl", RbStateType.RB_STATE_TYPE, new OrderField[] { RbStateType.RB_STATE_TYPE.ID }, true);
         public static Index PK_ROUTE_TBL = Internal.createIndex("pk_route_tbl", Route.ROUTE, new OrderField[] { Route.ROUTE.ID }, true);
         public static Index PK_ROUTE_SCHEDULE_TBL = Internal.createIndex("pk_route_schedule_tbl", RouteSchedule.ROUTE_SCHEDULE, new OrderField[] { RouteSchedule.ROUTE_SCHEDULE.ROUTE_ID }, true);
@@ -178,7 +179,6 @@ public class Indexes {
         public static Index PK_FIXED_SHIFT_SNAPSHOT_TBL = Internal.createIndex("pk_fixed_shift_snapshot_tbl", ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT, new OrderField[] { ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT.SHIFT_SCHEDULE_ID, ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT.DATE, ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_SHIFT_SCHEDULE_ID = Internal.createIndex("pk_shift_schedule_id", ShiftSchedule.SHIFT_SCHEDULE, new OrderField[] { ShiftSchedule.SHIFT_SCHEDULE.ID }, true);
         public static Index PK_SHIFT_SCHEDULE_SNAPSORT_TBL = Internal.createIndex("pk_shift_schedule_snapsort_tbl", ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT, new OrderField[] { ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT.ID, ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT.CREATED_AT }, true);
-        public static Index PK_SHIFT_TYPE_TBL = Internal.createIndex("pk_shift_type_tbl", ShiftType.SHIFT_TYPE, new OrderField[] { ShiftType.SHIFT_TYPE.ID }, true);
         public static Index PK_TECH_AVAILABILITY_TBL = Internal.createIndex("pk_tech_availability_tbl", TechAvailability.TECH_AVAILABILITY, new OrderField[] { TechAvailability.TECH_AVAILABILITY.BUS_ID, TechAvailability.TECH_AVAILABILITY.DATE }, true);
         public static Index PK_TECH_SNAPSHOT_AVAILABILITY_TBL = Internal.createIndex("pk_tech_snapshot_availability_tbl", TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT, new OrderField[] { TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.BUS_ID, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.DATE, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_TRACK_TBL = Internal.createIndex("pk_track_tbl", Track.TRACK, new OrderField[] { Track.TRACK.ID }, true);

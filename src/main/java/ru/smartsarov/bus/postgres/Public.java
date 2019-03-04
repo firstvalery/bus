@@ -47,6 +47,7 @@ import ru.smartsarov.bus.postgres.tables.RbEmployeeType;
 import ru.smartsarov.bus.postgres.tables.RbFuelType;
 import ru.smartsarov.bus.postgres.tables.RbIntsidentType;
 import ru.smartsarov.bus.postgres.tables.RbReadyType;
+import ru.smartsarov.bus.postgres.tables.RbShiftType;
 import ru.smartsarov.bus.postgres.tables.RbStateType;
 import ru.smartsarov.bus.postgres.tables.Route;
 import ru.smartsarov.bus.postgres.tables.RouteSchedule;
@@ -58,7 +59,6 @@ import ru.smartsarov.bus.postgres.tables.ShiftFixed;
 import ru.smartsarov.bus.postgres.tables.ShiftFixedSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftSchedule;
 import ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot;
-import ru.smartsarov.bus.postgres.tables.ShiftType;
 import ru.smartsarov.bus.postgres.tables.TechAvailability;
 import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
@@ -78,7 +78,7 @@ import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Public extends SchemaImpl {
 
-    private static final long serialVersionUID = 711696270;
+    private static final long serialVersionUID = -738874000;
 
     /**
      * The reference instance of <code>public</code>
@@ -246,6 +246,11 @@ public class Public extends SchemaImpl {
     public final RbReadyType RB_READY_TYPE = ru.smartsarov.bus.postgres.tables.RbReadyType.RB_READY_TYPE;
 
     /**
+     * The table <code>public.rb_shift_type</code>.
+     */
+    public final RbShiftType RB_SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.RbShiftType.RB_SHIFT_TYPE;
+
+    /**
      * The table <code>public.rb_state_type</code>.
      */
     public final RbStateType RB_STATE_TYPE = ru.smartsarov.bus.postgres.tables.RbStateType.RB_STATE_TYPE;
@@ -302,11 +307,6 @@ public class Public extends SchemaImpl {
     public final ShiftScheduleSnapshot SHIFT_SCHEDULE_SNAPSHOT = ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT;
 
     /**
-     * The table <code>public.shift_type</code>.
-     */
-    public final ShiftType SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.ShiftType.SHIFT_TYPE;
-
-    /**
      * The table <code>public.tech_availability</code>.
      */
     public final TechAvailability TECH_AVAILABILITY = ru.smartsarov.bus.postgres.tables.TechAvailability.TECH_AVAILABILITY;
@@ -357,6 +357,8 @@ public class Public extends SchemaImpl {
             Sequences.BUS_STOP_LIST_ID_SEQ,
             Sequences.BUS_STOPS_ID_SEQ,
             Sequences.CONDUCTOR_ID_SEQ,
+            Sequences.CONDUCTOR_SCHEDULE_CONDUCTOR_ID_SEQ,
+            Sequences.CONDUCTOR_SCHEDULE_SNAPSHOT_CONDUCTOR_ID_SEQ,
             Sequences.CONDUCTOR_SNAPSHOT_ID_SEQ,
             Sequences.DEPARTURE_LIST_ID_SEQ,
             Sequences.DEPARTURE_MOMENTS_ID_SEQ,
@@ -385,7 +387,6 @@ public class Public extends SchemaImpl {
             Sequences.SHIFT_DEPARTURE_MOMENTS_ID_SEQ,
             Sequences.SHIFT_SCHEDULE_ID_SEQ,
             Sequences.SHIFT_SCHEDULE_SNAPSHOT_ID_SEQ,
-            Sequences.SHIFT_TYPE_ID_SEQ,
             Sequences.TRACK_COORDINATES_ID_SEQ,
             Sequences.TRACK_ID_SEQ);
     }
@@ -431,6 +432,7 @@ public class Public extends SchemaImpl {
             RbFuelType.RB_FUEL_TYPE,
             RbIntsidentType.RB_INTSIDENT_TYPE,
             RbReadyType.RB_READY_TYPE,
+            RbShiftType.RB_SHIFT_TYPE,
             RbStateType.RB_STATE_TYPE,
             Route.ROUTE,
             RouteSchedule.ROUTE_SCHEDULE,
@@ -442,7 +444,6 @@ public class Public extends SchemaImpl {
             ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT,
             ShiftSchedule.SHIFT_SCHEDULE,
             ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT,
-            ShiftType.SHIFT_TYPE,
             TechAvailability.TECH_AVAILABILITY,
             TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT,
             Track.TRACK,

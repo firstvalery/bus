@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftScheduleRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftSchedule extends TableImpl<ShiftScheduleRecord> {
 
-    private static final long serialVersionUID = -600888218;
+    private static final long serialVersionUID = -1980861098;
 
     /**
      * The reference instance of <code>public.shift_schedule</code>
@@ -177,8 +177,8 @@ public class ShiftSchedule extends TableImpl<ShiftScheduleRecord> {
         return Arrays.<ForeignKey<ShiftScheduleRecord, ?>>asList(Keys.SHIFT_SCHEDULE__FK_SHIFT_SCHEDULE_TBL_SHIFT_TYPE_ID, Keys.SHIFT_SCHEDULE__FK_SHIFT_SCHEDULE_TBL_SHIFT_DEPARTURE_LIST_ID);
     }
 
-    public ShiftType shiftType() {
-        return new ShiftType(this, Keys.SHIFT_SCHEDULE__FK_SHIFT_SCHEDULE_TBL_SHIFT_TYPE_ID);
+    public RbShiftType rbShiftType() {
+        return new RbShiftType(this, Keys.SHIFT_SCHEDULE__FK_SHIFT_SCHEDULE_TBL_SHIFT_TYPE_ID);
     }
 
     public ShiftDepartureList shiftDepartureList() {

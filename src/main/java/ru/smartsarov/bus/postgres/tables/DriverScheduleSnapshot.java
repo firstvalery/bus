@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverScheduleSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotRecord> {
 
-    private static final long serialVersionUID = 1251700419;
+    private static final long serialVersionUID = 338200883;
 
     /**
      * The reference instance of <code>public.driver_schedule_snapshot</code>
@@ -58,9 +58,9 @@ public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotReco
     }
 
     /**
-     * The column <code>public.driver_schedule_snapshot.employee_id</code>.
+     * The column <code>public.driver_schedule_snapshot.driver_id</code>.
      */
-    public final TableField<DriverScheduleSnapshotRecord, Short> EMPLOYEE_ID = createField("employee_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<DriverScheduleSnapshotRecord, Integer> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_schedule_snapshot.date</code>.
@@ -162,15 +162,15 @@ public class DriverScheduleSnapshot extends TableImpl<DriverScheduleSnapshotReco
      */
     @Override
     public List<ForeignKey<DriverScheduleSnapshotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverScheduleSnapshotRecord, ?>>asList(Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
+        return Arrays.<ForeignKey<DriverScheduleSnapshotRecord, ?>>asList(Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_DRIVER_ID, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID);
     }
 
     public Driver driver() {
-        return new Driver(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_EMPLOYEE_ID_FK);
+        return new Driver(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_DRIVER_ID);
     }
 
-    public ShiftType shiftType() {
-        return new ShiftType(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+    public RbShiftType rbShiftType() {
+        return new RbShiftType(this, Keys.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
     }
 
     public RbReadyType rbReadyType() {

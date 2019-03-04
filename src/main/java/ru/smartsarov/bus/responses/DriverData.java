@@ -30,16 +30,16 @@ public class DriverData {
 	    private Short brigadeId;
 	 @SerializedName("briadireFlag")
 	    @Expose
-	    private boolean briadireFlag;
+	    private Boolean briadireFlag;
 	 @SerializedName("stateType")
 	    @Expose
 	    private String stateType;
 	 @SerializedName("ticketFlag")
 	    @Expose
-	    private boolean ticketFlag;
+	    private Boolean ticketFlag;
 	public DriverData(Integer id, String personalNumber, String firstName, String middleName, String lastName,
-			String busGarageNumber, Short groupId, Short brigadeId, boolean briadireFlag, String stateType,
-			boolean ticketFlag) {
+			String busGarageNumber, Short groupId, Short brigadeId, Boolean briadireFlag, String stateType,
+			Boolean ticketFlag) {
 		this.id = id;
 		this.personalNumber = personalNumber;
 		this.firstName = firstName;
@@ -107,10 +107,10 @@ public class DriverData {
 	public void setGroupId(Short groupId) {
 		this.groupId = groupId;
 	}
-	public boolean isBriadireFlag() {
+	public Boolean isBriadireFlag() {
 		return briadireFlag;
 	}
-	public void setBriadireFlag(boolean briadireFlag) {
+	public void setBriadireFlag(Boolean briadireFlag) {
 		this.briadireFlag = briadireFlag;
 	}
 	public String getStateType() {
@@ -119,10 +119,10 @@ public class DriverData {
 	public void setStateType(String stateType) {
 		this.stateType = stateType;
 	}
-	public boolean isTicketFlag() {
+	public Boolean isTicketFlag() {
 		return ticketFlag;
 	}
-	public void setTicketFlag(boolean ticketFlag) {
+	public void setTicketFlag(Boolean ticketFlag) {
 		this.ticketFlag = ticketFlag;
 	}
 	public Short getBrigadeId() {

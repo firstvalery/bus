@@ -38,6 +38,7 @@ import ru.smartsarov.bus.postgres.tables.RbEmployeeType;
 import ru.smartsarov.bus.postgres.tables.RbFuelType;
 import ru.smartsarov.bus.postgres.tables.RbIntsidentType;
 import ru.smartsarov.bus.postgres.tables.RbReadyType;
+import ru.smartsarov.bus.postgres.tables.RbShiftType;
 import ru.smartsarov.bus.postgres.tables.RbStateType;
 import ru.smartsarov.bus.postgres.tables.Route;
 import ru.smartsarov.bus.postgres.tables.RouteSchedule;
@@ -49,7 +50,6 @@ import ru.smartsarov.bus.postgres.tables.ShiftFixed;
 import ru.smartsarov.bus.postgres.tables.ShiftFixedSnapshot;
 import ru.smartsarov.bus.postgres.tables.ShiftSchedule;
 import ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot;
-import ru.smartsarov.bus.postgres.tables.ShiftType;
 import ru.smartsarov.bus.postgres.tables.TechAvailability;
 import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
@@ -230,6 +230,11 @@ public class Tables {
     public static final RbReadyType RB_READY_TYPE = ru.smartsarov.bus.postgres.tables.RbReadyType.RB_READY_TYPE;
 
     /**
+     * The table <code>public.rb_shift_type</code>.
+     */
+    public static final RbShiftType RB_SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.RbShiftType.RB_SHIFT_TYPE;
+
+    /**
      * The table <code>public.rb_state_type</code>.
      */
     public static final RbStateType RB_STATE_TYPE = ru.smartsarov.bus.postgres.tables.RbStateType.RB_STATE_TYPE;
@@ -284,11 +289,6 @@ public class Tables {
      * The table <code>public.shift_schedule_snapshot</code>.
      */
     public static final ShiftScheduleSnapshot SHIFT_SCHEDULE_SNAPSHOT = ru.smartsarov.bus.postgres.tables.ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT;
-
-    /**
-     * The table <code>public.shift_type</code>.
-     */
-    public static final ShiftType SHIFT_TYPE = ru.smartsarov.bus.postgres.tables.ShiftType.SHIFT_TYPE;
 
     /**
      * The table <code>public.tech_availability</code>.

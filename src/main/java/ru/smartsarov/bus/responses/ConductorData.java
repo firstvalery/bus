@@ -9,7 +9,7 @@ public class ConductorData {
 	    private Integer id;
 	 @SerializedName("personalNumber")
 	    @Expose
-	    private Integer personalNumber;
+	    private String personalNumber;
 	 @SerializedName("firstName")
 	    @Expose
 	    private String firstName;
@@ -28,10 +28,10 @@ public class ConductorData {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public Integer getPersonalNumber() {
+	public String getPersonalNumber() {
 		return personalNumber;
 	}
-	public void setPersonalNumber(Integer personalNumber) {
+	public void setPersonalNumber(String personalNumber) {
 		this.personalNumber = personalNumber;
 	}
 	public String getFirstName() {
@@ -58,7 +58,7 @@ public class ConductorData {
 	public void setStateType(String stateType) {
 		this.stateType = stateType;
 	}
-	public ConductorData(Integer id, Integer personalNumber, String firstName, String middleName, String lastName,
+	public ConductorData(Integer id, String personalNumber, String firstName, String middleName, String lastName,
 			 String stateType) {
 		this.id = id;
 		this.personalNumber = personalNumber;
@@ -69,7 +69,7 @@ public class ConductorData {
 	}
 	public ConductorData() {
 		this.id = 0;
-		this.personalNumber = 0;
+		this.personalNumber = "";
 		this.firstName = "";
 		this.middleName = "";
 		this.lastName = "";

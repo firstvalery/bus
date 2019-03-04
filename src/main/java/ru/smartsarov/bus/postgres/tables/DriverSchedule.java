@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverScheduleRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
 
-    private static final long serialVersionUID = -1453523666;
+    private static final long serialVersionUID = 568860815;
 
     /**
      * The reference instance of <code>public.driver_schedule</code>
@@ -57,9 +57,9 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
     }
 
     /**
-     * The column <code>public.driver_schedule.employee_id</code>.
+     * The column <code>public.driver_schedule.driver_id</code>.
      */
-    public final TableField<DriverScheduleRecord, Short> EMPLOYEE_ID = createField("employee_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<DriverScheduleRecord, Integer> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_schedule.date</code>.
@@ -67,9 +67,9 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
     public final TableField<DriverScheduleRecord, Date> DATE = createField("date", org.jooq.impl.SQLDataType.DATE.nullable(false), this, "");
 
     /**
-     * The column <code>public.driver_schedule.schedule_type_id</code>.
+     * The column <code>public.driver_schedule.shift_type_id</code>.
      */
-    public final TableField<DriverScheduleRecord, Short> SCHEDULE_TYPE_ID = createField("schedule_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<DriverScheduleRecord, Short> SHIFT_TYPE_ID = createField("shift_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.driver_schedule.ready_type_id</code>.
@@ -151,15 +151,15 @@ public class DriverSchedule extends TableImpl<DriverScheduleRecord> {
      */
     @Override
     public List<ForeignKey<DriverScheduleRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<DriverScheduleRecord, ?>>asList(Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_EMPLOYEE_ID_FK, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_READY_TYPE_ID);
+        return Arrays.<ForeignKey<DriverScheduleRecord, ?>>asList(Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_DRIVER_ID_FK, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_READY_TYPE_ID);
     }
 
     public Driver driver() {
-        return new Driver(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_EMPLOYEE_ID_FK);
+        return new Driver(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_DRIVER_ID_FK);
     }
 
-    public ShiftType shiftType() {
-        return new ShiftType(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID);
+    public RbShiftType rbShiftType() {
+        return new RbShiftType(this, Keys.DRIVER_SCHEDULE__FK_DRIVER_SCHEDULE_TBL_SHIFT_TYPE_ID);
     }
 
     public RbReadyType rbReadyType() {

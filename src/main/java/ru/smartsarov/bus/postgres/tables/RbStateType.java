@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbStateTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbStateType extends TableImpl<RbStateTypeRecord> {
 
-    private static final long serialVersionUID = -475612819;
+    private static final long serialVersionUID = -200884764;
 
     /**
      * The reference instance of <code>public.rb_state_type</code>
@@ -62,14 +62,14 @@ public class RbStateType extends TableImpl<RbStateTypeRecord> {
     public final TableField<RbStateTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_state_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
+     * The column <code>public.rb_state_type.name</code>.
+     */
+    public final TableField<RbStateTypeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+
+    /**
      * The column <code>public.rb_state_type.removed</code>.
      */
     public final TableField<RbStateTypeRecord, Short> REMOVED = createField("removed", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("0", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
-
-    /**
-     * The column <code>public.rb_state_type.name</code>.
-     */
-    public final TableField<RbStateTypeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB, this, "");
 
     /**
      * Create a <code>public.rb_state_type</code> table reference

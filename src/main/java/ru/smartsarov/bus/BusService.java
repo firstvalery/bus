@@ -179,23 +179,26 @@ public class BusService
 			
 	@GET
 	@ApiOperation(value = "Получить расписание водителей",
-	    notes = "Выводится JSON массивом в виде списка дат и типа смены. На конкретный промежуток между двумя датами. в параметре driverIdList JSON список id водителей. При пустом driverIdList выводится расписание всех водителей",
+	    notes = "Выводится JSON массивом в виде списка дат и типа смены. На конкретный промежуток между двумя датами. в параметре driverId id водителей. При пустом driverId выводится расписание всех водителей",
 	    response = DriverScheduleDataOnDate.class,
 	    responseContainer = "List")
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/driver/schedule/get")
+	@Path("/drivers/schedule")
 	@Produces(MediaType.APPLICATION_JSON)
-    public Response getDriverShiftType(
-    		@ApiParam(value = "Список идентификаторов водителей", required = true)@QueryParam("driver_id_ist") String driverId,
-    		@ApiParam(value = "Номер бригады", required = true)@QueryParam("brigade_id") int brigadeId,
-    		@ApiParam(value = "Гаражный номер автобуса", required = true)@QueryParam("bus_garage_number") String busGarageNumber,
+    public Response getDriverSchedule(
+    		@ApiParam(value = "Идентификаторы водителей", required = true)@QueryParam("drivers_id") List<String> driversIdList,
+    		@ApiParam(value = "Номер бригады", required = true)@QueryParam("brigade_id") String brigadeId,
+    		@ApiParam(value = "Идентификаторы автобусов", required = true)@QueryParam("bus_id") List<String> busesIdList,
     		@ApiParam(value = "Дата минимальная", required = true)@QueryParam("date_min") String dateMin,
     		@ApiParam(value = "Дата максимальная", required = true)@QueryParam("date_max") String dateMax)
     {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getDriverSchedule(driversIdList, brigadeId, busesIdList, dateMin, dateMax)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 
 	@GET
@@ -206,12 +209,15 @@ public class BusService
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/conductor/get_list")
+	@Path("/conductors")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getConductorList()
     {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getConductorsList()).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 	
 	@GET
@@ -221,13 +227,16 @@ public class BusService
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/conductor/get")
+	@Path("/conductors/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getConductor(
-    		@ApiParam(value = "Идентификатор кондуктора", required = true)@QueryParam("conductor_id") int conductorId)
+    		@ApiParam(value = "Идентификатор кондуктора", required = true)@PathParam("id") String conductorId)
     {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getConductor(conductorId)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 	
 	
@@ -239,33 +248,38 @@ public class BusService
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/conductor/schedule/get")
+	@Path("/conductors/schedule")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getConductorShiftType(
-    		@ApiParam(value = "список идентификаторов кондукторов", required = false)@QueryParam("conductor_id_list") String conductorIdList,
-    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("date_min") String date_min,
-    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("date_max") String date_max)
+    		@ApiParam(value = "список идентификаторов кондукторов", required = false)@QueryParam("conductors_id") List<String> conductorIdList,		
+    		@ApiParam(value = "дата минимальная", required = true)@QueryParam("date_min") String dateMin,
+    		@ApiParam(value = "дата максимальная", required = true)@QueryParam("date_max") String dateMax)
     {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getConductorSchedule(conductorIdList, dateMin, dateMax)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 	
 	@GET
 	@ApiOperation(value = "Получить актуальный список доступных водителей",
 	    notes = "Выводится JSON массивом. На конкретную дату",
-	    response = DriverData.class,
-	    responseContainer = "List")
+	    response = AvailableDriversOnDate.class)
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/driver/get_actual_list")
+	@Path("/drivers/available")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getAvailableDrivers(
     		@ApiParam(value = "Дата", required = true)@QueryParam("date") String date)
-    {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    {		
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getAvailableDrivers(date)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 	
 	@GET
@@ -276,13 +290,16 @@ public class BusService
 	@ApiResponses(value = { 
 		      @ApiResponse(code = 400, message = "Bad Request"),
 		      @ApiResponse(code = 404, message = "Not Found") })
-	@Path("/conductor/get_actual_list")
+	@Path("/conductor/available")
 	@Produces(MediaType.APPLICATION_JSON)
     public Response getAvailableConductors(
     		@ApiParam(value = "Дата", required = true)@QueryParam("date") String date)
     {
-		InputStream is = this.getClass().getResourceAsStream("/static/index.html");
-    	return Response.status(Response.Status.OK).entity(is).build();
+    	try {
+			return Response.status(Response.Status.OK).entity(BusScheduleEngine.getAvailableConductors(date)).build();
+		} catch (ClassNotFoundException | SQLException e) {
+			return Response.status(Response.Status.OK).entity(e.toString()).build();
+		}
     }
 	
 	@POST

@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -42,7 +43,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleSnapshotRecord
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapshotRecord> {
 
-    private static final long serialVersionUID = -1520877898;
+    private static final long serialVersionUID = 1945427901;
 
     /**
      * The reference instance of <code>public.conductor_schedule_snapshot</code>
@@ -60,7 +61,7 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
     /**
      * The column <code>public.conductor_schedule_snapshot.conductor_id</code>.
      */
-    public final TableField<ConductorScheduleSnapshotRecord, Short> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<ConductorScheduleSnapshotRecord, Integer> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('conductor_schedule_snapshot_conductor_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.conductor_schedule_snapshot.date</code>.
@@ -145,6 +146,14 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
      * {@inheritDoc}
      */
     @Override
+    public Identity<ConductorScheduleSnapshotRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_CONDUCTOR_SCHEDULE_SNAPSHOT;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public UniqueKey<ConductorScheduleSnapshotRecord> getPrimaryKey() {
         return Keys.PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL;
     }
@@ -169,8 +178,8 @@ public class ConductorScheduleSnapshot extends TableImpl<ConductorScheduleSnapsh
         return new Conductor(this, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_CONDUCTOR_ID);
     }
 
-    public ShiftType shiftType() {
-        return new ShiftType(this, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
+    public RbShiftType rbShiftType() {
+        return new RbShiftType(this, Keys.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID);
     }
 
     public RbReadyType rbReadyType() {

@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbReadyTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbReadyType extends TableImpl<RbReadyTypeRecord> {
 
-    private static final long serialVersionUID = -2134910136;
+    private static final long serialVersionUID = -496176936;
 
     /**
      * The reference instance of <code>public.rb_ready_type</code>
@@ -59,12 +59,12 @@ public class RbReadyType extends TableImpl<RbReadyTypeRecord> {
     /**
      * The column <code>public.rb_ready_type.id</code>.
      */
-    public final TableField<RbReadyTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_ready_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RbReadyTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_ready_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
-     * The column <code>public.rb_ready_type.ready_type_description</code>.
+     * The column <code>public.rb_ready_type.name</code>.
      */
-    public final TableField<RbReadyTypeRecord, String> READY_TYPE_DESCRIPTION = createField("ready_type_description", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
+    public final TableField<RbReadyTypeRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
 
     /**
      * The column <code>public.rb_ready_type.removed</code>.
@@ -124,7 +124,7 @@ public class RbReadyType extends TableImpl<RbReadyTypeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbReadyTypeRecord, Integer> getIdentity() {
+    public Identity<RbReadyTypeRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_READY_TYPE;
     }
 
