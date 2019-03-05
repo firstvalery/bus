@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RouteRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Route extends TableImpl<RouteRecord> {
 
-    private static final long serialVersionUID = -880670330;
+    private static final long serialVersionUID = 1080742826;
 
     /**
      * The reference instance of <code>public.route</code>
@@ -59,7 +59,7 @@ public class Route extends TableImpl<RouteRecord> {
     /**
      * The column <code>public.route.id</code>.
      */
-    public final TableField<RouteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('route_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RouteRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('route_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.route.bus_stop_list_id</code>.
@@ -139,7 +139,7 @@ public class Route extends TableImpl<RouteRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RouteRecord, Integer> getIdentity() {
+    public Identity<RouteRecord, Short> getIdentity() {
         return Keys.IDENTITY_ROUTE;
     }
 

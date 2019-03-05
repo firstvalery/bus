@@ -157,8 +157,8 @@ public class Keys {
     public static final Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Identities0.IDENTITY_RB_FUEL_TYPE;
     public static final Identity<RbReadyTypeRecord, Short> IDENTITY_RB_READY_TYPE = Identities0.IDENTITY_RB_READY_TYPE;
     public static final Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Identities0.IDENTITY_RB_STATE_TYPE;
-    public static final Identity<RouteRecord, Integer> IDENTITY_ROUTE = Identities0.IDENTITY_ROUTE;
-    public static final Identity<ShiftDepartureListRecord, Integer> IDENTITY_SHIFT_DEPARTURE_LIST = Identities0.IDENTITY_SHIFT_DEPARTURE_LIST;
+    public static final Identity<RouteRecord, Short> IDENTITY_ROUTE = Identities0.IDENTITY_ROUTE;
+    public static final Identity<ShiftDepartureListRecord, Short> IDENTITY_SHIFT_DEPARTURE_LIST = Identities0.IDENTITY_SHIFT_DEPARTURE_LIST;
     public static final Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Identities0.IDENTITY_SHIFT_DEPARTURE_MOMENTS;
     public static final Identity<ShiftScheduleRecord, Integer> IDENTITY_SHIFT_SCHEDULE = Identities0.IDENTITY_SHIFT_SCHEDULE;
     public static final Identity<ShiftScheduleSnapshotRecord, Integer> IDENTITY_SHIFT_SCHEDULE_SNAPSHOT = Identities0.IDENTITY_SHIFT_SCHEDULE_SNAPSHOT;
@@ -340,8 +340,8 @@ public class Keys {
         public static Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Internal.createIdentity(RbFuelType.RB_FUEL_TYPE, RbFuelType.RB_FUEL_TYPE.ID);
         public static Identity<RbReadyTypeRecord, Short> IDENTITY_RB_READY_TYPE = Internal.createIdentity(RbReadyType.RB_READY_TYPE, RbReadyType.RB_READY_TYPE.ID);
         public static Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Internal.createIdentity(RbStateType.RB_STATE_TYPE, RbStateType.RB_STATE_TYPE.ID);
-        public static Identity<RouteRecord, Integer> IDENTITY_ROUTE = Internal.createIdentity(Route.ROUTE, Route.ROUTE.ID);
-        public static Identity<ShiftDepartureListRecord, Integer> IDENTITY_SHIFT_DEPARTURE_LIST = Internal.createIdentity(ShiftDepartureList.SHIFT_DEPARTURE_LIST, ShiftDepartureList.SHIFT_DEPARTURE_LIST.ID);
+        public static Identity<RouteRecord, Short> IDENTITY_ROUTE = Internal.createIdentity(Route.ROUTE, Route.ROUTE.ID);
+        public static Identity<ShiftDepartureListRecord, Short> IDENTITY_SHIFT_DEPARTURE_LIST = Internal.createIdentity(ShiftDepartureList.SHIFT_DEPARTURE_LIST, ShiftDepartureList.SHIFT_DEPARTURE_LIST.ID);
         public static Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Internal.createIdentity(ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS, ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS.ID);
         public static Identity<ShiftScheduleRecord, Integer> IDENTITY_SHIFT_SCHEDULE = Internal.createIdentity(ShiftSchedule.SHIFT_SCHEDULE, ShiftSchedule.SHIFT_SCHEDULE.ID);
         public static Identity<ShiftScheduleSnapshotRecord, Integer> IDENTITY_SHIFT_SCHEDULE_SNAPSHOT = Internal.createIdentity(ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT, ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT.ID);

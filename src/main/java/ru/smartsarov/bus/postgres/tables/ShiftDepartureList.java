@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftDepartureListRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftDepartureList extends TableImpl<ShiftDepartureListRecord> {
 
-    private static final long serialVersionUID = -427688002;
+    private static final long serialVersionUID = -1625446556;
 
     /**
      * The reference instance of <code>public.shift_departure_list</code>
@@ -59,7 +59,7 @@ public class ShiftDepartureList extends TableImpl<ShiftDepartureListRecord> {
     /**
      * The column <code>public.shift_departure_list.id</code>.
      */
-    public final TableField<ShiftDepartureListRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('shift_departure_list_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<ShiftDepartureListRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('shift_departure_list_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.shift_departure_list.name</code>.
@@ -124,7 +124,7 @@ public class ShiftDepartureList extends TableImpl<ShiftDepartureListRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<ShiftDepartureListRecord, Integer> getIdentity() {
+    public Identity<ShiftDepartureListRecord, Short> getIdentity() {
         return Keys.IDENTITY_SHIFT_DEPARTURE_LIST;
     }
 

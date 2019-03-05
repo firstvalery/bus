@@ -44,7 +44,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftDepartureMomentsRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftDepartureMoments extends TableImpl<ShiftDepartureMomentsRecord> {
 
-    private static final long serialVersionUID = 1747212901;
+    private static final long serialVersionUID = 2008200559;
 
     /**
      * The reference instance of <code>public.shift_departure_moments</code>
@@ -72,7 +72,7 @@ public class ShiftDepartureMoments extends TableImpl<ShiftDepartureMomentsRecord
     /**
      * The column <code>public.shift_departure_moments.departure_moments_id</code>.
      */
-    public final TableField<ShiftDepartureMomentsRecord, Short> DEPARTURE_MOMENTS_ID = createField("departure_moments_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<ShiftDepartureMomentsRecord, Integer> DEPARTURE_MOMENTS_ID = createField("departure_moments_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.shift_departure_moments.order</code>.

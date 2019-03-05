@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftFixedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
 
-    private static final long serialVersionUID = 2029642930;
+    private static final long serialVersionUID = -32367170;
 
     /**
      * The reference instance of <code>public.shift_fixed</code>
@@ -59,7 +59,7 @@ public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
     /**
      * The column <code>public.shift_fixed.shift_schedule_id</code>.
      */
-    public final TableField<ShiftFixedRecord, Short> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<ShiftFixedRecord, Integer> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.shift_fixed.date</code>.
@@ -69,12 +69,12 @@ public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
     /**
      * The column <code>public.shift_fixed.driver_id</code>.
      */
-    public final TableField<ShiftFixedRecord, Short> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<ShiftFixedRecord, Integer> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.shift_fixed.conductor_id</code>.
      */
-    public final TableField<ShiftFixedRecord, Short> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<ShiftFixedRecord, Integer> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.shift_fixed.removed</code>.
