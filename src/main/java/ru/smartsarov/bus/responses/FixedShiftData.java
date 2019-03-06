@@ -7,7 +7,7 @@ public class FixedShiftData {
 	private String routeName;
 	private DriverData driverData;
 	private ConductorData conductorData;
-	private List<DepartureMomentOrderedData> shiftDepartureListId;
+	private List<DepartureMomentOrderedData> shiftDepartureList;
 	public String getRouteName() {
 		return routeName;
 	}
@@ -26,23 +26,23 @@ public class FixedShiftData {
 	public void setConductorData(ConductorData conductorData) {
 		this.conductorData = conductorData;
 	}
-	public List<DepartureMomentOrderedData> getShiftDepartureListId() {
-		return shiftDepartureListId;
+	public List<DepartureMomentOrderedData> getShiftDepartureList() {
+		return shiftDepartureList;
 	}
-	public void setShiftDepartureListId(List<DepartureMomentOrderedData> shiftDepartureListId) {
-		this.shiftDepartureListId = shiftDepartureListId;
+	public void setShiftDepartureList(List<DepartureMomentOrderedData> shiftDepartureList) {
+		this.shiftDepartureList = shiftDepartureList;
 	}
 	public FixedShiftData(String routeName, DriverData driverData, ConductorData conductorData,
-			List<DepartureMomentOrderedData> shiftDepartureListId) {
+			List<DepartureMomentOrderedData> shiftDepartureList) {
 		this.routeName = routeName;
 		this.driverData = driverData;
 		this.conductorData = conductorData;
-		this.shiftDepartureListId = shiftDepartureListId;
+		this.shiftDepartureList = shiftDepartureList;
 	}
 	public FixedShiftData() {
 		this.routeName = "";
 		this.driverData = new DriverData();
 		this.conductorData = new ConductorData();
-		this.shiftDepartureListId = new ArrayList<>();
+		this.shiftDepartureList = new ArrayList<>();
 	}
 }

@@ -16,6 +16,7 @@ import ru.smartsarov.bus.postgres.tables.BusInfo;
 import ru.smartsarov.bus.postgres.tables.BusSnapshot;
 import ru.smartsarov.bus.postgres.tables.BusStopList;
 import ru.smartsarov.bus.postgres.tables.BusStops;
+import ru.smartsarov.bus.postgres.tables.CondEmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.Conductor;
 import ru.smartsarov.bus.postgres.tables.ConductorSchedule;
 import ru.smartsarov.bus.postgres.tables.ConductorScheduleSnapshot;
@@ -30,8 +31,8 @@ import ru.smartsarov.bus.postgres.tables.DriverScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.DriverSnapshot;
 import ru.smartsarov.bus.postgres.tables.EmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.FuelCode;
-import ru.smartsarov.bus.postgres.tables.Intsident;
-import ru.smartsarov.bus.postgres.tables.Position;
+import ru.smartsarov.bus.postgres.tables.GenerationInfo;
+import ru.smartsarov.bus.postgres.tables.Incident;
 import ru.smartsarov.bus.postgres.tables.Race;
 import ru.smartsarov.bus.postgres.tables.RaceSnaphot;
 import ru.smartsarov.bus.postgres.tables.RbBusConditionType;
@@ -39,9 +40,9 @@ import ru.smartsarov.bus.postgres.tables.RbBusMake;
 import ru.smartsarov.bus.postgres.tables.RbBusModel;
 import ru.smartsarov.bus.postgres.tables.RbBusStop;
 import ru.smartsarov.bus.postgres.tables.RbEmployeeScheduleType;
-import ru.smartsarov.bus.postgres.tables.RbEmployeeType;
 import ru.smartsarov.bus.postgres.tables.RbFuelType;
-import ru.smartsarov.bus.postgres.tables.RbIntsidentType;
+import ru.smartsarov.bus.postgres.tables.RbIncidentType;
+import ru.smartsarov.bus.postgres.tables.RbPosition;
 import ru.smartsarov.bus.postgres.tables.RbReadyType;
 import ru.smartsarov.bus.postgres.tables.RbShiftType;
 import ru.smartsarov.bus.postgres.tables.RbStateType;
@@ -59,11 +60,14 @@ import ru.smartsarov.bus.postgres.tables.TechAvailability;
 import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
 import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
+import ru.smartsarov.bus.postgres.tables.User;
+import ru.smartsarov.bus.postgres.tables.UserSession;
 import ru.smartsarov.bus.postgres.tables.records.BusInfoRecord;
 import ru.smartsarov.bus.postgres.tables.records.BusRecord;
 import ru.smartsarov.bus.postgres.tables.records.BusSnapshotRecord;
 import ru.smartsarov.bus.postgres.tables.records.BusStopListRecord;
 import ru.smartsarov.bus.postgres.tables.records.BusStopsRecord;
+import ru.smartsarov.bus.postgres.tables.records.CondEmployeeInfoRecord;
 import ru.smartsarov.bus.postgres.tables.records.ConductorRecord;
 import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleRecord;
 import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleSnapshotRecord;
@@ -78,8 +82,8 @@ import ru.smartsarov.bus.postgres.tables.records.DriverScheduleSnapshotRecord;
 import ru.smartsarov.bus.postgres.tables.records.DriverSnapshotRecord;
 import ru.smartsarov.bus.postgres.tables.records.EmployeeInfoRecord;
 import ru.smartsarov.bus.postgres.tables.records.FuelCodeRecord;
-import ru.smartsarov.bus.postgres.tables.records.IntsidentRecord;
-import ru.smartsarov.bus.postgres.tables.records.PositionRecord;
+import ru.smartsarov.bus.postgres.tables.records.GenerationInfoRecord;
+import ru.smartsarov.bus.postgres.tables.records.IncidentRecord;
 import ru.smartsarov.bus.postgres.tables.records.RaceRecord;
 import ru.smartsarov.bus.postgres.tables.records.RaceSnaphotRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbBusConditionTypeRecord;
@@ -87,9 +91,9 @@ import ru.smartsarov.bus.postgres.tables.records.RbBusMakeRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbBusModelRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbBusStopRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbEmployeeScheduleTypeRecord;
-import ru.smartsarov.bus.postgres.tables.records.RbEmployeeTypeRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbFuelTypeRecord;
-import ru.smartsarov.bus.postgres.tables.records.RbIntsidentTypeRecord;
+import ru.smartsarov.bus.postgres.tables.records.RbIncidentTypeRecord;
+import ru.smartsarov.bus.postgres.tables.records.RbPositionRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbReadyTypeRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbShiftTypeRecord;
 import ru.smartsarov.bus.postgres.tables.records.RbStateTypeRecord;
@@ -107,6 +111,8 @@ import ru.smartsarov.bus.postgres.tables.records.TechAvailabilityRecord;
 import ru.smartsarov.bus.postgres.tables.records.TechAvailabilitySnapshotRecord;
 import ru.smartsarov.bus.postgres.tables.records.TrackCoordinatesRecord;
 import ru.smartsarov.bus.postgres.tables.records.TrackRecord;
+import ru.smartsarov.bus.postgres.tables.records.UserRecord;
+import ru.smartsarov.bus.postgres.tables.records.UserSessionRecord;
 
 
 /**
@@ -132,38 +138,40 @@ public class Keys {
     public static final Identity<BusSnapshotRecord, Integer> IDENTITY_BUS_SNAPSHOT = Identities0.IDENTITY_BUS_SNAPSHOT;
     public static final Identity<BusStopListRecord, Integer> IDENTITY_BUS_STOP_LIST = Identities0.IDENTITY_BUS_STOP_LIST;
     public static final Identity<BusStopsRecord, Integer> IDENTITY_BUS_STOPS = Identities0.IDENTITY_BUS_STOPS;
+    public static final Identity<CondEmployeeInfoRecord, Short> IDENTITY_COND_EMPLOYEE_INFO = Identities0.IDENTITY_COND_EMPLOYEE_INFO;
     public static final Identity<ConductorRecord, Integer> IDENTITY_CONDUCTOR = Identities0.IDENTITY_CONDUCTOR;
-    public static final Identity<ConductorScheduleRecord, Integer> IDENTITY_CONDUCTOR_SCHEDULE = Identities0.IDENTITY_CONDUCTOR_SCHEDULE;
-    public static final Identity<ConductorScheduleSnapshotRecord, Integer> IDENTITY_CONDUCTOR_SCHEDULE_SNAPSHOT = Identities0.IDENTITY_CONDUCTOR_SCHEDULE_SNAPSHOT;
     public static final Identity<ConductorSnapshotRecord, Integer> IDENTITY_CONDUCTOR_SNAPSHOT = Identities0.IDENTITY_CONDUCTOR_SNAPSHOT;
-    public static final Identity<DepartureListRecord, Integer> IDENTITY_DEPARTURE_LIST = Identities0.IDENTITY_DEPARTURE_LIST;
+    public static final Identity<DepartureListRecord, Short> IDENTITY_DEPARTURE_LIST = Identities0.IDENTITY_DEPARTURE_LIST;
     public static final Identity<DepartureMomentsRecord, Integer> IDENTITY_DEPARTURE_MOMENTS = Identities0.IDENTITY_DEPARTURE_MOMENTS;
     public static final Identity<DriverRecord, Integer> IDENTITY_DRIVER = Identities0.IDENTITY_DRIVER;
     public static final Identity<DriverBrigadeRecord, Short> IDENTITY_DRIVER_BRIGADE = Identities0.IDENTITY_DRIVER_BRIGADE;
     public static final Identity<DriverGroupRecord, Short> IDENTITY_DRIVER_GROUP = Identities0.IDENTITY_DRIVER_GROUP;
     public static final Identity<DriverSnapshotRecord, Integer> IDENTITY_DRIVER_SNAPSHOT = Identities0.IDENTITY_DRIVER_SNAPSHOT;
     public static final Identity<EmployeeInfoRecord, Short> IDENTITY_EMPLOYEE_INFO = Identities0.IDENTITY_EMPLOYEE_INFO;
-    public static final Identity<FuelCodeRecord, Integer> IDENTITY_FUEL_CODE = Identities0.IDENTITY_FUEL_CODE;
-    public static final Identity<IntsidentRecord, Integer> IDENTITY_INTSIDENT = Identities0.IDENTITY_INTSIDENT;
-    public static final Identity<PositionRecord, Integer> IDENTITY_POSITION = Identities0.IDENTITY_POSITION;
+    public static final Identity<FuelCodeRecord, Short> IDENTITY_FUEL_CODE = Identities0.IDENTITY_FUEL_CODE;
+    public static final Identity<IncidentRecord, Integer> IDENTITY_INCIDENT = Identities0.IDENTITY_INCIDENT;
     public static final Identity<RaceRecord, Integer> IDENTITY_RACE = Identities0.IDENTITY_RACE;
     public static final Identity<RaceSnaphotRecord, Integer> IDENTITY_RACE_SNAPHOT = Identities0.IDENTITY_RACE_SNAPHOT;
     public static final Identity<RbBusConditionTypeRecord, Short> IDENTITY_RB_BUS_CONDITION_TYPE = Identities0.IDENTITY_RB_BUS_CONDITION_TYPE;
     public static final Identity<RbBusMakeRecord, Short> IDENTITY_RB_BUS_MAKE = Identities0.IDENTITY_RB_BUS_MAKE;
     public static final Identity<RbBusModelRecord, Short> IDENTITY_RB_BUS_MODEL = Identities0.IDENTITY_RB_BUS_MODEL;
     public static final Identity<RbBusStopRecord, Integer> IDENTITY_RB_BUS_STOP = Identities0.IDENTITY_RB_BUS_STOP;
-    public static final Identity<RbEmployeeScheduleTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE = Identities0.IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE;
-    public static final Identity<RbEmployeeTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_TYPE = Identities0.IDENTITY_RB_EMPLOYEE_TYPE;
-    public static final Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Identities0.IDENTITY_RB_FUEL_TYPE;
+    public static final Identity<RbEmployeeScheduleTypeRecord, Short> IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE = Identities0.IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE;
+    public static final Identity<RbFuelTypeRecord, Short> IDENTITY_RB_FUEL_TYPE = Identities0.IDENTITY_RB_FUEL_TYPE;
+    public static final Identity<RbPositionRecord, Short> IDENTITY_RB_POSITION = Identities0.IDENTITY_RB_POSITION;
     public static final Identity<RbReadyTypeRecord, Short> IDENTITY_RB_READY_TYPE = Identities0.IDENTITY_RB_READY_TYPE;
+    public static final Identity<RbShiftTypeRecord, Short> IDENTITY_RB_SHIFT_TYPE = Identities0.IDENTITY_RB_SHIFT_TYPE;
     public static final Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Identities0.IDENTITY_RB_STATE_TYPE;
     public static final Identity<RouteRecord, Short> IDENTITY_ROUTE = Identities0.IDENTITY_ROUTE;
     public static final Identity<ShiftDepartureListRecord, Short> IDENTITY_SHIFT_DEPARTURE_LIST = Identities0.IDENTITY_SHIFT_DEPARTURE_LIST;
     public static final Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Identities0.IDENTITY_SHIFT_DEPARTURE_MOMENTS;
+    public static final Identity<ShiftFixedRecord, Integer> IDENTITY_SHIFT_FIXED = Identities0.IDENTITY_SHIFT_FIXED;
+    public static final Identity<ShiftFixedSnapshotRecord, Integer> IDENTITY_SHIFT_FIXED_SNAPSHOT = Identities0.IDENTITY_SHIFT_FIXED_SNAPSHOT;
     public static final Identity<ShiftScheduleRecord, Integer> IDENTITY_SHIFT_SCHEDULE = Identities0.IDENTITY_SHIFT_SCHEDULE;
     public static final Identity<ShiftScheduleSnapshotRecord, Integer> IDENTITY_SHIFT_SCHEDULE_SNAPSHOT = Identities0.IDENTITY_SHIFT_SCHEDULE_SNAPSHOT;
     public static final Identity<TrackRecord, Integer> IDENTITY_TRACK = Identities0.IDENTITY_TRACK;
     public static final Identity<TrackCoordinatesRecord, Integer> IDENTITY_TRACK_COORDINATES = Identities0.IDENTITY_TRACK_COORDINATES;
+    public static final Identity<UserRecord, Integer> IDENTITY_USER = Identities0.IDENTITY_USER;
 
     // -------------------------------------------------------------------------
     // UNIQUE and PRIMARY KEY definitions
@@ -175,6 +183,7 @@ public class Keys {
     public static final UniqueKey<BusSnapshotRecord> PK_BUS_SNAPSHOT_TBL = UniqueKeys0.PK_BUS_SNAPSHOT_TBL;
     public static final UniqueKey<BusStopListRecord> PK_BUS_STOP_LIST_TBL = UniqueKeys0.PK_BUS_STOP_LIST_TBL;
     public static final UniqueKey<BusStopsRecord> PK_BUS_STOPS_TBL = UniqueKeys0.PK_BUS_STOPS_TBL;
+    public static final UniqueKey<CondEmployeeInfoRecord> PK_COND_EMPLOYEE_INFO_TBL = UniqueKeys0.PK_COND_EMPLOYEE_INFO_TBL;
     public static final UniqueKey<ConductorRecord> PK_CONDUCTOR_TBL_ID = UniqueKeys0.PK_CONDUCTOR_TBL_ID;
     public static final UniqueKey<ConductorScheduleRecord> PK_CONDUCTOR_SCHEDULE_TBL = UniqueKeys0.PK_CONDUCTOR_SCHEDULE_TBL;
     public static final UniqueKey<ConductorScheduleSnapshotRecord> PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL = UniqueKeys0.PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL;
@@ -189,8 +198,8 @@ public class Keys {
     public static final UniqueKey<DriverSnapshotRecord> PK_EMPLOYEE_SNAPSHOT_TBL = UniqueKeys0.PK_EMPLOYEE_SNAPSHOT_TBL;
     public static final UniqueKey<EmployeeInfoRecord> PK_EMPLOYEE_INFO_TBL = UniqueKeys0.PK_EMPLOYEE_INFO_TBL;
     public static final UniqueKey<FuelCodeRecord> PK_FUEL_CODE_TBL = UniqueKeys0.PK_FUEL_CODE_TBL;
-    public static final UniqueKey<IntsidentRecord> PK_INTSIDENT = UniqueKeys0.PK_INTSIDENT;
-    public static final UniqueKey<PositionRecord> PK_POSITION_TBL = UniqueKeys0.PK_POSITION_TBL;
+    public static final UniqueKey<GenerationInfoRecord> PK_GENERATION_INFO_TBL = UniqueKeys0.PK_GENERATION_INFO_TBL;
+    public static final UniqueKey<IncidentRecord> PK_INCIDENT = UniqueKeys0.PK_INCIDENT;
     public static final UniqueKey<RaceRecord> PK_RACE_TBL = UniqueKeys0.PK_RACE_TBL;
     public static final UniqueKey<RaceSnaphotRecord> PK_RACE_SNAPHOT_TBL = UniqueKeys0.PK_RACE_SNAPHOT_TBL;
     public static final UniqueKey<RbBusConditionTypeRecord> PK_BUS_CONDITION_TBL = UniqueKeys0.PK_BUS_CONDITION_TBL;
@@ -198,9 +207,9 @@ public class Keys {
     public static final UniqueKey<RbBusModelRecord> PK_RB_BUS_MODEL_TBL = UniqueKeys0.PK_RB_BUS_MODEL_TBL;
     public static final UniqueKey<RbBusStopRecord> PK_RB_BUS_STOP_TBL = UniqueKeys0.PK_RB_BUS_STOP_TBL;
     public static final UniqueKey<RbEmployeeScheduleTypeRecord> PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL = UniqueKeys0.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL;
-    public static final UniqueKey<RbEmployeeTypeRecord> PK_RB_EMPLOYEE_TYPE_TBL = UniqueKeys0.PK_RB_EMPLOYEE_TYPE_TBL;
     public static final UniqueKey<RbFuelTypeRecord> PL_RB_FUEL_TYPE_TBL = UniqueKeys0.PL_RB_FUEL_TYPE_TBL;
-    public static final UniqueKey<RbIntsidentTypeRecord> PK_INTSIDENT_TYPE_TBL = UniqueKeys0.PK_INTSIDENT_TYPE_TBL;
+    public static final UniqueKey<RbIncidentTypeRecord> PK_INCIDENT_TYPE_TBL = UniqueKeys0.PK_INCIDENT_TYPE_TBL;
+    public static final UniqueKey<RbPositionRecord> PK_RB_POSITION_TBL = UniqueKeys0.PK_RB_POSITION_TBL;
     public static final UniqueKey<RbReadyTypeRecord> PK_RB_READY_TYPE_TBL = UniqueKeys0.PK_RB_READY_TYPE_TBL;
     public static final UniqueKey<RbShiftTypeRecord> PK_SHIFT_TYPE_TBL = UniqueKeys0.PK_SHIFT_TYPE_TBL;
     public static final UniqueKey<RbStateTypeRecord> PK_RB_STATE_TYPE_TBL = UniqueKeys0.PK_RB_STATE_TYPE_TBL;
@@ -219,6 +228,8 @@ public class Keys {
     public static final UniqueKey<TechAvailabilitySnapshotRecord> PK_TECH_SNAPSHOT_AVAILABILITY_TBL = UniqueKeys0.PK_TECH_SNAPSHOT_AVAILABILITY_TBL;
     public static final UniqueKey<TrackRecord> PK_TRACK_TBL = UniqueKeys0.PK_TRACK_TBL;
     public static final UniqueKey<TrackCoordinatesRecord> PK_TRACK_COORDINATES_TBL = UniqueKeys0.PK_TRACK_COORDINATES_TBL;
+    public static final UniqueKey<UserRecord> PK_USER_ID = UniqueKeys0.PK_USER_ID;
+    public static final UniqueKey<UserSessionRecord> PK_USER_SESSION_TBL = UniqueKeys0.PK_USER_SESSION_TBL;
 
     // -------------------------------------------------------------------------
     // FOREIGN KEY definitions
@@ -235,8 +246,8 @@ public class Keys {
     public static final ForeignKey<BusStopsRecord, BusStopListRecord> BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_LIST_ID = ForeignKeys0.BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_LIST_ID;
     public static final ForeignKey<BusStopsRecord, RbBusStopRecord> BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_ID = ForeignKeys0.BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_ID;
     public static final ForeignKey<ConductorRecord, RbEmployeeScheduleTypeRecord> CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK;
-    public static final ForeignKey<ConductorRecord, EmployeeInfoRecord> CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID;
-    public static final ForeignKey<ConductorRecord, PositionRecord> CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID;
+    public static final ForeignKey<ConductorRecord, CondEmployeeInfoRecord> CONDUCTOR__FK_CONDUCTOR_TBL_COND_EMPLOYEE_DATA_ID = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_COND_EMPLOYEE_DATA_ID;
+    public static final ForeignKey<ConductorRecord, RbPositionRecord> CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID;
     public static final ForeignKey<ConductorRecord, RbStateTypeRecord> CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK = ForeignKeys0.CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK;
     public static final ForeignKey<ConductorScheduleRecord, ConductorRecord> CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_CONDUCTOR_ID = ForeignKeys0.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_CONDUCTOR_ID;
     public static final ForeignKey<ConductorScheduleRecord, RbShiftTypeRecord> CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID = ForeignKeys0.CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID;
@@ -245,12 +256,12 @@ public class Keys {
     public static final ForeignKey<ConductorScheduleSnapshotRecord, RbShiftTypeRecord> CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID = ForeignKeys0.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID;
     public static final ForeignKey<ConductorScheduleSnapshotRecord, RbReadyTypeRecord> CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID = ForeignKeys0.CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID;
     public static final ForeignKey<ConductorSnapshotRecord, RbEmployeeScheduleTypeRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID;
-    public static final ForeignKey<ConductorSnapshotRecord, EmployeeInfoRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID;
-    public static final ForeignKey<ConductorSnapshotRecord, PositionRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID;
+    public static final ForeignKey<ConductorSnapshotRecord, CondEmployeeInfoRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID;
+    public static final ForeignKey<ConductorSnapshotRecord, RbPositionRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID;
     public static final ForeignKey<ConductorSnapshotRecord, RbStateTypeRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_STATE_ID = ForeignKeys0.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_STATE_ID;
     public static final ForeignKey<DepartureMomentsRecord, DepartureListRecord> DEPARTURE_MOMENTS__FK_DEPARTURE_MOMENTS_TBL_DEPARTURE_LIST_ID = ForeignKeys0.DEPARTURE_MOMENTS__FK_DEPARTURE_MOMENTS_TBL_DEPARTURE_LIST_ID;
     public static final ForeignKey<DriverRecord, EmployeeInfoRecord> DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID = ForeignKeys0.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID;
-    public static final ForeignKey<DriverRecord, PositionRecord> DRIVER__FK_DRIVER_TBL_POSITION_ID = ForeignKeys0.DRIVER__FK_DRIVER_TBL_POSITION_ID;
+    public static final ForeignKey<DriverRecord, RbPositionRecord> DRIVER__FK_DRIVER_TBL_POSITION_ID = ForeignKeys0.DRIVER__FK_DRIVER_TBL_POSITION_ID;
     public static final ForeignKey<DriverRecord, BusRecord> DRIVER__FK_DRIVER_TBL_BUS_ID = ForeignKeys0.DRIVER__FK_DRIVER_TBL_BUS_ID;
     public static final ForeignKey<DriverRecord, DriverGroupRecord> DRIVER__FK_DRIVER_TBL_GROUP_ID = ForeignKeys0.DRIVER__FK_DRIVER_TBL_GROUP_ID;
     public static final ForeignKey<DriverRecord, RbEmployeeScheduleTypeRecord> DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE = ForeignKeys0.DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE;
@@ -263,22 +274,21 @@ public class Keys {
     public static final ForeignKey<DriverScheduleSnapshotRecord, RbShiftTypeRecord> DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID = ForeignKeys0.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID;
     public static final ForeignKey<DriverScheduleSnapshotRecord, RbReadyTypeRecord> DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID = ForeignKeys0.DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID;
     public static final ForeignKey<DriverSnapshotRecord, EmployeeInfoRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID;
-    public static final ForeignKey<DriverSnapshotRecord, PositionRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID;
+    public static final ForeignKey<DriverSnapshotRecord, RbPositionRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID;
     public static final ForeignKey<DriverSnapshotRecord, BusRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_BUS_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_BUS_ID;
     public static final ForeignKey<DriverSnapshotRecord, DriverGroupRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_GROUP_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_GROUP_ID;
     public static final ForeignKey<DriverSnapshotRecord, RbEmployeeScheduleTypeRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE;
     public static final ForeignKey<DriverSnapshotRecord, RbStateTypeRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_STATE_ID = ForeignKeys0.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_STATE_ID;
-    public static final ForeignKey<EmployeeInfoRecord, RbEmployeeTypeRecord> EMPLOYEE_INFO__FK_EMPLOYEE_INFO_EMPLOYEE_TYPE_ID = ForeignKeys0.EMPLOYEE_INFO__FK_EMPLOYEE_INFO_EMPLOYEE_TYPE_ID;
     public static final ForeignKey<FuelCodeRecord, RbFuelTypeRecord> FUEL_CODE__FK_BUS_DATA_TBL_FUEL_TYPE = ForeignKeys0.FUEL_CODE__FK_BUS_DATA_TBL_FUEL_TYPE;
-    public static final ForeignKey<IntsidentRecord, RbIntsidentTypeRecord> INTSIDENT__FK_INTSIDENT_TBL_TYPE = ForeignKeys0.INTSIDENT__FK_INTSIDENT_TBL_TYPE;
+    public static final ForeignKey<IncidentRecord, RbIncidentTypeRecord> INCIDENT__FK_INCIDENT_TBL_TYPE = ForeignKeys0.INCIDENT__FK_INCIDENT_TBL_TYPE;
     public static final ForeignKey<RaceRecord, DriverRecord> RACE__FK_RACE_TBL_DRIVER_ID = ForeignKeys0.RACE__FK_RACE_TBL_DRIVER_ID;
     public static final ForeignKey<RaceRecord, ConductorRecord> RACE__FK_RACE_TBL_CONDUCTOR_ID = ForeignKeys0.RACE__FK_RACE_TBL_CONDUCTOR_ID;
     public static final ForeignKey<RaceRecord, BusRecord> RACE__FK_RACE_TBL_BUS_ID = ForeignKeys0.RACE__FK_RACE_TBL_BUS_ID;
-    public static final ForeignKey<RaceRecord, IntsidentRecord> RACE__FK_RACE_TBL_INTSIDENT_ID_FK = ForeignKeys0.RACE__FK_RACE_TBL_INTSIDENT_ID_FK;
+    public static final ForeignKey<RaceRecord, IncidentRecord> RACE__FK_RACE_TBL_INCIDENT_ID_FK = ForeignKeys0.RACE__FK_RACE_TBL_INCIDENT_ID_FK;
     public static final ForeignKey<RaceSnaphotRecord, DriverRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_DRIVER_ID = ForeignKeys0.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_DRIVER_ID;
     public static final ForeignKey<RaceSnaphotRecord, ConductorRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_CONDUCTOR_ID = ForeignKeys0.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_CONDUCTOR_ID;
     public static final ForeignKey<RaceSnaphotRecord, BusRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID = ForeignKeys0.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID;
-    public static final ForeignKey<RaceSnaphotRecord, IntsidentRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INTSIDENT_ID_FK = ForeignKeys0.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INTSIDENT_ID_FK;
+    public static final ForeignKey<RaceSnaphotRecord, IncidentRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INCIDENT_ID_FK = ForeignKeys0.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INCIDENT_ID_FK;
     public static final ForeignKey<RouteRecord, BusStopListRecord> ROUTE__FK_ROUTE_TBL_BUS_STOP_LIST_ID = ForeignKeys0.ROUTE__FK_ROUTE_TBL_BUS_STOP_LIST_ID;
     public static final ForeignKey<RouteRecord, TrackRecord> ROUTE__FK_ROUTE_TRACK_TBL_ID = ForeignKeys0.ROUTE__FK_ROUTE_TRACK_TBL_ID;
     public static final ForeignKey<RouteScheduleRecord, RouteRecord> ROUTE_SCHEDULE__FK_ROUTE_SCHEDULE_TBL_ROUTE_ID = ForeignKeys0.ROUTE_SCHEDULE__FK_ROUTE_SCHEDULE_TBL_ROUTE_ID;
@@ -304,6 +314,7 @@ public class Keys {
     public static final ForeignKey<TechAvailabilitySnapshotRecord, BusRecord> TECH_AVAILABILITY_SNAPSHOT__FK__TECH_SNAPSHOT_AVAILABILITY_TBL_BUS_ID = ForeignKeys0.TECH_AVAILABILITY_SNAPSHOT__FK__TECH_SNAPSHOT_AVAILABILITY_TBL_BUS_ID;
     public static final ForeignKey<TechAvailabilitySnapshotRecord, RbBusConditionTypeRecord> TECH_AVAILABILITY_SNAPSHOT__FK_TECH_AVAILABILITY_SNAPSHOT_TBL_BUS_CONDITION_ID = ForeignKeys0.TECH_AVAILABILITY_SNAPSHOT__FK_TECH_AVAILABILITY_SNAPSHOT_TBL_BUS_CONDITION_ID;
     public static final ForeignKey<TrackCoordinatesRecord, TrackRecord> TRACK_COORDINATES__FK_TRACK_COORDINATES_TBL_TRACK_ID = ForeignKeys0.TRACK_COORDINATES__FK_TRACK_COORDINATES_TBL_TRACK_ID;
+    public static final ForeignKey<UserSessionRecord, UserRecord> USER_SESSION__FK_USER_SESSION_TBL_USER_ID = ForeignKeys0.USER_SESSION__FK_USER_SESSION_TBL_USER_ID;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -315,38 +326,40 @@ public class Keys {
         public static Identity<BusSnapshotRecord, Integer> IDENTITY_BUS_SNAPSHOT = Internal.createIdentity(BusSnapshot.BUS_SNAPSHOT, BusSnapshot.BUS_SNAPSHOT.ID);
         public static Identity<BusStopListRecord, Integer> IDENTITY_BUS_STOP_LIST = Internal.createIdentity(BusStopList.BUS_STOP_LIST, BusStopList.BUS_STOP_LIST.ID);
         public static Identity<BusStopsRecord, Integer> IDENTITY_BUS_STOPS = Internal.createIdentity(BusStops.BUS_STOPS, BusStops.BUS_STOPS.ID);
+        public static Identity<CondEmployeeInfoRecord, Short> IDENTITY_COND_EMPLOYEE_INFO = Internal.createIdentity(CondEmployeeInfo.COND_EMPLOYEE_INFO, CondEmployeeInfo.COND_EMPLOYEE_INFO.ID);
         public static Identity<ConductorRecord, Integer> IDENTITY_CONDUCTOR = Internal.createIdentity(Conductor.CONDUCTOR, Conductor.CONDUCTOR.ID);
-        public static Identity<ConductorScheduleRecord, Integer> IDENTITY_CONDUCTOR_SCHEDULE = Internal.createIdentity(ConductorSchedule.CONDUCTOR_SCHEDULE, ConductorSchedule.CONDUCTOR_SCHEDULE.CONDUCTOR_ID);
-        public static Identity<ConductorScheduleSnapshotRecord, Integer> IDENTITY_CONDUCTOR_SCHEDULE_SNAPSHOT = Internal.createIdentity(ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.CONDUCTOR_ID);
         public static Identity<ConductorSnapshotRecord, Integer> IDENTITY_CONDUCTOR_SNAPSHOT = Internal.createIdentity(ConductorSnapshot.CONDUCTOR_SNAPSHOT, ConductorSnapshot.CONDUCTOR_SNAPSHOT.ID);
-        public static Identity<DepartureListRecord, Integer> IDENTITY_DEPARTURE_LIST = Internal.createIdentity(DepartureList.DEPARTURE_LIST, DepartureList.DEPARTURE_LIST.ID);
+        public static Identity<DepartureListRecord, Short> IDENTITY_DEPARTURE_LIST = Internal.createIdentity(DepartureList.DEPARTURE_LIST, DepartureList.DEPARTURE_LIST.ID);
         public static Identity<DepartureMomentsRecord, Integer> IDENTITY_DEPARTURE_MOMENTS = Internal.createIdentity(DepartureMoments.DEPARTURE_MOMENTS, DepartureMoments.DEPARTURE_MOMENTS.ID);
         public static Identity<DriverRecord, Integer> IDENTITY_DRIVER = Internal.createIdentity(Driver.DRIVER, Driver.DRIVER.ID);
         public static Identity<DriverBrigadeRecord, Short> IDENTITY_DRIVER_BRIGADE = Internal.createIdentity(DriverBrigade.DRIVER_BRIGADE, DriverBrigade.DRIVER_BRIGADE.ID);
         public static Identity<DriverGroupRecord, Short> IDENTITY_DRIVER_GROUP = Internal.createIdentity(DriverGroup.DRIVER_GROUP, DriverGroup.DRIVER_GROUP.ID);
         public static Identity<DriverSnapshotRecord, Integer> IDENTITY_DRIVER_SNAPSHOT = Internal.createIdentity(DriverSnapshot.DRIVER_SNAPSHOT, DriverSnapshot.DRIVER_SNAPSHOT.ID);
         public static Identity<EmployeeInfoRecord, Short> IDENTITY_EMPLOYEE_INFO = Internal.createIdentity(EmployeeInfo.EMPLOYEE_INFO, EmployeeInfo.EMPLOYEE_INFO.ID);
-        public static Identity<FuelCodeRecord, Integer> IDENTITY_FUEL_CODE = Internal.createIdentity(FuelCode.FUEL_CODE, FuelCode.FUEL_CODE.ID);
-        public static Identity<IntsidentRecord, Integer> IDENTITY_INTSIDENT = Internal.createIdentity(Intsident.INTSIDENT, Intsident.INTSIDENT.ID);
-        public static Identity<PositionRecord, Integer> IDENTITY_POSITION = Internal.createIdentity(Position.POSITION, Position.POSITION.ID);
+        public static Identity<FuelCodeRecord, Short> IDENTITY_FUEL_CODE = Internal.createIdentity(FuelCode.FUEL_CODE, FuelCode.FUEL_CODE.ID);
+        public static Identity<IncidentRecord, Integer> IDENTITY_INCIDENT = Internal.createIdentity(Incident.INCIDENT, Incident.INCIDENT.ID);
         public static Identity<RaceRecord, Integer> IDENTITY_RACE = Internal.createIdentity(Race.RACE, Race.RACE.ID);
         public static Identity<RaceSnaphotRecord, Integer> IDENTITY_RACE_SNAPHOT = Internal.createIdentity(RaceSnaphot.RACE_SNAPHOT, RaceSnaphot.RACE_SNAPHOT.ID);
         public static Identity<RbBusConditionTypeRecord, Short> IDENTITY_RB_BUS_CONDITION_TYPE = Internal.createIdentity(RbBusConditionType.RB_BUS_CONDITION_TYPE, RbBusConditionType.RB_BUS_CONDITION_TYPE.ID);
         public static Identity<RbBusMakeRecord, Short> IDENTITY_RB_BUS_MAKE = Internal.createIdentity(RbBusMake.RB_BUS_MAKE, RbBusMake.RB_BUS_MAKE.ID);
         public static Identity<RbBusModelRecord, Short> IDENTITY_RB_BUS_MODEL = Internal.createIdentity(RbBusModel.RB_BUS_MODEL, RbBusModel.RB_BUS_MODEL.ID);
         public static Identity<RbBusStopRecord, Integer> IDENTITY_RB_BUS_STOP = Internal.createIdentity(RbBusStop.RB_BUS_STOP, RbBusStop.RB_BUS_STOP.ID);
-        public static Identity<RbEmployeeScheduleTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE = Internal.createIdentity(RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE, RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE.ID);
-        public static Identity<RbEmployeeTypeRecord, Integer> IDENTITY_RB_EMPLOYEE_TYPE = Internal.createIdentity(RbEmployeeType.RB_EMPLOYEE_TYPE, RbEmployeeType.RB_EMPLOYEE_TYPE.ID);
-        public static Identity<RbFuelTypeRecord, Integer> IDENTITY_RB_FUEL_TYPE = Internal.createIdentity(RbFuelType.RB_FUEL_TYPE, RbFuelType.RB_FUEL_TYPE.ID);
+        public static Identity<RbEmployeeScheduleTypeRecord, Short> IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE = Internal.createIdentity(RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE, RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE.ID);
+        public static Identity<RbFuelTypeRecord, Short> IDENTITY_RB_FUEL_TYPE = Internal.createIdentity(RbFuelType.RB_FUEL_TYPE, RbFuelType.RB_FUEL_TYPE.ID);
+        public static Identity<RbPositionRecord, Short> IDENTITY_RB_POSITION = Internal.createIdentity(RbPosition.RB_POSITION, RbPosition.RB_POSITION.ID);
         public static Identity<RbReadyTypeRecord, Short> IDENTITY_RB_READY_TYPE = Internal.createIdentity(RbReadyType.RB_READY_TYPE, RbReadyType.RB_READY_TYPE.ID);
+        public static Identity<RbShiftTypeRecord, Short> IDENTITY_RB_SHIFT_TYPE = Internal.createIdentity(RbShiftType.RB_SHIFT_TYPE, RbShiftType.RB_SHIFT_TYPE.ID);
         public static Identity<RbStateTypeRecord, Short> IDENTITY_RB_STATE_TYPE = Internal.createIdentity(RbStateType.RB_STATE_TYPE, RbStateType.RB_STATE_TYPE.ID);
         public static Identity<RouteRecord, Short> IDENTITY_ROUTE = Internal.createIdentity(Route.ROUTE, Route.ROUTE.ID);
         public static Identity<ShiftDepartureListRecord, Short> IDENTITY_SHIFT_DEPARTURE_LIST = Internal.createIdentity(ShiftDepartureList.SHIFT_DEPARTURE_LIST, ShiftDepartureList.SHIFT_DEPARTURE_LIST.ID);
         public static Identity<ShiftDepartureMomentsRecord, Integer> IDENTITY_SHIFT_DEPARTURE_MOMENTS = Internal.createIdentity(ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS, ShiftDepartureMoments.SHIFT_DEPARTURE_MOMENTS.ID);
+        public static Identity<ShiftFixedRecord, Integer> IDENTITY_SHIFT_FIXED = Internal.createIdentity(ShiftFixed.SHIFT_FIXED, ShiftFixed.SHIFT_FIXED.SHIFT_SCHEDULE_ID);
+        public static Identity<ShiftFixedSnapshotRecord, Integer> IDENTITY_SHIFT_FIXED_SNAPSHOT = Internal.createIdentity(ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT, ShiftFixedSnapshot.SHIFT_FIXED_SNAPSHOT.SHIFT_SCHEDULE_ID);
         public static Identity<ShiftScheduleRecord, Integer> IDENTITY_SHIFT_SCHEDULE = Internal.createIdentity(ShiftSchedule.SHIFT_SCHEDULE, ShiftSchedule.SHIFT_SCHEDULE.ID);
         public static Identity<ShiftScheduleSnapshotRecord, Integer> IDENTITY_SHIFT_SCHEDULE_SNAPSHOT = Internal.createIdentity(ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT, ShiftScheduleSnapshot.SHIFT_SCHEDULE_SNAPSHOT.ID);
         public static Identity<TrackRecord, Integer> IDENTITY_TRACK = Internal.createIdentity(Track.TRACK, Track.TRACK.ID);
         public static Identity<TrackCoordinatesRecord, Integer> IDENTITY_TRACK_COORDINATES = Internal.createIdentity(TrackCoordinates.TRACK_COORDINATES, TrackCoordinates.TRACK_COORDINATES.ID);
+        public static Identity<UserRecord, Integer> IDENTITY_USER = Internal.createIdentity(User.USER, User.USER.ID);
     }
 
     private static class UniqueKeys0 {
@@ -356,6 +369,7 @@ public class Keys {
         public static final UniqueKey<BusSnapshotRecord> PK_BUS_SNAPSHOT_TBL = Internal.createUniqueKey(BusSnapshot.BUS_SNAPSHOT, "pk_bus_snapshot_tbl", BusSnapshot.BUS_SNAPSHOT.ID, BusSnapshot.BUS_SNAPSHOT.CREATED_AT);
         public static final UniqueKey<BusStopListRecord> PK_BUS_STOP_LIST_TBL = Internal.createUniqueKey(BusStopList.BUS_STOP_LIST, "pk_bus_stop_list_tbl", BusStopList.BUS_STOP_LIST.ID);
         public static final UniqueKey<BusStopsRecord> PK_BUS_STOPS_TBL = Internal.createUniqueKey(BusStops.BUS_STOPS, "pk_bus_stops_tbl", BusStops.BUS_STOPS.ID);
+        public static final UniqueKey<CondEmployeeInfoRecord> PK_COND_EMPLOYEE_INFO_TBL = Internal.createUniqueKey(CondEmployeeInfo.COND_EMPLOYEE_INFO, "pk_cond_employee_info_tbl", CondEmployeeInfo.COND_EMPLOYEE_INFO.ID);
         public static final UniqueKey<ConductorRecord> PK_CONDUCTOR_TBL_ID = Internal.createUniqueKey(Conductor.CONDUCTOR, "pk_conductor_tbl_id", Conductor.CONDUCTOR.ID);
         public static final UniqueKey<ConductorScheduleRecord> PK_CONDUCTOR_SCHEDULE_TBL = Internal.createUniqueKey(ConductorSchedule.CONDUCTOR_SCHEDULE, "pk_conductor_schedule_tbl", ConductorSchedule.CONDUCTOR_SCHEDULE.CONDUCTOR_ID, ConductorSchedule.CONDUCTOR_SCHEDULE.DATE);
         public static final UniqueKey<ConductorScheduleSnapshotRecord> PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL = Internal.createUniqueKey(ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT, "pk_conductor_schedule_snapshot_tbl", ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.CONDUCTOR_ID, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.DATE, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.CREATED_AT);
@@ -370,8 +384,8 @@ public class Keys {
         public static final UniqueKey<DriverSnapshotRecord> PK_EMPLOYEE_SNAPSHOT_TBL = Internal.createUniqueKey(DriverSnapshot.DRIVER_SNAPSHOT, "pk_employee_snapshot_tbl", DriverSnapshot.DRIVER_SNAPSHOT.ID, DriverSnapshot.DRIVER_SNAPSHOT.CREATED_AT);
         public static final UniqueKey<EmployeeInfoRecord> PK_EMPLOYEE_INFO_TBL = Internal.createUniqueKey(EmployeeInfo.EMPLOYEE_INFO, "pk_employee_info_tbl", EmployeeInfo.EMPLOYEE_INFO.ID);
         public static final UniqueKey<FuelCodeRecord> PK_FUEL_CODE_TBL = Internal.createUniqueKey(FuelCode.FUEL_CODE, "pk_fuel_code_tbl", FuelCode.FUEL_CODE.ID);
-        public static final UniqueKey<IntsidentRecord> PK_INTSIDENT = Internal.createUniqueKey(Intsident.INTSIDENT, "pk_intsident", Intsident.INTSIDENT.ID);
-        public static final UniqueKey<PositionRecord> PK_POSITION_TBL = Internal.createUniqueKey(Position.POSITION, "pk_position_tbl", Position.POSITION.ID);
+        public static final UniqueKey<GenerationInfoRecord> PK_GENERATION_INFO_TBL = Internal.createUniqueKey(GenerationInfo.GENERATION_INFO, "pk_generation_info_tbl", GenerationInfo.GENERATION_INFO.DATE);
+        public static final UniqueKey<IncidentRecord> PK_INCIDENT = Internal.createUniqueKey(Incident.INCIDENT, "pk_incident", Incident.INCIDENT.ID);
         public static final UniqueKey<RaceRecord> PK_RACE_TBL = Internal.createUniqueKey(Race.RACE, "pk_race_tbl", Race.RACE.ID);
         public static final UniqueKey<RaceSnaphotRecord> PK_RACE_SNAPHOT_TBL = Internal.createUniqueKey(RaceSnaphot.RACE_SNAPHOT, "pk_race_snaphot_tbl", RaceSnaphot.RACE_SNAPHOT.ID, RaceSnaphot.RACE_SNAPHOT.CREATED_AT);
         public static final UniqueKey<RbBusConditionTypeRecord> PK_BUS_CONDITION_TBL = Internal.createUniqueKey(RbBusConditionType.RB_BUS_CONDITION_TYPE, "pk_bus_condition_tbl", RbBusConditionType.RB_BUS_CONDITION_TYPE.ID);
@@ -379,9 +393,9 @@ public class Keys {
         public static final UniqueKey<RbBusModelRecord> PK_RB_BUS_MODEL_TBL = Internal.createUniqueKey(RbBusModel.RB_BUS_MODEL, "pk_rb_bus_model_tbl", RbBusModel.RB_BUS_MODEL.ID);
         public static final UniqueKey<RbBusStopRecord> PK_RB_BUS_STOP_TBL = Internal.createUniqueKey(RbBusStop.RB_BUS_STOP, "pk_rb_bus_stop_tbl", RbBusStop.RB_BUS_STOP.ID);
         public static final UniqueKey<RbEmployeeScheduleTypeRecord> PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL = Internal.createUniqueKey(RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE, "pk_rb_employee_schedule_type_tbl", RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE.ID);
-        public static final UniqueKey<RbEmployeeTypeRecord> PK_RB_EMPLOYEE_TYPE_TBL = Internal.createUniqueKey(RbEmployeeType.RB_EMPLOYEE_TYPE, "pk_rb_employee_type_tbl", RbEmployeeType.RB_EMPLOYEE_TYPE.ID);
         public static final UniqueKey<RbFuelTypeRecord> PL_RB_FUEL_TYPE_TBL = Internal.createUniqueKey(RbFuelType.RB_FUEL_TYPE, "pl_rb_fuel_type_tbl", RbFuelType.RB_FUEL_TYPE.ID);
-        public static final UniqueKey<RbIntsidentTypeRecord> PK_INTSIDENT_TYPE_TBL = Internal.createUniqueKey(RbIntsidentType.RB_INTSIDENT_TYPE, "pk_intsident_type_tbl", RbIntsidentType.RB_INTSIDENT_TYPE.ID);
+        public static final UniqueKey<RbIncidentTypeRecord> PK_INCIDENT_TYPE_TBL = Internal.createUniqueKey(RbIncidentType.RB_INCIDENT_TYPE, "pk_incident_type_tbl", RbIncidentType.RB_INCIDENT_TYPE.ID);
+        public static final UniqueKey<RbPositionRecord> PK_RB_POSITION_TBL = Internal.createUniqueKey(RbPosition.RB_POSITION, "pk_rb_position_tbl", RbPosition.RB_POSITION.ID);
         public static final UniqueKey<RbReadyTypeRecord> PK_RB_READY_TYPE_TBL = Internal.createUniqueKey(RbReadyType.RB_READY_TYPE, "pk_rb_ready_type_tbl", RbReadyType.RB_READY_TYPE.ID);
         public static final UniqueKey<RbShiftTypeRecord> PK_SHIFT_TYPE_TBL = Internal.createUniqueKey(RbShiftType.RB_SHIFT_TYPE, "pk_shift_type_tbl", RbShiftType.RB_SHIFT_TYPE.ID);
         public static final UniqueKey<RbStateTypeRecord> PK_RB_STATE_TYPE_TBL = Internal.createUniqueKey(RbStateType.RB_STATE_TYPE, "pk_rb_state_type_tbl", RbStateType.RB_STATE_TYPE.ID);
@@ -400,6 +414,8 @@ public class Keys {
         public static final UniqueKey<TechAvailabilitySnapshotRecord> PK_TECH_SNAPSHOT_AVAILABILITY_TBL = Internal.createUniqueKey(TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT, "pk_tech_snapshot_availability_tbl", TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.BUS_ID, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.DATE, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.CREATED_AT);
         public static final UniqueKey<TrackRecord> PK_TRACK_TBL = Internal.createUniqueKey(Track.TRACK, "pk_track_tbl", Track.TRACK.ID);
         public static final UniqueKey<TrackCoordinatesRecord> PK_TRACK_COORDINATES_TBL = Internal.createUniqueKey(TrackCoordinates.TRACK_COORDINATES, "pk_track_coordinates_tbl", TrackCoordinates.TRACK_COORDINATES.ID);
+        public static final UniqueKey<UserRecord> PK_USER_ID = Internal.createUniqueKey(User.USER, "pk_user_id", User.USER.ID);
+        public static final UniqueKey<UserSessionRecord> PK_USER_SESSION_TBL = Internal.createUniqueKey(UserSession.USER_SESSION, "pk_user_session_tbl", UserSession.USER_SESSION.ID);
     }
 
     private static class ForeignKeys0 {
@@ -414,8 +430,8 @@ public class Keys {
         public static final ForeignKey<BusStopsRecord, BusStopListRecord> BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_LIST_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_STOP_LIST_TBL, BusStops.BUS_STOPS, "bus_stops__fk_bus_stops_tbl_bus_stop_list_id", BusStops.BUS_STOPS.BUS_STOP_LIST_ID);
         public static final ForeignKey<BusStopsRecord, RbBusStopRecord> BUS_STOPS__FK_BUS_STOPS_TBL_BUS_STOP_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_BUS_STOP_TBL, BusStops.BUS_STOPS, "bus_stops__fk_bus_stops_tbl_bus_stop_id", BusStops.BUS_STOPS.BUS_STOP_ID);
         public static final ForeignKey<ConductorRecord, RbEmployeeScheduleTypeRecord> CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_schedule_type_id_fk", Conductor.CONDUCTOR.ID);
-        public static final ForeignKey<ConductorRecord, EmployeeInfoRecord> CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_EMPLOYEE_INFO_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_employee_data_id", Conductor.CONDUCTOR.EMPLOYEE_DATA_ID);
-        public static final ForeignKey<ConductorRecord, PositionRecord> CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_POSITION_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_position_id", Conductor.CONDUCTOR.POSITION_ID);
+        public static final ForeignKey<ConductorRecord, CondEmployeeInfoRecord> CONDUCTOR__FK_CONDUCTOR_TBL_COND_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_COND_EMPLOYEE_INFO_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_cond_employee_data_id", Conductor.CONDUCTOR.EMPLOYEE_DATA_ID);
+        public static final ForeignKey<ConductorRecord, RbPositionRecord> CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_POSITION_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_position_id", Conductor.CONDUCTOR.POSITION_ID);
         public static final ForeignKey<ConductorRecord, RbStateTypeRecord> CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_STATE_TYPE_TBL, Conductor.CONDUCTOR, "conductor__fk_conductor_tbl_state_id_fk", Conductor.CONDUCTOR.STATE_ID);
         public static final ForeignKey<ConductorScheduleRecord, ConductorRecord> CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_CONDUCTOR_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_CONDUCTOR_TBL_ID, ConductorSchedule.CONDUCTOR_SCHEDULE, "conductor_schedule__fk_conductor_schedule_tbl_conductor_id", ConductorSchedule.CONDUCTOR_SCHEDULE.CONDUCTOR_ID);
         public static final ForeignKey<ConductorScheduleRecord, RbShiftTypeRecord> CONDUCTOR_SCHEDULE__FK_CONDUCTOR_SCHEDULE_TBL_SHIFT_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_SHIFT_TYPE_TBL, ConductorSchedule.CONDUCTOR_SCHEDULE, "conductor_schedule__fk_conductor_schedule_tbl_shift_type_id", ConductorSchedule.CONDUCTOR_SCHEDULE.SHIFT_TYPE_ID);
@@ -424,12 +440,12 @@ public class Keys {
         public static final ForeignKey<ConductorScheduleSnapshotRecord, RbShiftTypeRecord> CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_SHIFT_TYPE_TBL, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT, "conductor_schedule_snapshot__fk_conductor_schedule_snapshot_tbl_shift_type_id", ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.SHIFT_TYPE_ID);
         public static final ForeignKey<ConductorScheduleSnapshotRecord, RbReadyTypeRecord> CONDUCTOR_SCHEDULE_SNAPSHOT__FK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_READY_TYPE_TBL, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT, "conductor_schedule_snapshot__fk_conductor_schedule_snapshot_tbl_ready_type_id", ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.READY_TYPE_ID);
         public static final ForeignKey<ConductorSnapshotRecord, RbEmployeeScheduleTypeRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_schedule_type_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.ID);
-        public static final ForeignKey<ConductorSnapshotRecord, EmployeeInfoRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_EMPLOYEE_INFO_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_employee_data_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.EMPLOYEE_DATA_ID);
-        public static final ForeignKey<ConductorSnapshotRecord, PositionRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_POSITION_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_position_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.POSITION_ID);
+        public static final ForeignKey<ConductorSnapshotRecord, CondEmployeeInfoRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_COND_EMPLOYEE_INFO_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_employee_data_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.EMPLOYEE_DATA_ID);
+        public static final ForeignKey<ConductorSnapshotRecord, RbPositionRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_POSITION_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_position_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.POSITION_ID);
         public static final ForeignKey<ConductorSnapshotRecord, RbStateTypeRecord> CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_STATE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_STATE_TYPE_TBL, ConductorSnapshot.CONDUCTOR_SNAPSHOT, "conductor_snapshot__fk_conductor_snapshot_tbl_state_id", ConductorSnapshot.CONDUCTOR_SNAPSHOT.STATE_ID);
         public static final ForeignKey<DepartureMomentsRecord, DepartureListRecord> DEPARTURE_MOMENTS__FK_DEPARTURE_MOMENTS_TBL_DEPARTURE_LIST_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_DEPARTURE_LIST_TBL, DepartureMoments.DEPARTURE_MOMENTS, "departure_moments__fk_departure_moments_tbl_departure_list_id", DepartureMoments.DEPARTURE_MOMENTS.DEPARTURE_LIST_ID);
         public static final ForeignKey<DriverRecord, EmployeeInfoRecord> DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_EMPLOYEE_INFO_TBL, Driver.DRIVER, "driver__fk_driver_tbl_employee_data_id", Driver.DRIVER.EMPLOYEE_DATA_ID);
-        public static final ForeignKey<DriverRecord, PositionRecord> DRIVER__FK_DRIVER_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_POSITION_TBL, Driver.DRIVER, "driver__fk_driver_tbl_position_id", Driver.DRIVER.POSITION_ID);
+        public static final ForeignKey<DriverRecord, RbPositionRecord> DRIVER__FK_DRIVER_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_POSITION_TBL, Driver.DRIVER, "driver__fk_driver_tbl_position_id", Driver.DRIVER.POSITION_ID);
         public static final ForeignKey<DriverRecord, BusRecord> DRIVER__FK_DRIVER_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_TBL, Driver.DRIVER, "driver__fk_driver_tbl_bus_id", Driver.DRIVER.BUS_ID);
         public static final ForeignKey<DriverRecord, DriverGroupRecord> DRIVER__FK_DRIVER_TBL_GROUP_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_DRIVER_GROUP_TBL, Driver.DRIVER, "driver__fk_driver_tbl_group_id", Driver.DRIVER.GROUP_ID);
         public static final ForeignKey<DriverRecord, RbEmployeeScheduleTypeRecord> DRIVER__FK_DRIVER_TBL_SCHEDULE_TYPE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL, Driver.DRIVER, "driver__fk_driver_tbl_schedule_type", Driver.DRIVER.SCHEDULE_TYPE);
@@ -442,22 +458,21 @@ public class Keys {
         public static final ForeignKey<DriverScheduleSnapshotRecord, RbShiftTypeRecord> DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_SHIFT_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_SHIFT_TYPE_TBL, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT, "driver_schedule_snapshot__fk_driver_schedule_snapshot_tbl_shift_type_id", DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.SHIFT_TYPE_ID);
         public static final ForeignKey<DriverScheduleSnapshotRecord, RbReadyTypeRecord> DRIVER_SCHEDULE_SNAPSHOT__FK_DRIVER_SCHEDULE_SNAPSHOT_TBL_READY_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_READY_TYPE_TBL, DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT, "driver_schedule_snapshot__fk_driver_schedule_snapshot_tbl_ready_type_id", DriverScheduleSnapshot.DRIVER_SCHEDULE_SNAPSHOT.READY_TYPE_ID);
         public static final ForeignKey<DriverSnapshotRecord, EmployeeInfoRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_EMPLOYEE_INFO_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_employee_data_id", DriverSnapshot.DRIVER_SNAPSHOT.EMPLOYEE_DATA_ID);
-        public static final ForeignKey<DriverSnapshotRecord, PositionRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_POSITION_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_position_id", DriverSnapshot.DRIVER_SNAPSHOT.POSITION_ID);
+        public static final ForeignKey<DriverSnapshotRecord, RbPositionRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_POSITION_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_position_id", DriverSnapshot.DRIVER_SNAPSHOT.POSITION_ID);
         public static final ForeignKey<DriverSnapshotRecord, BusRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_bus_id", DriverSnapshot.DRIVER_SNAPSHOT.BUS_ID);
         public static final ForeignKey<DriverSnapshotRecord, DriverGroupRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_GROUP_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_DRIVER_GROUP_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_group_id", DriverSnapshot.DRIVER_SNAPSHOT.GROUP_ID);
         public static final ForeignKey<DriverSnapshotRecord, RbEmployeeScheduleTypeRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_SCHEDULE_TYPE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_schedule_type", DriverSnapshot.DRIVER_SNAPSHOT.SCHEDULE_TYPE);
         public static final ForeignKey<DriverSnapshotRecord, RbStateTypeRecord> DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_STATE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_STATE_TYPE_TBL, DriverSnapshot.DRIVER_SNAPSHOT, "driver_snapshot__fk_driver_snapshot_tbl_state_id", DriverSnapshot.DRIVER_SNAPSHOT.STATE_ID);
-        public static final ForeignKey<EmployeeInfoRecord, RbEmployeeTypeRecord> EMPLOYEE_INFO__FK_EMPLOYEE_INFO_EMPLOYEE_TYPE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_RB_EMPLOYEE_TYPE_TBL, EmployeeInfo.EMPLOYEE_INFO, "employee_info__fk_employee_info_employee_type_id", EmployeeInfo.EMPLOYEE_INFO.EMPLOYEE_TYPE_ID);
         public static final ForeignKey<FuelCodeRecord, RbFuelTypeRecord> FUEL_CODE__FK_BUS_DATA_TBL_FUEL_TYPE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PL_RB_FUEL_TYPE_TBL, FuelCode.FUEL_CODE, "fuel_code__fk_bus_data_tbl_fuel_type", FuelCode.FUEL_CODE.FUEL_TYPE_ID);
-        public static final ForeignKey<IntsidentRecord, RbIntsidentTypeRecord> INTSIDENT__FK_INTSIDENT_TBL_TYPE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INTSIDENT_TYPE_TBL, Intsident.INTSIDENT, "intsident__fk_intsident_tbl_type", Intsident.INTSIDENT.TYPE);
+        public static final ForeignKey<IncidentRecord, RbIncidentTypeRecord> INCIDENT__FK_INCIDENT_TBL_TYPE = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INCIDENT_TYPE_TBL, Incident.INCIDENT, "incident__fk_incident_tbl_type", Incident.INCIDENT.TYPE);
         public static final ForeignKey<RaceRecord, DriverRecord> RACE__FK_RACE_TBL_DRIVER_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_DRIVER_TBL_EMPLOYEE_SNAPSHOT_ID, Race.RACE, "race__fk_race_tbl_driver_id", Race.RACE.DRIVER_ID);
         public static final ForeignKey<RaceRecord, ConductorRecord> RACE__FK_RACE_TBL_CONDUCTOR_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_CONDUCTOR_TBL_ID, Race.RACE, "race__fk_race_tbl_conductor_id", Race.RACE.CONDUCTOR_ID);
         public static final ForeignKey<RaceRecord, BusRecord> RACE__FK_RACE_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_TBL, Race.RACE, "race__fk_race_tbl_bus_id", Race.RACE.BUS_ID);
-        public static final ForeignKey<RaceRecord, IntsidentRecord> RACE__FK_RACE_TBL_INTSIDENT_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INTSIDENT, Race.RACE, "race__fk_race_tbl_intsident_id_fk", Race.RACE.INTSIDEND_ID);
+        public static final ForeignKey<RaceRecord, IncidentRecord> RACE__FK_RACE_TBL_INCIDENT_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INCIDENT, Race.RACE, "race__fk_race_tbl_incident_id_fk", Race.RACE.INCIDEND_ID);
         public static final ForeignKey<RaceSnaphotRecord, DriverRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_DRIVER_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_DRIVER_TBL_EMPLOYEE_SNAPSHOT_ID, RaceSnaphot.RACE_SNAPHOT, "race_snaphot__fk_race_snaphot_tbl_driver_id", RaceSnaphot.RACE_SNAPHOT.DRIVER_ID);
         public static final ForeignKey<RaceSnaphotRecord, ConductorRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_CONDUCTOR_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_CONDUCTOR_TBL_ID, RaceSnaphot.RACE_SNAPHOT, "race_snaphot__fk_race_snaphot_tbl_conductor_id", RaceSnaphot.RACE_SNAPHOT.CONDUCTOR_ID);
         public static final ForeignKey<RaceSnaphotRecord, BusRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_TBL, RaceSnaphot.RACE_SNAPHOT, "race_snaphot__fk_race_snaphot_tbl_bus_id", RaceSnaphot.RACE_SNAPHOT.BUS_ID);
-        public static final ForeignKey<RaceSnaphotRecord, IntsidentRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INTSIDENT_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INTSIDENT, RaceSnaphot.RACE_SNAPHOT, "race_snaphot__fk_race_snaphot_tbl_intsident_id_fk", RaceSnaphot.RACE_SNAPHOT.INTSIDEND_ID);
+        public static final ForeignKey<RaceSnaphotRecord, IncidentRecord> RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INCIDENT_ID_FK = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_INCIDENT, RaceSnaphot.RACE_SNAPHOT, "race_snaphot__fk_race_snaphot_tbl_incident_id_fk", RaceSnaphot.RACE_SNAPHOT.INCIDEND_ID);
         public static final ForeignKey<RouteRecord, BusStopListRecord> ROUTE__FK_ROUTE_TBL_BUS_STOP_LIST_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_STOP_LIST_TBL, Route.ROUTE, "route__fk_route_tbl_bus_stop_list_id", Route.ROUTE.BUS_STOP_LIST_ID);
         public static final ForeignKey<RouteRecord, TrackRecord> ROUTE__FK_ROUTE_TRACK_TBL_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_TRACK_TBL, Route.ROUTE, "route__fk_route_track_tbl_id", Route.ROUTE.TRACK_ID);
         public static final ForeignKey<RouteScheduleRecord, RouteRecord> ROUTE_SCHEDULE__FK_ROUTE_SCHEDULE_TBL_ROUTE_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_ROUTE_TBL, RouteSchedule.ROUTE_SCHEDULE, "route_schedule__fk_route_schedule_tbl_route_id", RouteSchedule.ROUTE_SCHEDULE.ROUTE_ID);
@@ -483,5 +498,6 @@ public class Keys {
         public static final ForeignKey<TechAvailabilitySnapshotRecord, BusRecord> TECH_AVAILABILITY_SNAPSHOT__FK__TECH_SNAPSHOT_AVAILABILITY_TBL_BUS_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_TBL, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT, "tech_availability_snapshot__fk_ tech_snapshot_availability_tbl_bus_id", TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.BUS_ID);
         public static final ForeignKey<TechAvailabilitySnapshotRecord, RbBusConditionTypeRecord> TECH_AVAILABILITY_SNAPSHOT__FK_TECH_AVAILABILITY_SNAPSHOT_TBL_BUS_CONDITION_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_BUS_CONDITION_TBL, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT, "tech_availability_snapshot__fk_tech_availability_snapshot_tbl_bus_condition_id", TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.BUS_CONDITION_ID);
         public static final ForeignKey<TrackCoordinatesRecord, TrackRecord> TRACK_COORDINATES__FK_TRACK_COORDINATES_TBL_TRACK_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_TRACK_TBL, TrackCoordinates.TRACK_COORDINATES, "track_coordinates__fk_track_coordinates_tbl_track_id", TrackCoordinates.TRACK_COORDINATES.TRACK_ID);
+        public static final ForeignKey<UserSessionRecord, UserRecord> USER_SESSION__FK_USER_SESSION_TBL_USER_ID = Internal.createForeignKey(ru.smartsarov.bus.postgres.Keys.PK_USER_ID, UserSession.USER_SESSION, "user_session__fk_user_session_tbl_user_id", UserSession.USER_SESSION.USER_ID);
     }
 }

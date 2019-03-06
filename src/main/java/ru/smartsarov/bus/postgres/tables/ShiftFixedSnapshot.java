@@ -13,6 +13,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -42,7 +43,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftFixedSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftFixedSnapshot extends TableImpl<ShiftFixedSnapshotRecord> {
 
-    private static final long serialVersionUID = 1365894262;
+    private static final long serialVersionUID = 726784982;
 
     /**
      * The reference instance of <code>public.shift_fixed_snapshot</code>
@@ -60,7 +61,7 @@ public class ShiftFixedSnapshot extends TableImpl<ShiftFixedSnapshotRecord> {
     /**
      * The column <code>public.shift_fixed_snapshot.shift_schedule_id</code>.
      */
-    public final TableField<ShiftFixedSnapshotRecord, Short> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<ShiftFixedSnapshotRecord, Integer> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('shift_fixed_snapshot_shift_schedule_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.shift_fixed_snapshot.date</code>.
@@ -70,12 +71,12 @@ public class ShiftFixedSnapshot extends TableImpl<ShiftFixedSnapshotRecord> {
     /**
      * The column <code>public.shift_fixed_snapshot.driver_id</code>.
      */
-    public final TableField<ShiftFixedSnapshotRecord, Short> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<ShiftFixedSnapshotRecord, Integer> DRIVER_ID = createField("driver_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.shift_fixed_snapshot.conductor_id</code>.
      */
-    public final TableField<ShiftFixedSnapshotRecord, Short> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.SMALLINT, this, "");
+    public final TableField<ShiftFixedSnapshotRecord, Integer> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.shift_fixed_snapshot.created_at</code>.
@@ -139,6 +140,14 @@ public class ShiftFixedSnapshot extends TableImpl<ShiftFixedSnapshotRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PK_FIXED_SHIFT_SNAPSHOT_TBL);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<ShiftFixedSnapshotRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_SHIFT_FIXED_SNAPSHOT;
     }
 
     /**

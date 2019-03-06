@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Driver extends TableImpl<DriverRecord> {
 
-    private static final long serialVersionUID = -1700684392;
+    private static final long serialVersionUID = -527039896;
 
     /**
      * The reference instance of <code>public.driver</code>
@@ -191,8 +191,8 @@ public class Driver extends TableImpl<DriverRecord> {
         return new EmployeeInfo(this, Keys.DRIVER__FK_DRIVER_TBL_EMPLOYEE_DATA_ID);
     }
 
-    public Position position() {
-        return new Position(this, Keys.DRIVER__FK_DRIVER_TBL_POSITION_ID);
+    public RbPosition rbPosition() {
+        return new RbPosition(this, Keys.DRIVER__FK_DRIVER_TBL_POSITION_ID);
     }
 
     public Bus bus() {

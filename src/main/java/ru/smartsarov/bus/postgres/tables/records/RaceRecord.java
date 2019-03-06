@@ -30,7 +30,7 @@ import ru.smartsarov.bus.postgres.tables.Race;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Record8<Integer, Short, Short, Short, OffsetDateTime, Boolean, Short, Short> {
 
-    private static final long serialVersionUID = 1454324995;
+    private static final long serialVersionUID = 58380147;
 
     /**
      * Setter for <code>public.race.id</code>.
@@ -117,16 +117,16 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
     }
 
     /**
-     * Setter for <code>public.race.intsidend_id</code>.
+     * Setter for <code>public.race.incidend_id</code>.
      */
-    public void setIntsidendId(Short value) {
+    public void setIncidendId(Short value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.race.intsidend_id</code>.
+     * Getter for <code>public.race.incidend_id</code>.
      */
-    public Short getIntsidendId() {
+    public Short getIncidendId() {
         return (Short) get(6);
     }
 
@@ -229,7 +229,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
      */
     @Override
     public Field<Short> field7() {
-        return Race.RACE.INTSIDEND_ID;
+        return Race.RACE.INCIDEND_ID;
     }
 
     /**
@@ -293,7 +293,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
      */
     @Override
     public Short component7() {
-        return getIntsidendId();
+        return getIncidendId();
     }
 
     /**
@@ -357,7 +357,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
      */
     @Override
     public Short value7() {
-        return getIntsidendId();
+        return getIncidendId();
     }
 
     /**
@@ -427,7 +427,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
      */
     @Override
     public RaceRecord value7(Short value) {
-        setIntsidendId(value);
+        setIncidendId(value);
         return this;
     }
 
@@ -470,7 +470,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
     /**
      * Create a detached, initialised RaceRecord
      */
-    public RaceRecord(Integer id, Short driverId, Short conductorId, Short busId, OffsetDateTime tsStart, Boolean done, Short intsidendId, Short removed) {
+    public RaceRecord(Integer id, Short driverId, Short conductorId, Short busId, OffsetDateTime tsStart, Boolean done, Short incidendId, Short removed) {
         super(Race.RACE);
 
         set(0, id);
@@ -479,7 +479,7 @@ public class RaceRecord extends UpdatableRecordImpl<RaceRecord> implements Recor
         set(3, busId);
         set(4, tsStart);
         set(5, done);
-        set(6, intsidendId);
+        set(6, incidendId);
         set(7, removed);
     }
 }

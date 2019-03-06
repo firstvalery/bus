@@ -30,7 +30,7 @@ import ru.smartsarov.bus.postgres.tables.RaceSnaphot;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> implements Record10<Integer, Short, Short, Short, OffsetDateTime, Boolean, Short, OffsetDateTime, OffsetDateTime, Short> {
 
-    private static final long serialVersionUID = 1359753947;
+    private static final long serialVersionUID = 74893777;
 
     /**
      * Setter for <code>public.race_snaphot.id</code>.
@@ -117,16 +117,16 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
     }
 
     /**
-     * Setter for <code>public.race_snaphot.intsidend_id</code>.
+     * Setter for <code>public.race_snaphot.incidend_id</code>.
      */
-    public void setIntsidendId(Short value) {
+    public void setIncidendId(Short value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>public.race_snaphot.intsidend_id</code>.
+     * Getter for <code>public.race_snaphot.incidend_id</code>.
      */
-    public Short getIntsidendId() {
+    public Short getIncidendId() {
         return (Short) get(6);
     }
 
@@ -257,7 +257,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
      */
     @Override
     public Field<Short> field7() {
-        return RaceSnaphot.RACE_SNAPHOT.INTSIDEND_ID;
+        return RaceSnaphot.RACE_SNAPHOT.INCIDEND_ID;
     }
 
     /**
@@ -337,7 +337,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
      */
     @Override
     public Short component7() {
-        return getIntsidendId();
+        return getIncidendId();
     }
 
     /**
@@ -417,7 +417,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
      */
     @Override
     public Short value7() {
-        return getIntsidendId();
+        return getIncidendId();
     }
 
     /**
@@ -503,7 +503,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
      */
     @Override
     public RaceSnaphotRecord value7(Short value) {
-        setIntsidendId(value);
+        setIncidendId(value);
         return this;
     }
 
@@ -566,7 +566,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
     /**
      * Create a detached, initialised RaceSnaphotRecord
      */
-    public RaceSnaphotRecord(Integer id, Short driverId, Short conductorId, Short busId, OffsetDateTime tsStart, Boolean done, Short intsidendId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
+    public RaceSnaphotRecord(Integer id, Short driverId, Short conductorId, Short busId, OffsetDateTime tsStart, Boolean done, Short incidendId, OffsetDateTime createdAt, OffsetDateTime endedAt, Short removed) {
         super(RaceSnaphot.RACE_SNAPHOT);
 
         set(0, id);
@@ -575,7 +575,7 @@ public class RaceSnaphotRecord extends UpdatableRecordImpl<RaceSnaphotRecord> im
         set(3, busId);
         set(4, tsStart);
         set(5, done);
-        set(6, intsidendId);
+        set(6, incidendId);
         set(7, createdAt);
         set(8, endedAt);
         set(9, removed);

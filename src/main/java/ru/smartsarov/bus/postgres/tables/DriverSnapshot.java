@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.DriverSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
 
-    private static final long serialVersionUID = 724331267;
+    private static final long serialVersionUID = 66115859;
 
     /**
      * The reference instance of <code>public.driver_snapshot</code>
@@ -202,8 +202,8 @@ public class DriverSnapshot extends TableImpl<DriverSnapshotRecord> {
         return new EmployeeInfo(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
     }
 
-    public Position position() {
-        return new Position(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID);
+    public RbPosition rbPosition() {
+        return new RbPosition(this, Keys.DRIVER_SNAPSHOT__FK_DRIVER_SNAPSHOT_TBL_POSITION_ID);
     }
 
     public Bus bus() {

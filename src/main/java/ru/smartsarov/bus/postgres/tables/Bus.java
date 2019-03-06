@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.BusRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Bus extends TableImpl<BusRecord> {
 
-    private static final long serialVersionUID = 605879689;
+    private static final long serialVersionUID = -1133694392;
 
     /**
      * The reference instance of <code>public.bus</code>
@@ -84,7 +84,7 @@ public class Bus extends TableImpl<BusRecord> {
     /**
      * The column <code>public.bus.odometer_mileage</code>.
      */
-    public final TableField<BusRecord, Integer> ODOMETER_MILEAGE = createField("odometer_mileage", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BusRecord, Integer> ODOMETER_MILEAGE = createField("odometer_mileage", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.bus.tracker_mileage</code>.

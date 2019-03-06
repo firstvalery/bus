@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbFuelTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbFuelType extends TableImpl<RbFuelTypeRecord> {
 
-    private static final long serialVersionUID = 994545224;
+    private static final long serialVersionUID = 1535512642;
 
     /**
      * The reference instance of <code>public.rb_fuel_type</code>
@@ -59,7 +59,7 @@ public class RbFuelType extends TableImpl<RbFuelTypeRecord> {
     /**
      * The column <code>public.rb_fuel_type.id</code>.
      */
-    public final TableField<RbFuelTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_fuel_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RbFuelTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_fuel_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_fuel_type.fuel_mark</code>.
@@ -124,7 +124,7 @@ public class RbFuelType extends TableImpl<RbFuelTypeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbFuelTypeRecord, Integer> getIdentity() {
+    public Identity<RbFuelTypeRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_FUEL_TYPE;
     }
 

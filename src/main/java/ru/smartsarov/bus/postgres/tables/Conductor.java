@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Conductor extends TableImpl<ConductorRecord> {
 
-    private static final long serialVersionUID = -1148264497;
+    private static final long serialVersionUID = 1410660979;
 
     /**
      * The reference instance of <code>public.conductor</code>
@@ -164,19 +164,19 @@ public class Conductor extends TableImpl<ConductorRecord> {
      */
     @Override
     public List<ForeignKey<ConductorRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<ConductorRecord, ?>>asList(Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK);
+        return Arrays.<ForeignKey<ConductorRecord, ?>>asList(Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_COND_EMPLOYEE_DATA_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_STATE_ID_FK);
     }
 
     public RbEmployeeScheduleType rbEmployeeScheduleType() {
         return new RbEmployeeScheduleType(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_SCHEDULE_TYPE_ID_FK);
     }
 
-    public EmployeeInfo employeeInfo() {
-        return new EmployeeInfo(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_EMPLOYEE_DATA_ID);
+    public CondEmployeeInfo condEmployeeInfo() {
+        return new CondEmployeeInfo(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_COND_EMPLOYEE_DATA_ID);
     }
 
-    public Position position() {
-        return new Position(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID);
+    public RbPosition rbPosition() {
+        return new RbPosition(this, Keys.CONDUCTOR__FK_CONDUCTOR_TBL_POSITION_ID);
     }
 
     public RbStateType rbStateType() {

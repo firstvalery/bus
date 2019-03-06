@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorSnapshot extends TableImpl<ConductorSnapshotRecord> {
 
-    private static final long serialVersionUID = -1578751834;
+    private static final long serialVersionUID = -743336108;
 
     /**
      * The reference instance of <code>public.conductor_snapshot</code>
@@ -182,12 +182,12 @@ public class ConductorSnapshot extends TableImpl<ConductorSnapshotRecord> {
         return new RbEmployeeScheduleType(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_SCHEDULE_TYPE_ID);
     }
 
-    public EmployeeInfo employeeInfo() {
-        return new EmployeeInfo(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
+    public CondEmployeeInfo condEmployeeInfo() {
+        return new CondEmployeeInfo(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_EMPLOYEE_DATA_ID);
     }
 
-    public Position position() {
-        return new Position(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID);
+    public RbPosition rbPosition() {
+        return new RbPosition(this, Keys.CONDUCTOR_SNAPSHOT__FK_CONDUCTOR_SNAPSHOT_TBL_POSITION_ID);
     }
 
     public RbStateType rbStateType() {

@@ -12,7 +12,6 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
-import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -42,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.ConductorScheduleRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
 
-    private static final long serialVersionUID = -765036811;
+    private static final long serialVersionUID = -975916932;
 
     /**
      * The reference instance of <code>public.conductor_schedule</code>
@@ -60,7 +59,7 @@ public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
     /**
      * The column <code>public.conductor_schedule.conductor_id</code>.
      */
-    public final TableField<ConductorScheduleRecord, Integer> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('conductor_schedule_conductor_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<ConductorScheduleRecord, Integer> CONDUCTOR_ID = createField("conductor_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
 
     /**
      * The column <code>public.conductor_schedule.date</code>.
@@ -129,14 +128,6 @@ public class ConductorSchedule extends TableImpl<ConductorScheduleRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PK_CONDUCTOR_SCHEDULE_TBL);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Identity<ConductorScheduleRecord, Integer> getIdentity() {
-        return Keys.IDENTITY_CONDUCTOR_SCHEDULE;
     }
 
     /**

@@ -11,6 +11,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -40,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbShiftTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbShiftType extends TableImpl<RbShiftTypeRecord> {
 
-    private static final long serialVersionUID = 1113212630;
+    private static final long serialVersionUID = -1514907623;
 
     /**
      * The reference instance of <code>public.rb_shift_type</code>
@@ -58,7 +59,7 @@ public class RbShiftType extends TableImpl<RbShiftTypeRecord> {
     /**
      * The column <code>public.rb_shift_type.id</code>.
      */
-    public final TableField<RbShiftTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RbShiftTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_shift_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_shift_type.name</code>.
@@ -117,6 +118,14 @@ public class RbShiftType extends TableImpl<RbShiftTypeRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PK_SHIFT_TYPE_TBL);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<RbShiftTypeRecord, Short> getIdentity() {
+        return Keys.IDENTITY_RB_SHIFT_TYPE;
     }
 
     /**

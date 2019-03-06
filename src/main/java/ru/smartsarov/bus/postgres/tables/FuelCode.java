@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.FuelCodeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class FuelCode extends TableImpl<FuelCodeRecord> {
 
-    private static final long serialVersionUID = 314425343;
+    private static final long serialVersionUID = -976664901;
 
     /**
      * The reference instance of <code>public.fuel_code</code>
@@ -59,12 +59,12 @@ public class FuelCode extends TableImpl<FuelCodeRecord> {
     /**
      * The column <code>public.fuel_code.id</code>.
      */
-    public final TableField<FuelCodeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fuel_code_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FuelCodeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fuel_code_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.fuel_code.fuel_type_id</code>.
      */
-    public final TableField<FuelCodeRecord, Integer> FUEL_TYPE_ID = createField("fuel_type_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('fuel_code_fuel_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<FuelCodeRecord, Short> FUEL_TYPE_ID = createField("fuel_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.fuel_code.winter_consumption</code>.
@@ -139,7 +139,7 @@ public class FuelCode extends TableImpl<FuelCodeRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<FuelCodeRecord, Integer> getIdentity() {
+    public Identity<FuelCodeRecord, Short> getIdentity() {
         return Keys.IDENTITY_FUEL_CODE;
     }
 

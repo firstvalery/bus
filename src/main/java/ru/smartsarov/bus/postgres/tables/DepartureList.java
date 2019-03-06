@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.DepartureListRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DepartureList extends TableImpl<DepartureListRecord> {
 
-    private static final long serialVersionUID = 496391011;
+    private static final long serialVersionUID = 1154949283;
 
     /**
      * The reference instance of <code>public.departure_list</code>
@@ -59,7 +59,7 @@ public class DepartureList extends TableImpl<DepartureListRecord> {
     /**
      * The column <code>public.departure_list.id</code>.
      */
-    public final TableField<DepartureListRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('departure_list_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<DepartureListRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('departure_list_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.departure_list.description</code>.
@@ -124,7 +124,7 @@ public class DepartureList extends TableImpl<DepartureListRecord> {
      * {@inheritDoc}
      */
     @Override
-    public Identity<DepartureListRecord, Integer> getIdentity() {
+    public Identity<DepartureListRecord, Short> getIdentity() {
         return Keys.IDENTITY_DEPARTURE_LIST;
     }
 

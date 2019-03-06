@@ -12,6 +12,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Index;
 import org.jooq.Name;
 import org.jooq.Record;
@@ -41,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.ShiftFixedRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
 
-    private static final long serialVersionUID = -32367170;
+    private static final long serialVersionUID = -1452702754;
 
     /**
      * The reference instance of <code>public.shift_fixed</code>
@@ -59,7 +60,7 @@ public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
     /**
      * The column <code>public.shift_fixed.shift_schedule_id</code>.
      */
-    public final TableField<ShiftFixedRecord, Integer> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ShiftFixedRecord, Integer> SHIFT_SCHEDULE_ID = createField("shift_schedule_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('shift_fixed_shift_schedule_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
 
     /**
      * The column <code>public.shift_fixed.date</code>.
@@ -128,6 +129,14 @@ public class ShiftFixed extends TableImpl<ShiftFixedRecord> {
     @Override
     public List<Index> getIndexes() {
         return Arrays.<Index>asList(Indexes.PK_SHIFT_FIXED_TBL);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Identity<ShiftFixedRecord, Integer> getIdentity() {
+        return Keys.IDENTITY_SHIFT_FIXED;
     }
 
     /**

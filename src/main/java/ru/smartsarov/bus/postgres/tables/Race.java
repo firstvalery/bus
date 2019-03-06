@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.RaceRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Race extends TableImpl<RaceRecord> {
 
-    private static final long serialVersionUID = -173465399;
+    private static final long serialVersionUID = -1739834587;
 
     /**
      * The reference instance of <code>public.race</code>
@@ -88,9 +88,9 @@ public class Race extends TableImpl<RaceRecord> {
     public final TableField<RaceRecord, Boolean> DONE = createField("done", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("false", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
 
     /**
-     * The column <code>public.race.intsidend_id</code>.
+     * The column <code>public.race.incidend_id</code>.
      */
-    public final TableField<RaceRecord, Short> INTSIDEND_ID = createField("intsidend_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RaceRecord, Short> INCIDEND_ID = createField("incidend_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.race.removed</code>.
@@ -175,7 +175,7 @@ public class Race extends TableImpl<RaceRecord> {
      */
     @Override
     public List<ForeignKey<RaceRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RaceRecord, ?>>asList(Keys.RACE__FK_RACE_TBL_DRIVER_ID, Keys.RACE__FK_RACE_TBL_CONDUCTOR_ID, Keys.RACE__FK_RACE_TBL_BUS_ID, Keys.RACE__FK_RACE_TBL_INTSIDENT_ID_FK);
+        return Arrays.<ForeignKey<RaceRecord, ?>>asList(Keys.RACE__FK_RACE_TBL_DRIVER_ID, Keys.RACE__FK_RACE_TBL_CONDUCTOR_ID, Keys.RACE__FK_RACE_TBL_BUS_ID, Keys.RACE__FK_RACE_TBL_INCIDENT_ID_FK);
     }
 
     public Driver driver() {
@@ -190,8 +190,8 @@ public class Race extends TableImpl<RaceRecord> {
         return new Bus(this, Keys.RACE__FK_RACE_TBL_BUS_ID);
     }
 
-    public Intsident intsident() {
-        return new Intsident(this, Keys.RACE__FK_RACE_TBL_INTSIDENT_ID_FK);
+    public Incident incident() {
+        return new Incident(this, Keys.RACE__FK_RACE_TBL_INCIDENT_ID_FK);
     }
 
     /**

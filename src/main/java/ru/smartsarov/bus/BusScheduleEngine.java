@@ -14,6 +14,7 @@ import static ru.smartsarov.bus.postgres.tables.DriverSchedule.*;
 import static ru.smartsarov.bus.postgres.tables.RbShiftType.*;
 import static ru.smartsarov.bus.postgres.tables.RbReadyType.*;
 import static ru.smartsarov.bus.postgres.tables.Conductor.*;
+import static ru.smartsarov.bus.postgres.tables.CondEmployeeInfo.*;
 import static ru.smartsarov.bus.postgres.tables.ConductorSchedule.*;
 import static ru.smartsarov.bus.postgres.tables.ShiftSchedule.*;
 import static ru.smartsarov.bus.postgres.tables.ShiftDepartureList.*;
@@ -22,13 +23,16 @@ import static ru.smartsarov.bus.postgres.tables.DepartureMoments.*;
 import static ru.smartsarov.bus.postgres.tables.RouteSchedule.*;
 import static ru.smartsarov.bus.postgres.tables.Route.*;
 import static ru.smartsarov.bus.postgres.tables.ShiftFixed.*;
-
+import static ru.smartsarov.bus.postgres.tables.GenerationInfo.*;
 
 
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.OffsetTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,22 +41,25 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
-import org.jooq.Record1;
+
 import org.jooq.Record11;
+import org.jooq.Record14;
 import org.jooq.Record2;
-import org.jooq.Record3;
+
 import org.jooq.Record4;
 import org.jooq.Record6;
 import org.jooq.Record8;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.SelectHavingStep;
+
 import org.jooq.Table;
+import org.jooq.exception.DataAccessException;
 import org.jooq.impl.DSL;
 
 
 import com.google.gson.Gson;
 
+import ru.smartsarov.bus.postgres.tables.records.GenerationInfoRecord;
 import ru.smartsarov.bus.postgres.tables.records.ShiftFixedRecord;
 import ru.smartsarov.bus.responses.AvailableBusesOnDate;
 import ru.smartsarov.bus.responses.AvailableDriversOnDate;
@@ -62,17 +69,20 @@ import ru.smartsarov.bus.responses.BusTechAvailabilityDataOnDate;
 import ru.smartsarov.bus.responses.ConductorData;
 import ru.smartsarov.bus.responses.ConductorScheduleData;
 import ru.smartsarov.bus.responses.ConductorScheduleDataOnDate;
+import ru.smartsarov.bus.responses.DepartureMomentOrderedData;
 import ru.smartsarov.bus.responses.DriverData;
 import ru.smartsarov.bus.responses.DriverScheduleData;
 import ru.smartsarov.bus.responses.DriverScheduleDataOnDate;
+import ru.smartsarov.bus.responses.FixedShiftData;
+import ru.smartsarov.bus.responses.GenerationData;
+import ru.smartsarov.bus.responses.OrderData;
 
 
 
 
 public class BusScheduleEngine {
 	/** 
-	 *Getting conect to postgresql DB. Look for Properies file
-	 *return Connection conn  
+	 * Возвращает connection к БД. Настройки подключения в конфигурационном файле 
 	 * @throws ClassNotFoundException 
 	 * @throws SQLException 
 	 */
@@ -90,7 +100,7 @@ public class BusScheduleEngine {
 	
 	
 	/**
-	 * returns message in json format {"message": "message text"}
+	 * Возвращает строку в формате JSON {"message": "message text"}
 	 */
 	 public static String getJsonMessage(String str) {
 		  return "{\"message\":\"" + str + "\"}";
@@ -98,7 +108,7 @@ public class BusScheduleEngine {
 	
 	 
 	/**
-	 *returns buses info list 
+	 * Возвращает JSON с описанием всех автобусов, зарегистрированных в БД
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */ 
@@ -140,7 +150,7 @@ public class BusScheduleEngine {
 	}
 	
 	/**
-	 *returns bus info 
+	 * Возвращает данные по автобусу. В параметрах id автобуса
 	 * @throws SQLException 
 	 * @throws ClassNotFoundException 
 	 */
@@ -186,6 +196,9 @@ public class BusScheduleEngine {
 												j.get(BUS.ODOMETER_MILEAGE),
 												j.get(BUS.TRACKER_MILEAGE),
 												j.get(RB_BUS_CONDITION_TYPE.NAME)));
+	    }catch(DataAccessException ex) {
+	    	//TODO
+	    	return "{}";
 	    }
 	}
 	
@@ -633,22 +646,22 @@ public class BusScheduleEngine {
 				return new Gson().toJson(
 		       DSL.using(conn, SQLDialect.POSTGRES_10)   	         
 		   						.select(CONDUCTOR.ID,
-		   								EMPLOYEE_INFO.PERSONNEL_NUMBER,
-		   								EMPLOYEE_INFO.FIRST_NAME,
-		   								EMPLOYEE_INFO.MIDDLE_NAME,
-		   								EMPLOYEE_INFO.LAST_NAME,
+		   								COND_EMPLOYEE_INFO.PERSONNEL_NUMBER,
+		   								COND_EMPLOYEE_INFO.FIRST_NAME,
+		   								COND_EMPLOYEE_INFO.MIDDLE_NAME,
+		   								COND_EMPLOYEE_INFO.LAST_NAME,
 		   								RB_STATE_TYPE.NAME)
 		   						.from(CONDUCTOR)
-		   						.join(EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(EMPLOYEE_INFO.ID))
+		   						.join(COND_EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(COND_EMPLOYEE_INFO.ID))
 		    		   			.join(RB_STATE_TYPE).on(CONDUCTOR.STATE_ID.eq(RB_STATE_TYPE.ID))
 		         				.fetch()
 		         				.stream()
 		         				.map(j->{return new ConductorData(
 					         						j.getValue(CONDUCTOR.ID),
-					         						j.getValue(EMPLOYEE_INFO.PERSONNEL_NUMBER),
-					         						j.getValue(EMPLOYEE_INFO.FIRST_NAME),
-					         						j.getValue(EMPLOYEE_INFO.MIDDLE_NAME),
-					         						j.getValue(EMPLOYEE_INFO.LAST_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.PERSONNEL_NUMBER),
+					         						j.getValue(COND_EMPLOYEE_INFO.FIRST_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.MIDDLE_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.LAST_NAME),
 					         						j.getValue(RB_STATE_TYPE.NAME));
 		         						}
 		         					)
@@ -673,22 +686,22 @@ public class BusScheduleEngine {
 				
 		       Record6<Integer, String, String, String, String, String>j = DSL.using(conn, SQLDialect.POSTGRES_10)   	         
 		   						.select(CONDUCTOR.ID,
-		   								EMPLOYEE_INFO.PERSONNEL_NUMBER,
-		   								EMPLOYEE_INFO.FIRST_NAME,
-		   								EMPLOYEE_INFO.MIDDLE_NAME,
-		   								EMPLOYEE_INFO.LAST_NAME,
+		   								COND_EMPLOYEE_INFO.PERSONNEL_NUMBER,
+		   								COND_EMPLOYEE_INFO.FIRST_NAME,
+		   								COND_EMPLOYEE_INFO.MIDDLE_NAME,
+		   								COND_EMPLOYEE_INFO.LAST_NAME,
 		   								RB_STATE_TYPE.NAME)
 		   						.from(CONDUCTOR)
-		   						.join(EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(EMPLOYEE_INFO.ID))
+		   						.join(COND_EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(COND_EMPLOYEE_INFO.ID))
 		    		   			.join(RB_STATE_TYPE).on(CONDUCTOR.STATE_ID.eq(RB_STATE_TYPE.ID))
 		    		   			.where(CONDUCTOR.ID.eq(integerConductorId))
 		         				.fetchAny();
 		         				return j==null?"{}": new Gson().toJson(new ConductorData(
 					         						j.getValue(CONDUCTOR.ID),
-					         						j.getValue(EMPLOYEE_INFO.PERSONNEL_NUMBER),
-					         						j.getValue(EMPLOYEE_INFO.FIRST_NAME),
-					         						j.getValue(EMPLOYEE_INFO.MIDDLE_NAME),
-					         						j.getValue(EMPLOYEE_INFO.LAST_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.PERSONNEL_NUMBER),
+					         						j.getValue(COND_EMPLOYEE_INFO.FIRST_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.MIDDLE_NAME),
+					         						j.getValue(COND_EMPLOYEE_INFO.LAST_NAME),
 					         						j.getValue(RB_STATE_TYPE.NAME)));
 			}  
 		}
@@ -723,14 +736,14 @@ public class BusScheduleEngine {
 				return new Gson().toJson(DSL.using(conn, SQLDialect.POSTGRES_10)   	         
 					.select(CONDUCTOR_SCHEDULE.DATE,
 							CONDUCTOR.ID,
-							EMPLOYEE_INFO.PERSONNEL_NUMBER,
-							EMPLOYEE_INFO.FIRST_NAME,
-							EMPLOYEE_INFO.MIDDLE_NAME,
-							EMPLOYEE_INFO.LAST_NAME,
+							COND_EMPLOYEE_INFO.PERSONNEL_NUMBER,
+							COND_EMPLOYEE_INFO.FIRST_NAME,
+							COND_EMPLOYEE_INFO.MIDDLE_NAME,
+							COND_EMPLOYEE_INFO.LAST_NAME,
 							RB_SHIFT_TYPE.NAME,
 							RB_READY_TYPE.NAME)
 					.from(CONDUCTOR)
-					.join(EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(EMPLOYEE_INFO.ID))
+					.join(COND_EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(COND_EMPLOYEE_INFO.ID))
 		   			.join(CONDUCTOR_SCHEDULE).on(CONDUCTOR.ID.eq(CONDUCTOR_SCHEDULE.CONDUCTOR_ID))
 		   			.join(RB_SHIFT_TYPE).on(CONDUCTOR_SCHEDULE.SHIFT_TYPE_ID.eq(RB_SHIFT_TYPE.ID))
 		   			.join(RB_READY_TYPE).on(CONDUCTOR_SCHEDULE.READY_TYPE_ID.eq(RB_READY_TYPE.ID))
@@ -754,10 +767,10 @@ public class BusScheduleEngine {
 		   										return new ConductorScheduleData(
 					   												new ConductorData(
 					   						         						k.getValue(CONDUCTOR.ID),
-					   						         						k.getValue(EMPLOYEE_INFO.PERSONNEL_NUMBER),
-					   						         						k.getValue(EMPLOYEE_INFO.FIRST_NAME),
-					   						         						k.getValue(EMPLOYEE_INFO.MIDDLE_NAME),
-					   						         						k.getValue(EMPLOYEE_INFO.LAST_NAME),
+					   						         						k.getValue(COND_EMPLOYEE_INFO.PERSONNEL_NUMBER),
+					   						         						k.getValue(COND_EMPLOYEE_INFO.FIRST_NAME),
+					   						         						k.getValue(COND_EMPLOYEE_INFO.MIDDLE_NAME),
+					   						         						k.getValue(COND_EMPLOYEE_INFO.LAST_NAME),
 					   						         						k.getValue(RB_STATE_TYPE.NAME)),
 					   												k.getValue(RB_SHIFT_TYPE.NAME),
 					   												k.getValue(RB_READY_TYPE.NAME));
@@ -816,13 +829,13 @@ public class BusScheduleEngine {
 			return DSL.using(conn, SQLDialect.POSTGRES_10)   	         
 					.select(
 							CONDUCTOR.ID,
-							EMPLOYEE_INFO.PERSONNEL_NUMBER,
-							EMPLOYEE_INFO.FIRST_NAME,
-							EMPLOYEE_INFO.MIDDLE_NAME,
-							EMPLOYEE_INFO.LAST_NAME,
+							COND_EMPLOYEE_INFO.PERSONNEL_NUMBER,
+							COND_EMPLOYEE_INFO.FIRST_NAME,
+							COND_EMPLOYEE_INFO.MIDDLE_NAME,
+							COND_EMPLOYEE_INFO.LAST_NAME,
 							RB_SHIFT_TYPE.NAME)
 					.from(CONDUCTOR)
-					.join(EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(EMPLOYEE_INFO.ID))
+					.join(COND_EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(COND_EMPLOYEE_INFO.ID))
 		   			.join(CONDUCTOR_SCHEDULE).on(CONDUCTOR.ID.eq(CONDUCTOR_SCHEDULE.CONDUCTOR_ID))
 		   			.join(RB_SHIFT_TYPE).on(CONDUCTOR_SCHEDULE.SHIFT_TYPE_ID.eq(RB_SHIFT_TYPE.ID))
 		   			.join(RB_READY_TYPE).on(CONDUCTOR_SCHEDULE.READY_TYPE_ID.eq(RB_READY_TYPE.ID))
@@ -836,10 +849,10 @@ public class BusScheduleEngine {
 		   				return new ConductorScheduleData(
 		   						new ConductorData(
 		   								j.getValue(CONDUCTOR.ID),
-		         						j.getValue(EMPLOYEE_INFO.PERSONNEL_NUMBER),
-		         						j.getValue(EMPLOYEE_INFO.FIRST_NAME),
-		         						j.getValue(EMPLOYEE_INFO.MIDDLE_NAME),
-		         						j.getValue(EMPLOYEE_INFO.LAST_NAME),
+		         						j.getValue(COND_EMPLOYEE_INFO.PERSONNEL_NUMBER),
+		         						j.getValue(COND_EMPLOYEE_INFO.FIRST_NAME),
+		         						j.getValue(COND_EMPLOYEE_INFO.MIDDLE_NAME),
+		         						j.getValue(COND_EMPLOYEE_INFO.LAST_NAME),
 		         						null),
 		   						j.getValue(RB_SHIFT_TYPE.NAME),
 		   						null);
@@ -899,11 +912,11 @@ public class BusScheduleEngine {
 			join public.ROUTE on public.ROUTE_SCHEDULE.ROUTE_ID = public.ROUTE.ID
 			group by  public.driver.id, public.ROUTE.NAME*/
 
-			//вложенный запрос для определения последней даты, когда водитель выходил на рейсы
+			//вложенный запрос для определения последней даты, когда водитель выходил на рейсы c глубиной просмотра 4 дня назад
 			Table<Record2<Date, Integer>> nested = dsl
 					.select(DSL.max(SHIFT_FIXED.DATE), SHIFT_FIXED.SHIFT_SCHEDULE_ID)
 								.from(SHIFT_FIXED)
-								.where(SHIFT_FIXED.DATE.between(Date.valueOf(sqlDate.toLocalDate().minusDays(3))).and(Date.valueOf(sqlDate.toLocalDate().minusDays(1))))
+								.where(SHIFT_FIXED.DATE.between(Date.valueOf(sqlDate.toLocalDate().minusDays(4))).and(Date.valueOf(sqlDate.toLocalDate().minusDays(1))))
 								.groupBy(SHIFT_FIXED.SHIFT_SCHEDULE_ID).asTable("nested");
 
 			//на ходу создадим map из id водителя  b name последнего маршрута
@@ -923,39 +936,46 @@ public class BusScheduleEngine {
 					.groupBy(DRIVER.ID, ROUTE_SCHEDULE.ROUTE_ID)
 					.orderBy(DRIVER.ID)
 					.fetch();
-			 Map<Integer, Short> lastRoute =test.stream()
+			 Map<Integer, Short> lastRoute =test
+					.stream()
+					//Отфильтруем случайные null
+					.filter(i->{return i.getValue(DRIVER.ID)==null || i.getValue(ROUTE_SCHEDULE.ROUTE_ID)!=null;})
 					.collect(Collectors.toMap(j->j.getValue(DRIVER.ID),
 												k->k.getValue(ROUTE_SCHEDULE.ROUTE_ID),
-												(o, y)-> y));
-			
-			
+												(o, n)-> n));
 			//Узнаем общее количество маршрутов в системе.
 			Integer routeCount = dsl.select(DSL.countDistinct(ROUTE.ID)).from(ROUTE).fetchAny().value1();
 			
-			routeCount.toString();
-			
-			lastRoute.toString();
 			//Делаем запрос на получение свободных водителей на этот день
 			List<DriverScheduleData> availableDriversListOnDate = getAvailableDriversList(sqlDate,conn);
-			availableDriversListOnDate.toString();
 			
 			//Делаем запрос на получение свободных кондукторов на этот день
-			//List<ConductorScheduleData> availableConductorsListOnDate = getAvailableConductorsList(sqlDate, conn);
+			List<ConductorScheduleData> availableConductorsListOnDate = getAvailableConductorsList(sqlDate, conn);
 			
-			ShiftFixedRecord record = null;
 			int ShifftFixedCounter = 0;
 			//пройдем по списку схем и назначим водителей
 			for(Record4<Integer, String, String, Short> shift:shiftList) {		
 				//Перебором ищем в списке водителей такого, кто работает в эту же смену и у кого id прошлого маршрута 1 меньше 
 				for(DriverScheduleData avalDriver:availableDriversListOnDate) {
 					if (avalDriver.getShiftType().equals(shift.get(RB_SHIFT_TYPE.NAME))
-							&&(checkForRouteId((int)shift.get(ROUTE_SCHEDULE.ROUTE_ID), lastRoute.get(avalDriver.getDriverData().getId()), routeCount))) {
+							&&(checkForRouteId((int)shift.get(ROUTE_SCHEDULE.ROUTE_ID), lastRoute.get(avalDriver.getDriverData().getId()), routeCount))) {	
+						//Перебором ище кондуктора, подходящего по смене
+						Integer conductorId = null;
+						for(ConductorScheduleData avalConductor: availableConductorsListOnDate) {
+								if(avalConductor.getShiftType().equals(shift.get(RB_SHIFT_TYPE.NAME))){
+									conductorId = avalConductor.getConductorData().getId();
+									//Удалим из списка кандидатов на кондукторы раз мы его назначили
+									availableConductorsListOnDate.remove(avalConductor);
+									break;
+								}
+							}
+						
 						//назначаем его на смену shift	
-						 record = new ShiftFixedRecord(shift.getValue(SHIFT_SCHEDULE.ID),sqlDate,
-																				avalDriver.getDriverData().getId(),null,(short)0);					
+						ShiftFixedRecord record = new ShiftFixedRecord(shift.getValue(SHIFT_SCHEDULE.ID),sqlDate,
+																				avalDriver.getDriverData().getId(),conductorId,(short)0);					
 						//Удалим из списка кандидатов водителя раз мы его назначили
 						availableDriversListOnDate.remove(avalDriver);
-						//TODO По тупому вызываем n раз UPSERT. Рассмотреть варианты с Batch()
+						//TODO По тупому вызываем n раз UPSERT.  Рассмотреть варианты с Batch()
 						ShifftFixedCounter+=dsl
 											   .insertInto(record.getTable())
 											   .set(record)
@@ -966,22 +986,209 @@ public class BusScheduleEngine {
 					}
 				}
 			}
+			
+			//Обновляем информацию по состоянию генерации на дату
+			Short genStatus = null; 
+			if(ShifftFixedCounter < shiftList.size()) {
+				genStatus = Constants.GENERATION_NOT_COMPLITED;
+			}else if(ShifftFixedCounter == shiftList.size()) {
+				genStatus = Constants.GENERATION_OK;
+			}else genStatus = Constants.GENERATION_FAILED;	
+			GenerationInfoRecord rec = new GenerationInfoRecord(sqlDate, genStatus, OffsetDateTime.now(), (short)0);
+			dsl.insertInto(rec.getTable())
+			   .set(rec)
+			   .onDuplicateKeyUpdate()
+			   .set(rec)
+			   .execute();
+			
+
 			conn.commit();
 			return getJsonMessage(String.format("%d%s", ShifftFixedCounter, " records was generated"));
 		}
 	}
-		
+		/**
+		 * helper method to check the assigned route
+		 */
 		private static boolean checkForRouteId(Integer routeId, Short lastRoute, Integer maxValue) {
-			if(lastRoute==null)return true;//если предыдущий маршрут неизвестен, считаем что водителя можно нажначить
+			if(lastRoute==null)return true;//если предыдущий маршрут неизвестен, считаем что водителя можно назначить
 			
 			if (lastRoute >= maxValue.shortValue()) {
-				if (routeId== 1) return true;
-				else return false;
+				return routeId == 1; 
 			}
-			else {
-				if(lastRoute+1==routeId) return true;
-				else return false;
-			} 
+			else return lastRoute+1 == routeId; 
 		}
-	
+		
+		/**
+		 * Returns generation data for period
+		 * @throws SQLException 
+		 * @throws ClassNotFoundException 
+		 */
+		public static String getGenerationInfo(String dateMin, String dateMax) throws ClassNotFoundException, SQLException {
+			Date sqlDateMin=null;
+			Date sqlDateMax=null;
+			try {
+				sqlDateMin = Date.valueOf(dateMin);
+				sqlDateMax = Date.valueOf(dateMax);
+			}catch(IllegalArgumentException  e) {
+				return getJsonMessage(String.format("%s or %s - wrong date formate. Сheck pattern matching yyyy-[m]m-[d]d", dateMin, dateMax));
+			}		
+			try (Connection conn = getConnection()) {
+				//создадим Map из даты и статуса выполнения генерации
+				Map<Date, Short> statusList = DSL.using(conn, SQLDialect.POSTGRES_10)
+				.select(GENERATION_INFO.DATE,
+						GENERATION_INFO.STATUS_ID,
+						GENERATION_INFO.CREATED_AT)
+				.from(GENERATION_INFO)
+				.fetch()
+				.stream()
+				.filter(i->{return i.getValue(GENERATION_INFO.STATUS_ID)!=null;})//фильтруем null
+				.collect(Collectors.toMap(j->j.getValue(GENERATION_INFO.DATE),
+										  k->k.getValue(GENERATION_INFO.STATUS_ID), 
+										 (o,n)->n));
+
+				return new Gson().toJson(
+						getDateListBetween(sqlDateMin, sqlDateMax)//получим массив дат для анализа
+					.stream()
+					.map(j-> {  //создаем Stream<GenerationData>
+					        String tmp="";
+					        if((statusList.get(j)==null) || statusList.get(j)==Constants.GENERATION_FAILED){
+								tmp = Constants.ST_GENERATION_FAILED;
+							}else if(statusList.get(j)==Constants.GENERATION_OK){
+								tmp = Constants.ST_GENERATION_OK;
+							}else 
+								tmp = Constants.ST_GENERATION_NOT_COMPLITED;
+							return new GenerationData(
+									j.toString(),
+									tmp,
+									j.compareTo(Date.from(Instant.now()))>0);//Доступен для изменений, если на завтра и далее
+						}
+					).sorted(new Comparator<GenerationData>() {
+							@Override
+							public int compare(GenerationData a, GenerationData b) {
+								if(a==null||b==null)return 0;
+								if(a.getDate()==null|| b.getDate()==null)return 0;
+								return Date.valueOf(a.getDate()).compareTo(Date.valueOf(b.getDate()));
+							}
+					    }
+					).collect(Collectors.toList()));//собираем в лист
+				}
+		}
+		
+		
+		/**helper method
+		 *Returns List of dates between two dates including
+		 */
+		private static List<Date> getDateListBetween(Date date1, Date date2){
+			List<Date>dateList =  new ArrayList<>();		
+			if(date1.compareTo(date2)<=0) {
+				while(date1.compareTo(date2)<0) {
+					dateList.add(date1);
+					date1 = Date.valueOf(date1.toLocalDate().plusDays(1));
+				}
+				dateList.add(date2);
+			}else if(date1.compareTo(date2)>0){
+				while(date1.compareTo(date2)>0) {
+					dateList.add(date1);
+					date1 = Date.valueOf(date1.toLocalDate().minusDays(1));
+				}
+				dateList.add(date2);
+			}
+			return dateList;	
+		}
+		
+		/**
+		 *Retuns shift fixed data for period from two dates 
+		 * @throws SQLException 
+		 * @throws ClassNotFoundException 
+		 */
+		public static String getOrder(String date) throws ClassNotFoundException, SQLException {
+			Date sqlDate=null;
+			try {
+				sqlDate = Date.valueOf(date);
+			}catch(IllegalArgumentException  e) {
+				return getJsonMessage(String.format("%s - wrong date formate. Сheck pattern matching yyyy-[m]m-[d]d", date));
+			}		
+				try (Connection conn = getConnection()) {
+				return new Gson().toJson(new OrderData(null, date, DSL.using(conn, SQLDialect.POSTGRES_10)
+					.select(
+							SHIFT_FIXED.SHIFT_SCHEDULE_ID,
+							ROUTE.NAME,
+							DRIVER.ID,
+							EMPLOYEE_INFO.FIRST_NAME,
+							EMPLOYEE_INFO.MIDDLE_NAME,
+							EMPLOYEE_INFO.LAST_NAME,
+							EMPLOYEE_INFO.PERSONNEL_NUMBER,
+							BUS.GARAGE_NUMBER,
+							CONDUCTOR.ID,
+							COND_EMPLOYEE_INFO.FIRST_NAME,
+							COND_EMPLOYEE_INFO.MIDDLE_NAME,
+							COND_EMPLOYEE_INFO.LAST_NAME,
+							COND_EMPLOYEE_INFO.PERSONNEL_NUMBER,
+							DEPARTURE_MOMENTS.START_TIME)
+					.from(SHIFT_FIXED)
+					.leftJoin(CONDUCTOR).on(SHIFT_FIXED.CONDUCTOR_ID.eq(CONDUCTOR.ID))
+					.leftJoin(COND_EMPLOYEE_INFO).on(CONDUCTOR.EMPLOYEE_DATA_ID.eq(COND_EMPLOYEE_INFO.ID))		
+					.join(DRIVER).on(SHIFT_FIXED.DRIVER_ID.eq(DRIVER.ID))
+					.leftJoin(BUS).on(DRIVER.BUS_ID.eq(BUS.ID))
+					.join (EMPLOYEE_INFO).on(DRIVER.EMPLOYEE_DATA_ID.eq(EMPLOYEE_INFO.ID))
+					.join (SHIFT_SCHEDULE).on(SHIFT_FIXED.SHIFT_SCHEDULE_ID.eq(SHIFT_SCHEDULE.ID))
+					.join (SHIFT_DEPARTURE_LIST).on(SHIFT_SCHEDULE.SHIFT_DEPARTURE_LIST_ID.eq(SHIFT_DEPARTURE_LIST.ID))
+					.join (SHIFT_DEPARTURE_MOMENTS).on (SHIFT_DEPARTURE_LIST.ID.eq(SHIFT_DEPARTURE_MOMENTS.SHIFT_DEPARTURE_LIST_ID))
+					.join (DEPARTURE_MOMENTS).on(SHIFT_DEPARTURE_MOMENTS.DEPARTURE_MOMENTS_ID.eq(DEPARTURE_MOMENTS.ID))
+					.join (ROUTE_SCHEDULE).on(DEPARTURE_MOMENTS.DEPARTURE_LIST_ID.eq(ROUTE_SCHEDULE.ROUTE_ID))
+					.join (ROUTE).on(ROUTE_SCHEDULE.ROUTE_ID.eq(ROUTE.ID))
+					.where(SHIFT_FIXED.DATE.eq(sqlDate))
+					.fetch()
+					.stream()
+				.collect(Collectors.groupingBy(Record14<Integer, String, Integer, String,
+															String, String, String, String,
+																Integer, String, String, String,
+																	String, OffsetTime>::value1 ))
+				.entrySet()
+				.stream()
+				.map(j->{ 
+							return new FixedShiftData(
+										j.getValue().get(0)==null?null:j.getValue().get(0).getValue(ROUTE.NAME),
+										j.getValue().get(0)==null?new DriverData():new DriverData(	
+														j.getValue().get(0).getValue(DRIVER.ID),
+														j.getValue().get(0).getValue(EMPLOYEE_INFO.PERSONNEL_NUMBER),
+														j.getValue().get(0).getValue(EMPLOYEE_INFO.FIRST_NAME),
+														j.getValue().get(0).getValue(EMPLOYEE_INFO.MIDDLE_NAME),
+														j.getValue().get(0).getValue(EMPLOYEE_INFO.LAST_NAME),
+														j.getValue().get(0).getValue(BUS.GARAGE_NUMBER),
+														null,
+														null,
+														null,
+														null,
+														null),
+												j.getValue().get(0)==null?new ConductorData():new ConductorData(
+														j.getValue().get(0).getValue(CONDUCTOR.ID),
+														j.getValue().get(0).getValue(COND_EMPLOYEE_INFO.PERSONNEL_NUMBER),
+														j.getValue().get(0).getValue(COND_EMPLOYEE_INFO.FIRST_NAME),
+														j.getValue().get(0).getValue(COND_EMPLOYEE_INFO.MIDDLE_NAME),
+														j.getValue().get(0).getValue(COND_EMPLOYEE_INFO.LAST_NAME),
+														null),
+										j.getValue()
+										.stream()
+										.map(k->{return new DepartureMomentOrderedData(null,
+																						null,
+																						k.getValue(DEPARTURE_MOMENTS.START_TIME).toString());
+												}
+											).sorted(new Comparator<DepartureMomentOrderedData>() {
+
+												@Override
+												public int compare(DepartureMomentOrderedData a,
+														DepartureMomentOrderedData b) {
+													if(a==null||b==null)return 0;
+													if(a.getStartTime()==null|| b.getStartTime()==null)return 0;
+													return a.getStartTime().compareTo(b.getStartTime());
+													
+												}})
+										.collect(Collectors.toList())
+									);
+						}
+					)
+				.collect(Collectors.toList())));
+			}
+		}				
 }

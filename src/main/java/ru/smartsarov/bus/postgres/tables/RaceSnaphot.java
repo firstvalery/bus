@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.RaceSnaphotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RaceSnaphot extends TableImpl<RaceSnaphotRecord> {
 
-    private static final long serialVersionUID = -705938809;
+    private static final long serialVersionUID = 3130457;
 
     /**
      * The reference instance of <code>public.race_snaphot</code>
@@ -88,9 +88,9 @@ public class RaceSnaphot extends TableImpl<RaceSnaphotRecord> {
     public final TableField<RaceSnaphotRecord, Boolean> DONE = createField("done", org.jooq.impl.SQLDataType.BOOLEAN.nullable(false).defaultValue(org.jooq.impl.DSL.field("false", org.jooq.impl.SQLDataType.BOOLEAN)), this, "");
 
     /**
-     * The column <code>public.race_snaphot.intsidend_id</code>.
+     * The column <code>public.race_snaphot.incidend_id</code>.
      */
-    public final TableField<RaceSnaphotRecord, Short> INTSIDEND_ID = createField("intsidend_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
+    public final TableField<RaceSnaphotRecord, Short> INCIDEND_ID = createField("incidend_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.race_snaphot.created_at</code>.
@@ -185,7 +185,7 @@ public class RaceSnaphot extends TableImpl<RaceSnaphotRecord> {
      */
     @Override
     public List<ForeignKey<RaceSnaphotRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<RaceSnaphotRecord, ?>>asList(Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_DRIVER_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_CONDUCTOR_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INTSIDENT_ID_FK);
+        return Arrays.<ForeignKey<RaceSnaphotRecord, ?>>asList(Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_DRIVER_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_CONDUCTOR_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INCIDENT_ID_FK);
     }
 
     public Driver driver() {
@@ -200,8 +200,8 @@ public class RaceSnaphot extends TableImpl<RaceSnaphotRecord> {
         return new Bus(this, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_BUS_ID);
     }
 
-    public Intsident intsident() {
-        return new Intsident(this, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INTSIDENT_ID_FK);
+    public Incident incident() {
+        return new Incident(this, Keys.RACE_SNAPHOT__FK_RACE_SNAPHOT_TBL_INCIDENT_ID_FK);
     }
 
     /**

@@ -15,6 +15,7 @@ import ru.smartsarov.bus.postgres.tables.BusInfo;
 import ru.smartsarov.bus.postgres.tables.BusSnapshot;
 import ru.smartsarov.bus.postgres.tables.BusStopList;
 import ru.smartsarov.bus.postgres.tables.BusStops;
+import ru.smartsarov.bus.postgres.tables.CondEmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.Conductor;
 import ru.smartsarov.bus.postgres.tables.ConductorSchedule;
 import ru.smartsarov.bus.postgres.tables.ConductorScheduleSnapshot;
@@ -29,8 +30,8 @@ import ru.smartsarov.bus.postgres.tables.DriverScheduleSnapshot;
 import ru.smartsarov.bus.postgres.tables.DriverSnapshot;
 import ru.smartsarov.bus.postgres.tables.EmployeeInfo;
 import ru.smartsarov.bus.postgres.tables.FuelCode;
-import ru.smartsarov.bus.postgres.tables.Intsident;
-import ru.smartsarov.bus.postgres.tables.Position;
+import ru.smartsarov.bus.postgres.tables.GenerationInfo;
+import ru.smartsarov.bus.postgres.tables.Incident;
 import ru.smartsarov.bus.postgres.tables.Race;
 import ru.smartsarov.bus.postgres.tables.RaceSnaphot;
 import ru.smartsarov.bus.postgres.tables.RbBusConditionType;
@@ -38,9 +39,9 @@ import ru.smartsarov.bus.postgres.tables.RbBusMake;
 import ru.smartsarov.bus.postgres.tables.RbBusModel;
 import ru.smartsarov.bus.postgres.tables.RbBusStop;
 import ru.smartsarov.bus.postgres.tables.RbEmployeeScheduleType;
-import ru.smartsarov.bus.postgres.tables.RbEmployeeType;
 import ru.smartsarov.bus.postgres.tables.RbFuelType;
-import ru.smartsarov.bus.postgres.tables.RbIntsidentType;
+import ru.smartsarov.bus.postgres.tables.RbIncidentType;
+import ru.smartsarov.bus.postgres.tables.RbPosition;
 import ru.smartsarov.bus.postgres.tables.RbReadyType;
 import ru.smartsarov.bus.postgres.tables.RbShiftType;
 import ru.smartsarov.bus.postgres.tables.RbStateType;
@@ -58,6 +59,8 @@ import ru.smartsarov.bus.postgres.tables.TechAvailability;
 import ru.smartsarov.bus.postgres.tables.TechAvailabilitySnapshot;
 import ru.smartsarov.bus.postgres.tables.Track;
 import ru.smartsarov.bus.postgres.tables.TrackCoordinates;
+import ru.smartsarov.bus.postgres.tables.User;
+import ru.smartsarov.bus.postgres.tables.UserSession;
 
 
 /**
@@ -83,6 +86,7 @@ public class Indexes {
     public static final Index PK_BUS_SNAPSHOT_TBL = Indexes0.PK_BUS_SNAPSHOT_TBL;
     public static final Index PK_BUS_STOP_LIST_TBL = Indexes0.PK_BUS_STOP_LIST_TBL;
     public static final Index PK_BUS_STOPS_TBL = Indexes0.PK_BUS_STOPS_TBL;
+    public static final Index PK_COND_EMPLOYEE_INFO_TBL = Indexes0.PK_COND_EMPLOYEE_INFO_TBL;
     public static final Index PK_CONDUCTOR_TBL_ID = Indexes0.PK_CONDUCTOR_TBL_ID;
     public static final Index PK_CONDUCTOR_SCHEDULE_TBL = Indexes0.PK_CONDUCTOR_SCHEDULE_TBL;
     public static final Index PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL = Indexes0.PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL;
@@ -97,8 +101,8 @@ public class Indexes {
     public static final Index PK_EMPLOYEE_SNAPSHOT_TBL = Indexes0.PK_EMPLOYEE_SNAPSHOT_TBL;
     public static final Index PK_EMPLOYEE_INFO_TBL = Indexes0.PK_EMPLOYEE_INFO_TBL;
     public static final Index PK_FUEL_CODE_TBL = Indexes0.PK_FUEL_CODE_TBL;
-    public static final Index PK_INTSIDENT = Indexes0.PK_INTSIDENT;
-    public static final Index PK_POSITION_TBL = Indexes0.PK_POSITION_TBL;
+    public static final Index PK_GENERATION_INFO_TBL = Indexes0.PK_GENERATION_INFO_TBL;
+    public static final Index PK_INCIDENT = Indexes0.PK_INCIDENT;
     public static final Index PK_RACE_TBL = Indexes0.PK_RACE_TBL;
     public static final Index PK_RACE_SNAPHOT_TBL = Indexes0.PK_RACE_SNAPHOT_TBL;
     public static final Index PK_BUS_CONDITION_TBL = Indexes0.PK_BUS_CONDITION_TBL;
@@ -106,9 +110,9 @@ public class Indexes {
     public static final Index PK_RB_BUS_MODEL_TBL = Indexes0.PK_RB_BUS_MODEL_TBL;
     public static final Index PK_RB_BUS_STOP_TBL = Indexes0.PK_RB_BUS_STOP_TBL;
     public static final Index PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL = Indexes0.PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL;
-    public static final Index PK_RB_EMPLOYEE_TYPE_TBL = Indexes0.PK_RB_EMPLOYEE_TYPE_TBL;
     public static final Index PL_RB_FUEL_TYPE_TBL = Indexes0.PL_RB_FUEL_TYPE_TBL;
-    public static final Index PK_INTSIDENT_TYPE_TBL = Indexes0.PK_INTSIDENT_TYPE_TBL;
+    public static final Index PK_INCIDENT_TYPE_TBL = Indexes0.PK_INCIDENT_TYPE_TBL;
+    public static final Index PK_RB_POSITION_TBL = Indexes0.PK_RB_POSITION_TBL;
     public static final Index PK_RB_READY_TYPE_TBL = Indexes0.PK_RB_READY_TYPE_TBL;
     public static final Index PK_SHIFT_TYPE_TBL = Indexes0.PK_SHIFT_TYPE_TBL;
     public static final Index PK_RB_STATE_TYPE_TBL = Indexes0.PK_RB_STATE_TYPE_TBL;
@@ -127,6 +131,8 @@ public class Indexes {
     public static final Index PK_TECH_SNAPSHOT_AVAILABILITY_TBL = Indexes0.PK_TECH_SNAPSHOT_AVAILABILITY_TBL;
     public static final Index PK_TRACK_TBL = Indexes0.PK_TRACK_TBL;
     public static final Index PK_TRACK_COORDINATES_TBL = Indexes0.PK_TRACK_COORDINATES_TBL;
+    public static final Index PK_USER_ID = Indexes0.PK_USER_ID;
+    public static final Index PK_USER_SESSION_TBL = Indexes0.PK_USER_SESSION_TBL;
 
     // -------------------------------------------------------------------------
     // [#1459] distribute members to avoid static initialisers > 64kb
@@ -139,6 +145,7 @@ public class Indexes {
         public static Index PK_BUS_SNAPSHOT_TBL = Internal.createIndex("pk_bus_snapshot_tbl", BusSnapshot.BUS_SNAPSHOT, new OrderField[] { BusSnapshot.BUS_SNAPSHOT.ID, BusSnapshot.BUS_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_BUS_STOP_LIST_TBL = Internal.createIndex("pk_bus_stop_list_tbl", BusStopList.BUS_STOP_LIST, new OrderField[] { BusStopList.BUS_STOP_LIST.ID }, true);
         public static Index PK_BUS_STOPS_TBL = Internal.createIndex("pk_bus_stops_tbl", BusStops.BUS_STOPS, new OrderField[] { BusStops.BUS_STOPS.ID }, true);
+        public static Index PK_COND_EMPLOYEE_INFO_TBL = Internal.createIndex("pk_cond_employee_info_tbl", CondEmployeeInfo.COND_EMPLOYEE_INFO, new OrderField[] { CondEmployeeInfo.COND_EMPLOYEE_INFO.ID }, true);
         public static Index PK_CONDUCTOR_TBL_ID = Internal.createIndex("pk_conductor_tbl_id", Conductor.CONDUCTOR, new OrderField[] { Conductor.CONDUCTOR.ID }, true);
         public static Index PK_CONDUCTOR_SCHEDULE_TBL = Internal.createIndex("pk_conductor_schedule_tbl", ConductorSchedule.CONDUCTOR_SCHEDULE, new OrderField[] { ConductorSchedule.CONDUCTOR_SCHEDULE.CONDUCTOR_ID, ConductorSchedule.CONDUCTOR_SCHEDULE.DATE }, true);
         public static Index PK_CONDUCTOR_SCHEDULE_SNAPSHOT_TBL = Internal.createIndex("pk_conductor_schedule_snapshot_tbl", ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT, new OrderField[] { ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.CONDUCTOR_ID, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.DATE, ConductorScheduleSnapshot.CONDUCTOR_SCHEDULE_SNAPSHOT.CREATED_AT }, true);
@@ -153,8 +160,8 @@ public class Indexes {
         public static Index PK_EMPLOYEE_SNAPSHOT_TBL = Internal.createIndex("pk_employee_snapshot_tbl", DriverSnapshot.DRIVER_SNAPSHOT, new OrderField[] { DriverSnapshot.DRIVER_SNAPSHOT.ID, DriverSnapshot.DRIVER_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_EMPLOYEE_INFO_TBL = Internal.createIndex("pk_employee_info_tbl", EmployeeInfo.EMPLOYEE_INFO, new OrderField[] { EmployeeInfo.EMPLOYEE_INFO.ID }, true);
         public static Index PK_FUEL_CODE_TBL = Internal.createIndex("pk_fuel_code_tbl", FuelCode.FUEL_CODE, new OrderField[] { FuelCode.FUEL_CODE.ID }, true);
-        public static Index PK_INTSIDENT = Internal.createIndex("pk_intsident", Intsident.INTSIDENT, new OrderField[] { Intsident.INTSIDENT.ID }, true);
-        public static Index PK_POSITION_TBL = Internal.createIndex("pk_position_tbl", Position.POSITION, new OrderField[] { Position.POSITION.ID }, true);
+        public static Index PK_GENERATION_INFO_TBL = Internal.createIndex("pk_generation_info_tbl", GenerationInfo.GENERATION_INFO, new OrderField[] { GenerationInfo.GENERATION_INFO.DATE }, true);
+        public static Index PK_INCIDENT = Internal.createIndex("pk_incident", Incident.INCIDENT, new OrderField[] { Incident.INCIDENT.ID }, true);
         public static Index PK_RACE_TBL = Internal.createIndex("pk_race_tbl", Race.RACE, new OrderField[] { Race.RACE.ID }, true);
         public static Index PK_RACE_SNAPHOT_TBL = Internal.createIndex("pk_race_snaphot_tbl", RaceSnaphot.RACE_SNAPHOT, new OrderField[] { RaceSnaphot.RACE_SNAPHOT.ID, RaceSnaphot.RACE_SNAPHOT.CREATED_AT }, true);
         public static Index PK_BUS_CONDITION_TBL = Internal.createIndex("pk_bus_condition_tbl", RbBusConditionType.RB_BUS_CONDITION_TYPE, new OrderField[] { RbBusConditionType.RB_BUS_CONDITION_TYPE.ID }, true);
@@ -162,9 +169,9 @@ public class Indexes {
         public static Index PK_RB_BUS_MODEL_TBL = Internal.createIndex("pk_rb_bus_model_tbl", RbBusModel.RB_BUS_MODEL, new OrderField[] { RbBusModel.RB_BUS_MODEL.ID }, true);
         public static Index PK_RB_BUS_STOP_TBL = Internal.createIndex("pk_rb_bus_stop_tbl", RbBusStop.RB_BUS_STOP, new OrderField[] { RbBusStop.RB_BUS_STOP.ID }, true);
         public static Index PK_RB_EMPLOYEE_SCHEDULE_TYPE_TBL = Internal.createIndex("pk_rb_employee_schedule_type_tbl", RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE, new OrderField[] { RbEmployeeScheduleType.RB_EMPLOYEE_SCHEDULE_TYPE.ID }, true);
-        public static Index PK_RB_EMPLOYEE_TYPE_TBL = Internal.createIndex("pk_rb_employee_type_tbl", RbEmployeeType.RB_EMPLOYEE_TYPE, new OrderField[] { RbEmployeeType.RB_EMPLOYEE_TYPE.ID }, true);
         public static Index PL_RB_FUEL_TYPE_TBL = Internal.createIndex("pl_rb_fuel_type_tbl", RbFuelType.RB_FUEL_TYPE, new OrderField[] { RbFuelType.RB_FUEL_TYPE.ID }, true);
-        public static Index PK_INTSIDENT_TYPE_TBL = Internal.createIndex("pk_intsident_type_tbl", RbIntsidentType.RB_INTSIDENT_TYPE, new OrderField[] { RbIntsidentType.RB_INTSIDENT_TYPE.ID }, true);
+        public static Index PK_INCIDENT_TYPE_TBL = Internal.createIndex("pk_incident_type_tbl", RbIncidentType.RB_INCIDENT_TYPE, new OrderField[] { RbIncidentType.RB_INCIDENT_TYPE.ID }, true);
+        public static Index PK_RB_POSITION_TBL = Internal.createIndex("pk_rb_position_tbl", RbPosition.RB_POSITION, new OrderField[] { RbPosition.RB_POSITION.ID }, true);
         public static Index PK_RB_READY_TYPE_TBL = Internal.createIndex("pk_rb_ready_type_tbl", RbReadyType.RB_READY_TYPE, new OrderField[] { RbReadyType.RB_READY_TYPE.ID }, true);
         public static Index PK_SHIFT_TYPE_TBL = Internal.createIndex("pk_shift_type_tbl", RbShiftType.RB_SHIFT_TYPE, new OrderField[] { RbShiftType.RB_SHIFT_TYPE.ID }, true);
         public static Index PK_RB_STATE_TYPE_TBL = Internal.createIndex("pk_rb_state_type_tbl", RbStateType.RB_STATE_TYPE, new OrderField[] { RbStateType.RB_STATE_TYPE.ID }, true);
@@ -183,5 +190,7 @@ public class Indexes {
         public static Index PK_TECH_SNAPSHOT_AVAILABILITY_TBL = Internal.createIndex("pk_tech_snapshot_availability_tbl", TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT, new OrderField[] { TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.BUS_ID, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.DATE, TechAvailabilitySnapshot.TECH_AVAILABILITY_SNAPSHOT.CREATED_AT }, true);
         public static Index PK_TRACK_TBL = Internal.createIndex("pk_track_tbl", Track.TRACK, new OrderField[] { Track.TRACK.ID }, true);
         public static Index PK_TRACK_COORDINATES_TBL = Internal.createIndex("pk_track_coordinates_tbl", TrackCoordinates.TRACK_COORDINATES, new OrderField[] { TrackCoordinates.TRACK_COORDINATES.ID }, true);
+        public static Index PK_USER_ID = Internal.createIndex("pk_user_id", User.USER, new OrderField[] { User.USER.ID }, true);
+        public static Index PK_USER_SESSION_TBL = Internal.createIndex("pk_user_session_tbl", UserSession.USER_SESSION, new OrderField[] { UserSession.USER_SESSION.ID }, true);
     }
 }

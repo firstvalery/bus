@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.RbEmployeeScheduleTypeRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class RbEmployeeScheduleType extends TableImpl<RbEmployeeScheduleTypeRecord> {
 
-    private static final long serialVersionUID = -878753677;
+    private static final long serialVersionUID = 1145903393;
 
     /**
      * The reference instance of <code>public.rb_employee_schedule_type</code>
@@ -59,7 +59,7 @@ public class RbEmployeeScheduleType extends TableImpl<RbEmployeeScheduleTypeReco
     /**
      * The column <code>public.rb_employee_schedule_type.id</code>.
      */
-    public final TableField<RbEmployeeScheduleTypeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_employee_schedule_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.INTEGER)), this, "");
+    public final TableField<RbEmployeeScheduleTypeRecord, Short> ID = createField("id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false).defaultValue(org.jooq.impl.DSL.field("nextval('rb_employee_schedule_type_id_seq'::regclass)", org.jooq.impl.SQLDataType.SMALLINT)), this, "");
 
     /**
      * The column <code>public.rb_employee_schedule_type.type_description</code>.
@@ -124,7 +124,7 @@ public class RbEmployeeScheduleType extends TableImpl<RbEmployeeScheduleTypeReco
      * {@inheritDoc}
      */
     @Override
-    public Identity<RbEmployeeScheduleTypeRecord, Integer> getIdentity() {
+    public Identity<RbEmployeeScheduleTypeRecord, Short> getIdentity() {
         return Keys.IDENTITY_RB_EMPLOYEE_SCHEDULE_TYPE;
     }
 

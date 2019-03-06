@@ -42,7 +42,7 @@ import ru.smartsarov.bus.postgres.tables.records.BusSnapshotRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class BusSnapshot extends TableImpl<BusSnapshotRecord> {
 
-    private static final long serialVersionUID = -525006530;
+    private static final long serialVersionUID = -751702595;
 
     /**
      * The reference instance of <code>public.bus_snapshot</code>
@@ -85,7 +85,7 @@ public class BusSnapshot extends TableImpl<BusSnapshotRecord> {
     /**
      * The column <code>public.bus_snapshot.odometer_mileage</code>.
      */
-    public final TableField<BusSnapshotRecord, Integer> ODOMETER_MILEAGE = createField("odometer_mileage", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<BusSnapshotRecord, Integer> ODOMETER_MILEAGE = createField("odometer_mileage", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>public.bus_snapshot.tracker_mileage</code>.

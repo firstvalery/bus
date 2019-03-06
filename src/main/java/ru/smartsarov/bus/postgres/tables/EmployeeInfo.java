@@ -41,7 +41,7 @@ import ru.smartsarov.bus.postgres.tables.records.EmployeeInfoRecord;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
 
-    private static final long serialVersionUID = 1763571917;
+    private static final long serialVersionUID = -771128490;
 
     /**
      * The reference instance of <code>public.employee_info</code>
@@ -80,11 +80,6 @@ public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
      * The column <code>public.employee_info.last_name</code>.
      */
     public final TableField<EmployeeInfoRecord, String> LAST_NAME = createField("last_name", org.jooq.impl.SQLDataType.CLOB.nullable(false), this, "");
-
-    /**
-     * The column <code>public.employee_info.employee_type_id</code>.
-     */
-    public final TableField<EmployeeInfoRecord, Short> EMPLOYEE_TYPE_ID = createField("employee_type_id", org.jooq.impl.SQLDataType.SMALLINT.nullable(false), this, "");
 
     /**
      * The column <code>public.employee_info.removed</code>.
@@ -162,18 +157,6 @@ public class EmployeeInfo extends TableImpl<EmployeeInfoRecord> {
     @Override
     public List<UniqueKey<EmployeeInfoRecord>> getKeys() {
         return Arrays.<UniqueKey<EmployeeInfoRecord>>asList(Keys.PK_EMPLOYEE_INFO_TBL);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<ForeignKey<EmployeeInfoRecord, ?>> getReferences() {
-        return Arrays.<ForeignKey<EmployeeInfoRecord, ?>>asList(Keys.EMPLOYEE_INFO__FK_EMPLOYEE_INFO_EMPLOYEE_TYPE_ID);
-    }
-
-    public RbEmployeeType rbEmployeeType() {
-        return new RbEmployeeType(this, Keys.EMPLOYEE_INFO__FK_EMPLOYEE_INFO_EMPLOYEE_TYPE_ID);
     }
 
     /**
